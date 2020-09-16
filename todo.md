@@ -1,8 +1,11 @@
 # To do
 
-frdescam:
-	- Afficher un prompt en l’attente d’une nouvelle commande
+## frdescam:
 
-badam:
-	- Chercher et lancer le bon executable (basé sur une variable d’environnement PATHou en utilisant unpathabsolu), comme dans bash
-	- Les variables d’environnement ($suivi de caractères) doivent marcher comme dansbash.
+- Afficher un prompt en l’attente d’une nouvelle commande
+
+
+## badam:
+
+- [FAIT] Chercher ~~et lancer~~ le bon executable (basé sur une variable d’environnement PATH ou en utilisant un path absolu), comme dans bash
+- [FAIT] Gestion basique des variables d'environements (initialisation, obtention, réinitialisation)

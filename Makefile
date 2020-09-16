@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/09/15 13:49:08 by frdescam         ###   ########.fr        #
+#    Updated: 2020/09/16 16:34:44 by badam            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ SHELL		= /bin/sh
 
 NAME		= minishell
 
-SRCS		=
+SRCS		= \
+	./srcs/utils/environ.c	\
+	./srcs/utils/whereis.c
 
 OBJS		= ${SRCS:.c=.o}
 
@@ -26,7 +28,7 @@ RM			= rm -f
 
 LIBFT_FLAGS	= -Llibft -lft
 
-CFLAGS		= -Wall -Wextra -Werror -g3
+CFLAGS		= -Wall -Wextra -Werror -g3 -Isrcs
 
 INCLUDES	= -I libft
 
@@ -37,7 +39,8 @@ all:	${NAME}
 
 $(NAME): ${OBJS}
 		make -C libft
-		${CC} ${OBJS} ${LIBFT_FLAGS} -o ${NAME} 
+		${CC} ${OBJS} ${LIBFT_FLAGS} -o ${NAME}
+
 clean:
 		make -C libft clean
 		${RM} ${OBJS}
