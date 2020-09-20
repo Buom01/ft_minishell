@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/25 18:40:41 by frdescam          #+#    #+#             */
-/*   Updated: 2020/05/25 19:08:02 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/09/20 15:27:36 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_list	*ft_lstsearch(t_list *lst, const char *name)
 	return (NULL);
 }
 /*
-**
 **#include <stdio.h>
 **
 **int		main(void)
@@ -69,9 +68,17 @@ t_list	*ft_lstsearch(t_list *lst, const char *name)
 **		lst_tmp = lst_tmp->next;
 **	}
 **	printf("\n\n");
-**	printf("searching for %s, found : name=%s, content=%s\n", "str2", ft_lstsearch(lst, "str2")->name, (char *)(ft_lstsearch(lst, "str2")->content));
-**	printf("searching for %s, found : name=%s, content=%s\n", "str4", ft_lstsearch(lst, "str4")->name, (char *)(ft_lstsearch(lst, "str4")->content));
-**	printf("searching for %s, found : name=%s, content=%s\n", "str3", ft_lstsearch(lst, "str3")->name, (char *)(ft_lstsearch(lst, "str3")->content));
-**	printf("searching for %s, found : name=%s, content=%s\n", "str6", ft_lstsearch(lst, "str6")->name, (char *)(ft_lstsearch(lst, "str6")->content));
+**	printf("searching for %s, found : name=%s, content=%s\n", "str2",
+**			ft_lstsearch(lst, "str2")->name,
+**			(char *)(ft_lstsearch(lst, "str2")->content));
+**	printf("searching for %s, found : name=%s, content=%s\n", "str4",
+**			ft_lstsearch(lst, "str4")->name,
+**			(char *)(ft_lstsearch(lst, "str4")->content));
+**	printf("searching for %s, found : name=%s, content=%s\n", "str3",
+**			ft_lstsearch(lst, "str3")->name,
+**			(char *)(ft_lstsearch(lst, "str3")->content));
+**	printf("searching for %s, found : name=%s, content=%s\n", "str6",
+**			ft_lstsearch(lst, "str6")->name,
+**			(char *)(ft_lstsearch(lst, "str6")->content));
 **}
 */

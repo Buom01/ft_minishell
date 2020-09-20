@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/09/16 16:34:44 by badam            ###   ########.fr        #
+#    Updated: 2020/09/20 13:47:04 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ NAME		= minishell
 
 SRCS		= \
 	./srcs/utils/environ.c	\
-	./srcs/utils/whereis.c
+	./srcs/utils/whereis.c	\
+	./srcs/main.c	\
+	./srcs/handle_errors.c
 
 OBJS		= ${SRCS:.c=.o}
 

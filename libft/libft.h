@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 09:42:53 by frdescam          #+#    #+#             */
-/*   Updated: 2020/05/27 12:13:48 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/09/20 15:48:04 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ typedef struct		s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_string
+{
+	char	*str;
+	size_t	len;
+	size_t	capacity;
+}					t_string;
 
 int					ft_printf(const char *str, ...);
 
@@ -66,6 +73,11 @@ char				**ft_clear_splitted(char **tab);
 char				*ft_strchr(const char *s, int c);
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strdup(const char *s1);
+t_string			*ft_string_new(void);
+t_string			*ft_string_from(char *str);
+t_string			*ft_string_with_capacity(size_t capacity);
+t_string			*ft_string_push(t_string *string, char *to_append);
+void				ft_string_destroy(t_string *string);
 char				*ft_strjoin(char const *s1, char const *s2);
 size_t				ft_strlcat(char *dest, const char *src, size_t dstsize);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);

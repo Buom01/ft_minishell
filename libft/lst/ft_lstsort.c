@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 12:43:15 by frdescam          #+#    #+#             */
-/*   Updated: 2020/03/09 15:14:45 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/09/20 15:28:27 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 static void	move_smallest_before_tmp(t_list *to_move_prev,
 		t_list *dest, t_list *dest_prev, t_list **lst)
 {
-	t_list	*to_move = to_move_prev->next;
+	t_list	*to_move;
 
+	to_move = to_move_prev->next;
 	if (dest_prev)
 		dest_prev->next = to_move;
 	else
@@ -44,6 +45,7 @@ static void	get_smallest(t_list **smallest, t_list **smallest_prev,
 		current = current->next;
 	}
 }
+
 void		ft_lstsort(t_list **lst, int (*f)(void *content1, void *content2))
 {
 	t_list	*smallest;
