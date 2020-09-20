@@ -2,7 +2,8 @@
 
 ## frdescam:
 
-- Afficher un prompt en l’attente d’une nouvelle commande
+- [FAIT] Afficher un prompt en l’attente d’une nouvelle commande
+- Parsing
 
 
 ## badam:
