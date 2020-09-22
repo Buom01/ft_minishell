@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/09/20 13:34:22 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/09/22 17:55:45 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@
 # include <sys/stat.h>
 # include "libft.h"
 
-# define ERR -1
-# define OK 0
-# define ERR_MALLOC 1
-# define ERR_SYNTAX 2
-# define ERR_READ 3
+typedef enum		e_error
+{
+	ERR = -1,
+	OK = 0,
+	ERR_MALLOC,
+	ERR_SYNTAX,
+	ERR_READ,
+	ERR_UNIMPLENTED,
+	ERR_PRINTF
+}					t_error;
 
 typedef struct		s_env
 {
@@ -31,12 +36,38 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
-void				env_init(t_env **entries, char **environ);
-void				env_shutdown(t_env **entries);
-t_env				*env_get(const t_env *entries, const char *key);
-char				*env_get_value(const t_env *entries, const char *key);
+typedef enum		e_builtin
+{
+	BI_NONE = -1,
+	BI_ECHO,
+	BI_CD,
+	BI_PWD,
+	BI_EXPORT,
+	BI_UNSET,
+	BI_ENV,
+	BI_EXIT,
+	BUILTINS_COUNT
+}					t_builtin;
 
-char				*whereis(const char *filepath, t_env *entries);
-void				panic(int err_code);
+bool				env_isvalid_equality(const char *equality);
+char				*env_parse_key(const char *equality);
+char				*env_parse_value(const char *equality);
+t_env				**env_dictionary(void);
+void				env_init(char **environ);
+void				env_shutdown(void);
+t_env				*env_create(char *equality);
+t_env				*env_set(const char *key, const char *value);
+void				env_unset(const char *key);
+t_env				*env_get(const char *key);
+char				*env_get_value(const char *key);
+
+t_builtin			get_builtin(char *command);
+t_error				builtins(t_builtin builtin, size_t argc, char **argv);
+t_error				builtin_export(size_t argc, char **argv);
+t_error				builtin_unset(size_t argc, char **argv);
+t_error				builtin_env(size_t argc, char **argv);
+
+char				*whereis(const char *filepath);
+void				panic(t_error err_code);
 
 #endif

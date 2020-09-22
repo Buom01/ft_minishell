@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 16:51:09 by badam             #+#    #+#             */
-/*   Updated: 2020/09/16 16:32:14 by badam            ###   ########.fr       */
+/*   Updated: 2020/09/22 16:11:10 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void		set_next_path(char **path, const size_t len)
 		*path += len + 1;
 }
 
-char			*whereis(const char *filepath, t_env *entries)
+char			*whereis(const char *filepath)
 {
 	size_t		filepath_len;
 	char		*path_cur;
@@ -40,7 +40,7 @@ char			*whereis(const char *filepath, t_env *entries)
 
 	if (*filepath == '/' || *filepath == '.')
 		return (ft_strdup(filepath));
-	else if ((path_cur = env_get_value(entries, "PATH")))
+	else if ((path_cur = env_get_value("PATH")))
 	{
 		filepath_len = ft_strlen(filepath);
 		while (path_cur)

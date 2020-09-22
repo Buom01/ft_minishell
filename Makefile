@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/09/20 13:47:04 by frdescam         ###   ########.fr        #
+#    Updated: 2020/09/22 16:14:45 by badam            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,17 @@ SHELL		= /bin/sh
 NAME		= minishell
 
 SRCS		= \
-	./srcs/utils/environ.c	\
-	./srcs/utils/whereis.c	\
-	./srcs/main.c	\
-	./srcs/handle_errors.c
+	./srcs/utils/environ/utils.c	\
+	./srcs/utils/environ/setters.c	\
+	./srcs/utils/environ/environ.c	\
+	./srcs/utils/environ/getters.c	\
+	./srcs/utils/whereis.c			\
+	./srcs/main.c					\
+	./srcs/handle_errors.c			\
+	./srcs/builtins/builtins.c		\
+	./srcs/builtins/export.c		\
+	./srcs/builtins/unset.c			\
+	./srcs/builtins/env.c
 
 OBJS		= ${SRCS:.c=.o}
 
