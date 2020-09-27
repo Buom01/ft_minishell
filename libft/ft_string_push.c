@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:55:47 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/20 15:22:09 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/09/27 20:02:03 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,46 @@ t_string	*ft_string_push(t_string *string, char *to_append)
 **	printf("cmd->str = %s, cmd->len = %ld, cmd->capacity = %ld\n",
 **      cmd->str, cmd->len, cmd->capacity);
 **	ft_string_push(cmd, "world!");
+**	printf("cmd->str = %s, cmd->len = %ld, cmd->capacity = %ld\n",
+**      cmd->str, cmd->len, cmd->capacity);
+**}
+*/
+
+t_string	*ft_string_push_char(t_string *string, char to_append)
+{
+	char	*tmp;
+
+	if (string->capacity < string->len + 2)
+	{
+		if (!(tmp = malloc(sizeof(char) * (string->len + 2))))
+			return (NULL);
+		string->capacity = string->len + 2;
+		ft_strlcpy(tmp, string->str, string->len + 2);
+		tmp[string->len] = to_append;
+		tmp[string->len + 1] = '\0';
+		free(string->str);
+		string->str = tmp;
+	}
+	else
+	{
+		string->str[string->len] = to_append;
+		string->str[string->len + 1] = '\0';
+	}
+	string->len += 1;
+	return (string);
+}
+/*
+**#include <stdio.h>
+**
+**int			main(void)
+**{
+**	t_string *cmd = ft_string_with_capacity(14);
+**	printf("cmd->str = %s, cmd->len = %ld, cmd->capacity = %ld\n",
+**      cmd->str, cmd->len, cmd->capacity);
+**	ft_string_push_char(cmd, 'w');
+**	printf("cmd->str = %s, cmd->len = %ld, cmd->capacity = %ld\n",
+**      cmd->str, cmd->len, cmd->capacity);
+**	ft_string_push_char(cmd, 'c');
 **	printf("cmd->str = %s, cmd->len = %ld, cmd->capacity = %ld\n",
 **      cmd->str, cmd->len, cmd->capacity);
 **}
