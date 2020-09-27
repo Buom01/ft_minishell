@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/09/22 16:14:45 by badam            ###   ########.fr        #
+#    Updated: 2020/09/27 14:46:08 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,13 @@ SRCS		= \
 	./srcs/utils/environ/environ.c	\
 	./srcs/utils/environ/getters.c	\
 	./srcs/utils/whereis.c			\
-	./srcs/main.c					\
-	./srcs/handle_errors.c			\
 	./srcs/builtins/builtins.c		\
 	./srcs/builtins/export.c		\
 	./srcs/builtins/unset.c			\
-	./srcs/builtins/env.c
+	./srcs/builtins/env.c			\
+	./srcs/main.c					\
+	./srcs/handle_errors.c			\
+	./srcs/parsing/parsing.c
 
 OBJS		= ${SRCS:.c=.o}
 
