@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/27 14:43:17 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/09/27 16:04:09 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	main(void)
 	{
 		if (read_ret == 0)
 			break ;
-		printf("executing %s\n", line->str);
 		exec_line(line);
 		ft_string_destroy(line);
 		if (!(line = ft_string_new()))

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/09/22 17:55:45 by badam            ###   ########.fr       */
+/*   Updated: 2020/09/29 23:50:01 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ typedef enum		e_error
 	ERR_SYNTAX,
 	ERR_READ,
 	ERR_UNIMPLENTED,
-	ERR_PRINTF
+	ERR_PRINTF,
+	ERR_QUOTE,
+	ERR_EMPTY_COMMAND
 }					t_error;
 
 typedef struct		s_env
@@ -69,5 +71,6 @@ t_error				builtin_env(size_t argc, char **argv);
 
 char				*whereis(const char *filepath);
 void				panic(t_error err_code);
+void				print_warning(t_error err_code);
 
 #endif

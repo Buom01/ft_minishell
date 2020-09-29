@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 14:34:05 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/27 14:43:53 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/09/30 00:11:26 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define PARSING_H
 
 void	exec_line(t_string *line);
+void	exec_cmd(t_string *cmd);
 
 #endif

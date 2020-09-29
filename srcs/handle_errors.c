@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 13:47:33 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/22 17:56:47 by badam            ###   ########.fr       */
+/*   Updated: 2020/09/29 23:52:05 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,12 @@ void	panic(t_error err_code)
 	else
 		ft_printf("Unknown Error ... exiting\n");
 	exit(ERR);
+}
+
+void	print_warning(t_error err_code)
+{
+	if (err_code == ERR_QUOTE)
+		ft_printf("Syntax error : The command is not complete\n");
+	else if (err_code == ERR_EMPTY_COMMAND)
+		ft_printf("Syntax error : Empty command\n");
 }
