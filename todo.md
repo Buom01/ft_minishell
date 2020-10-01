@@ -1,6 +1,6 @@
 # To do
 
-## frdescam:
+## fdeĉ:
 
 - [FAIT] Afficher un prompt en l’attente d’une nouvelle commande
 - Parsing
