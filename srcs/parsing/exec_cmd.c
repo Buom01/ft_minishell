@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 00:08:00 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/01 11:45:33 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/02 21:51:35 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,25 @@ static void	ft_string_destroy_wrapper(void *content)
 	ft_string_destroy(content);
 }
 
+void		copy_chars_until_end(size_t *i, t_string *cmd, t_string *next_word)
+{
+	int			inside_quote;
+	int			inside_dquote;
+
+	inside_dquote = 0;
+	inside_quote = 0;
+	while (cmd->str[*i] && (!ft_strchr("\f\t \n\r\v|<>", cmd->str[*i]) ||
+			inside_quote || inside_dquote))
+	{
+		if (cmd->str[*i] == '"' && !inside_quote)
+			inside_dquote = !inside_dquote;
+		else if (cmd->str[*i] == '\'' && !inside_dquote)
+			inside_quote = !inside_quote;
+		ft_string_push_char(next_word, cmd->str[*i]);
+		(*i)++;
+	}
+}
+
 t_string	*get_next_word(size_t *i, t_string *cmd)
 {
 	t_string	*next_word;
@@ -26,17 +45,13 @@ t_string	*get_next_word(size_t *i, t_string *cmd)
 		panic(ERR_MALLOC);
 	while (cmd->str[*i] && ft_strchr("\f\t \n\r\v", cmd->str[*i]))
 		(*i)++;
-	if (cmd->str[*i] == '|')
-	{
-		ft_string_push_char(next_word, '|');
-		(*i)++;
-		return (next_word);
-	}
-	while (cmd->str[*i] && !ft_strchr("\f\t \n\r\v|", cmd->str[*i]))
+	if (cmd->str[*i] == '|' || cmd->str[*i] == '>' || cmd->str[*i] == '<')
 	{
 		ft_string_push_char(next_word, cmd->str[*i]);
 		(*i)++;
+		return (next_word);
 	}
+	copy_chars_until_end(i, cmd, next_word);
 	if (!next_word->str)
 	{
 		ft_string_destroy(next_word);
