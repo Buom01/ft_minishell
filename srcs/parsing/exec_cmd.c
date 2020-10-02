@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 00:08:00 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/02 21:51:35 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/03 00:13:23 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static void	ft_string_destroy_wrapper(void *content)
 	ft_string_destroy(content);
 }
 
-void		copy_chars_until_end(size_t *i, t_string *cmd, t_string *next_word)
+void		copy_chars_until_end(unsigned int *i,
+								t_string *cmd,
+								t_string *next_word)
 {
 	int			inside_quote;
 	int			inside_dquote;
@@ -37,7 +39,7 @@ void		copy_chars_until_end(size_t *i, t_string *cmd, t_string *next_word)
 	}
 }
 
-t_string	*get_next_word(size_t *i, t_string *cmd)
+t_string	*get_next_word(unsigned int *i, t_string *cmd)
 {
 	t_string	*next_word;
 
@@ -62,10 +64,10 @@ t_string	*get_next_word(size_t *i, t_string *cmd)
 
 void		exec_cmd(t_string *cmd)
 {
-	size_t		i;
-	t_list		*words;
-	t_list		*word;
-	t_string	*next_word;
+	unsigned int	i;
+	t_list			*words;
+	t_list			*word;
+	t_string		*next_word;
 
 	i = 0;
 	words = NULL;

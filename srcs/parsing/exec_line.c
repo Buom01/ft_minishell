@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 00:09:21 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/01 11:48:01 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/03 00:14:51 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ static void	ft_string_destroy_wrapper(void *content)
 	ft_string_destroy(content);
 }
 
-t_string	*check_next_cmd_errors(t_string *next_cmd, int inside_quote,
-		int inside_dquote)
+t_string	*check_next_cmd_errors(t_string *next_cmd,
+									int inside_quote,
+									int inside_dquote)
 {
 	if (inside_dquote || inside_quote)
 	{
@@ -37,7 +38,7 @@ t_string	*check_next_cmd_errors(t_string *next_cmd, int inside_quote,
 	return (next_cmd);
 }
 
-t_string	*get_next_cmd(t_string *line, size_t *i)
+t_string	*get_next_cmd(t_string *line, unsigned int *i)
 {
 	t_string	*next_cmd;
 	int			inside_quote;
@@ -66,10 +67,10 @@ t_string	*get_next_cmd(t_string *line, size_t *i)
 
 void		exec_line(t_string *line)
 {
-	size_t		i;
-	t_list		*cmds;
-	t_list		*cmd;
-	t_string	*next_cmd;
+	unsigned int	i;
+	t_list			*cmds;
+	t_list			*cmd;
+	t_string		*next_cmd;
 
 	cmds = NULL;
 	i = 0;
