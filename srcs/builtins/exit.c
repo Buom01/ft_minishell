@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/08 18:18:25 by badam            ###   ########.fr       */
+/*   Created: 2020/10/08 18:19:56 by badam             #+#    #+#             */
+/*   Updated: 2020/10/08 18:26:10 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_error	builtin_env(void)
+t_error	builtin_exit(size_t argc, char **argv)
 {
-	t_env	*entry;
-
-	entry = *(env_dictionary());
-	while (entry)
-	{
-		if (ft_printf("%s=%s\n", entry->key, entry->value) < 0)
-			return (ERR_PRINTF);
-		entry = entry->next;
-	}
+	if (argc > 1)
+		return (ERR_TOOMUCH_ARGS);
+	exit(ft_atoi(*argv));
 	return (OK);
 }

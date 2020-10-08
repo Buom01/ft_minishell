@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/08 18:18:25 by badam            ###   ########.fr       */
+/*   Created: 2020/10/08 18:39:37 by badam             #+#    #+#             */
+/*   Updated: 2020/10/08 18:41:49 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-t_error	builtin_env(void)
+# include <stdbool.h>
+
+typedef struct		s_echo_opts
 {
-	t_env	*entry;
+	bool			nonewline;
+}					t_echo_opts;
 
-	entry = *(env_dictionary());
-	while (entry)
-	{
-		if (ft_printf("%s=%s\n", entry->key, entry->value) < 0)
-			return (ERR_PRINTF);
-		entry = entry->next;
-	}
-	return (OK);
-}
+#endif

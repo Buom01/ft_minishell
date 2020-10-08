@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/09/30 00:10:11 by frdescam         ###   ########.fr        #
+#    Updated: 2020/10/08 18:27:33 by badam            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRCS		= \
 	./srcs/builtins/export.c		\
 	./srcs/builtins/unset.c			\
 	./srcs/builtins/env.c			\
+	./srcs/builtins/echo.c			\
+	./srcs/builtins/exit.c			\
 	./srcs/main.c					\
 	./srcs/handle_errors.c			\
 	./srcs/parsing/exec_line.c		\
