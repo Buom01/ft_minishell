@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 18:39:37 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:37:32 by badam            ###   ########.fr       */
+/*   Created: 2020/10/15 23:58:26 by badam             #+#    #+#             */
+/*   Updated: 2020/10/16 00:02:07 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "minishell.h"
 
-# include <stdbool.h>
-
-typedef struct		s_echo_opts
+char	*path_pwd(void)
 {
-	bool			nonewline;
-}					t_echo_opts;
+	char	buff[PATH_MAX];
 
-typedef struct		s_cd_opts
-{
-	char			*home;
-	char			*path;
-	bool			relative;
-	bool			dot;
-}					t_cd_opts;
-
-#endif
+	return (ft_strdup(getcwd(buff, PATH_MAX)));
+}

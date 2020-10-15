@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   exists.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 18:39:37 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:37:32 by badam            ###   ########.fr       */
+/*   Created: 2020/10/15 23:14:27 by badam             #+#    #+#             */
+/*   Updated: 2020/10/15 23:56:45 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "minishell.h"
 
-# include <stdbool.h>
-
-typedef struct		s_echo_opts
+t_error	path_dir_exists(const char *path, bool follow_links, bool *ret)
 {
-	bool			nonewline;
-}					t_echo_opts;
+	struct stat	stat_buff;
 
-typedef struct		s_cd_opts
-{
-	char			*home;
-	char			*path;
-	bool			relative;
-	bool			dot;
-}					t_cd_opts;
-
-#endif
+	if (follow_links)
+	{
+		if (stat(path, &stat_buff) == -1)
+			return (ERR_ERRNO);
+	}
+	else
+		if (lstat(path, &stat_buff) == -1)
+			return (ERR_ERRNO);
+	*ret = S_ISDIR(stat_buff.st_mode)
+			|| (follow_links && S_ISLNK(stat_buff.st_mode));
+	return (OK);
+}

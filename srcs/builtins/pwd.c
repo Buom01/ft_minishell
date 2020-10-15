@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 18:39:37 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:37:32 by badam            ###   ########.fr       */
+/*   Created: 2020/10/09 18:32:12 by badam             #+#    #+#             */
+/*   Updated: 2020/10/09 21:13:11 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "minishell.h"
 
-# include <stdbool.h>
-
-typedef struct		s_echo_opts
+t_error	builtin_pwd(size_t argc, char **argv)
 {
-	bool			nonewline;
-}					t_echo_opts;
+	char	*cwd;
 
-typedef struct		s_cd_opts
-{
-	char			*home;
-	char			*path;
-	bool			relative;
-	bool			dot;
-}					t_cd_opts;
-
-#endif
+	(void)argv;
+	if (argc > 0)
+		return (ERR_TOOMUCH_ARGS);
+	if (!(cwd = getcwd(NULL, 0)))
+		return (ERR_MALLOC);
+	if (ft_printf("%s\n", cwd) < 0)
+		return (ERR_PRINTF);
+	free(cwd);
+	return (OK);
+}

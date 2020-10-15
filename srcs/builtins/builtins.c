@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:30:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/08 18:50:51 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/09 21:10:46 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,16 @@ t_error		builtins(t_builtin builtin, size_t argc, char **argv)
 {
 	if (builtin == BI_ECHO)
 		return (builtin_echo(argc, argv));
+	else if (builtin == BI_CD)
+		return (builtin_cd(argc, argv));
+	else if (builtin == BI_PWD)
+		return (builtin_pwd(argc, argv));
 	else if (builtin == BI_EXPORT)
 		return (builtin_export(argc, argv));
 	else if (builtin == BI_UNSET)
 		return (builtin_unset(argc, argv));
 	else if (builtin == BI_ENV)
-		return (builtin_env());
+		return (builtin_env(argc, argv));
 	else if (builtin == BI_EXIT)
 		return (builtin_exit(argc, argv));
 	else

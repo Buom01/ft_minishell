@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   relativize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 18:39:37 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:37:32 by badam            ###   ########.fr       */
+/*   Created: 2020/10/15 22:14:26 by badam             #+#    #+#             */
+/*   Updated: 2020/10/15 22:34:55 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "minishell.h"
 
-# include <stdbool.h>
-
-typedef struct		s_echo_opts
+t_error	path_relativize(char **path, char *pwd)
 {
-	bool			nonewline;
-}					t_echo_opts;
+	bool	trail;
+	char	*rel;
 
-typedef struct		s_cd_opts
-{
-	char			*home;
-	char			*path;
-	bool			relative;
-	bool			dot;
-}					t_cd_opts;
-
-#endif
+	trail = ((pwd)[ft_strlen(pwd) - 1] == '/');
+	if (ft_strnstr(*path, pwd, ft_strlen(*path)) == *path)
+	{
+		if (!(rel = ft_strdup(*path + ft_strlen(pwd) + !trail)))
+			return (ERR_MALLOC);
+		free(*path);
+		*path = rel;
+	}
+	return (OK);
+}

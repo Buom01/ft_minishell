@@ -6,16 +6,19 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/08 18:18:25 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/09 21:13:04 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_error	builtin_env(void)
+t_error	builtin_env(size_t argc, char **argv)
 {
 	t_env	*entry;
 
+	(void)argv;
+	if (argc > 0)
+		return (ERR_TOOMUCH_ARGS);
 	entry = *(env_dictionary());
 	while (entry)
 	{
