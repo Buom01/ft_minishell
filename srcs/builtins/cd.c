@@ -6,14 +6,12 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2020/10/16 00:02:28 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/19 23:21:47 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
-
-// Should test all ft_strcpy and others
 
 static t_error	step_five_test_cdpath(char **cdpath_array,
 		t_cd_opts *options, char **curpath)
@@ -35,7 +33,7 @@ static t_error	step_five_test_cdpath(char **cdpath_array,
 		if (exists)
 		{
 			*curpath = cdpath;
-			break;
+			break ;
 		}
 		free(cdpath);
 		cdpath_array++;
@@ -86,19 +84,21 @@ static t_error	exec(t_cd_opts *options, char **curpath, char *pwd)
 {
 	t_error	err;
 
-	if (!options->relative || options->dot)  // step 3 4
+	*curpath = NULL;
+	if (!options->relative || options->dot)
 	{
-		if (!(*curpath = ft_strdup(options->path))) // 6
+		if (!(*curpath = ft_strdup(options->path)))
 			return (ERR_MALLOC);
 	}
-	else if ((err = step_five(options, curpath)) != OK) // 5
+	else if ((err = step_five(options, curpath)) != OK
+			|| (err = step_seven(curpath, pwd)) != OK
+			|| (err = path_canonize(curpath)) != OK
+			|| (err = path_relativize(curpath, pwd)) != OK)
+	{
+		if (curpath)
+			free(curpath);
 		return (err);
-	if ((err = step_seven(curpath, pwd)) != OK) // 7
-		return (err);
-	if ((err = path_canonize(curpath)) != OK) // 8
-		return (err);
-	if ((err = path_relativize(curpath, pwd)) != OK) // 9
-		return (err);
+	}
 	return (OK);
 }
 
@@ -112,27 +112,20 @@ t_error			builtin_cd(size_t argc, char **argv)
 	if (argc > 1)
 		return (ERR_TOOMUCH_ARGS);
 	options.home = env_get_value("HOME");
-	if (argv == 0)
-	{
-		if (!options.home)
-			return (OK); // step 1
-		else
-			options.path = options.home; // step 2
-	}
-	else
-		options.path = *argv;
+	if (!argv && !options.home)
+		return (OK);
+	options.path = !argv ? options.home : *argv;
 	options.relative = (*options.path != '/');
 	options.dot = (*options.path == '.');
-	pwd = path_pwd(); // does it have always trailing slash ?
-	// save PWD to OLDPWD
-	if ((err = exec(&options, &curpath, pwd)) != OK)
-	{
-		free(curpath);
+	if ((err = path_pwd(&pwd)) != OK)
 		return (err);
-	}
+	if ((err = exec(&options, &curpath, pwd)) != OK)
+		return (err);
 	if (chdir(curpath) == -1)
 		return (ERR_ERRNO);
-	// set PWD env to the absolute path
+	env_set("OLDPWD", pwd);
+	env_set("PWD", curpath);
 	free(pwd);
+	free(curpath);
 	return (OK);
 }
