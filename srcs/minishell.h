@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/09/29 23:50:01 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/20 16:50:51 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum		e_error
 	ERR_UNIMPLENTED,
 	ERR_PRINTF,
 	ERR_QUOTE,
+	ERR_PIPE,
 	ERR_EMPTY_COMMAND
 }					t_error;
 

@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 00:09:21 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/03 00:14:51 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/20 14:44:15 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		exec_line(t_string *line)
 	cmd = cmds;
 	while (cmd)
 	{
-		exec_cmd(((t_string *)cmd->content));
+		exec_pipes(((t_string *)cmd->content));
 		cmd = cmd->next;
 	}
 	ft_lstclear(&cmds, &ft_string_destroy_wrapper);
