@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/21 16:00:31 by frdescam          #+#    #+#              #
-#    Updated: 2020/09/27 15:09:56 by frdescam         ###   ########.fr        #
+#    Updated: 2020/10/23 10:27:17 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ ft_toupper.c ft_calloc.c ft_memchr.c ft_putstr_fd.c ft_strcmp.c ft_strmapi.c \
 ft_isalnum.c ft_memcmp.c ft_split.c ft_strncmp.c ft_isalpha.c ft_memcpy.c \
 ft_strchr.c ft_strnstr.c ft_isascii.c ft_memmove.c ft_strdup.c ft_strrchr.c \
 ft_strndup.c ft_string_new.c ft_string_from.c ft_string_with_capacity.c \
-ft_string_push.c ft_string_destroy.c ft_string_sub.c\
+ft_string_push.c ft_string_destroy.c ft_string_sub.c ft_string_remove.c \
 \
 printf/ft_printf.c printf/parsing.c printf/get_args.c printf/retrieve_args.c \
 printf/convert.c printf/itoa_base.c printf/convert_func1.c \

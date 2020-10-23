@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 09:42:53 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/27 20:02:50 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/23 10:26:46 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_string			*ft_string_with_capacity(size_t capacity);
 t_string			*ft_string_push(t_string *string, char *to_append);
 t_string			*ft_string_push_char(t_string *string, char to_append);
 t_string			*ft_string_sub(t_string *string, size_t start, size_t len);
+t_string			*ft_string_remove(t_string *string, int start, int end);
 void				ft_string_destroy(t_string *string);
 char				*ft_strjoin(char const *s1, char const *s2);
 size_t				ft_strlcat(char *dest, const char *src, size_t dstsize);
