@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/20 16:50:51 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/24 14:24:00 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@ typedef enum		e_error
 	ERR_EMPTY_COMMAND
 }					t_error;
 
-typedef struct		s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
-
 typedef enum		e_builtin
 {
 	BI_NONE = -1,
@@ -51,6 +44,13 @@ typedef enum		e_builtin
 	BI_EXIT,
 	BUILTINS_COUNT
 }					t_builtin;
+
+typedef struct		s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
 
 bool				env_isvalid_equality(const char *equality);
 char				*env_parse_key(const char *equality);
