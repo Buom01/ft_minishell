@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   relativize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:13:04 by badam            ###   ########.fr       */
+/*   Created: 2020/10/15 22:14:26 by badam             #+#    #+#             */
+/*   Updated: 2020/10/15 22:34:55 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_error	builtin_env(size_t argc, char **argv)
+t_error	path_relativize(char **path, char *pwd)
 {
-	t_env	*entry;
+	bool	trail;
+	char	*rel;
 
-	(void)argv;
-	if (argc > 0)
-		return (ERR_TOOMUCH_ARGS);
-	entry = *(env_dictionary());
-	while (entry)
+	trail = ((pwd)[ft_strlen(pwd) - 1] == '/');
+	if (ft_strnstr(*path, pwd, ft_strlen(*path)) == *path)
 	{
-		if (ft_printf("%s=%s\n", entry->key, entry->value) < 0)
-			return (ERR_PRINTF);
-		entry = entry->next;
+		if (!(rel = ft_strdup(*path + ft_strlen(pwd) + !trail)))
+			return (ERR_MALLOC);
+		free(*path);
+		*path = rel;
 	}
 	return (OK);
 }

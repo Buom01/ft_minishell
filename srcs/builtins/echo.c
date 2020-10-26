@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:13:04 by badam            ###   ########.fr       */
+/*   Created: 2020/10/08 18:27:41 by badam             #+#    #+#             */
+/*   Updated: 2020/10/08 18:52:04 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "builtins.h"
 
-t_error	builtin_env(size_t argc, char **argv)
+t_error	builtin_echo(size_t argc, char **argv)
 {
-	t_env	*entry;
+	t_echo_opts	options;
 
-	(void)argv;
-	if (argc > 0)
-		return (ERR_TOOMUCH_ARGS);
-	entry = *(env_dictionary());
-	while (entry)
+	ft_bzero(&options, sizeof(options));
+	while (argc)
 	{
-		if (ft_printf("%s=%s\n", entry->key, entry->value) < 0)
-			return (ERR_PRINTF);
-		entry = entry->next;
+		if (!ft_strcmp(*argv, "-n"))
+			options.nonewline = true;
+		else
+			break ;
+		argv++;
+		argc--;
 	}
+	while (argc)
+	{
+		if (ft_printf(*argv) < 0)
+			return (ERR_PRINTF);
+		argv++;
+		argc--;
+	}
+	if (!options.nonewline)
+		if (ft_printf("\n") < 0)
+			return (ERR_PRINTF);
 	return (OK);
 }

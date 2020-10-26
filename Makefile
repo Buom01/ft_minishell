@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/10/24 13:46:27 by frdescam         ###   ########.fr        #
+#    Updated: 2020/10/26 12:41:20 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,20 @@ SRCS		= \
 	./srcs/utils/environ/setters.c	\
 	./srcs/utils/environ/environ.c	\
 	./srcs/utils/environ/getters.c	\
+	./srcs/utils/paths/utils.c		\
+	./srcs/utils/paths/canonize.c	\
+	./srcs/utils/paths/relativize.c	\
+	./srcs/utils/paths/exists.c		\
+	./srcs/utils/paths/join.c		\
 	./srcs/utils/whereis.c			\
 	./srcs/builtins/builtins.c		\
 	./srcs/builtins/export.c		\
 	./srcs/builtins/unset.c			\
 	./srcs/builtins/env.c			\
+	./srcs/builtins/pwd.c			\
+	./srcs/builtins/cd.c			\
+	./srcs/builtins/echo.c			\
+	./srcs/builtins/exit.c			\
 	./srcs/main.c					\
 	./srcs/handle_errors.c			\
 	./srcs/parsing/exec_line.c		\

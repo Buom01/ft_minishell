@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exists.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:13:04 by badam            ###   ########.fr       */
+/*   Created: 2020/10/15 23:14:27 by badam             #+#    #+#             */
+/*   Updated: 2020/10/19 23:19:41 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_error	builtin_env(size_t argc, char **argv)
+t_error	path_dir_exists(const char *path, bool follow_links, bool *ret)
 {
-	t_env	*entry;
+	struct stat	stat_buff;
 
-	(void)argv;
-	if (argc > 0)
-		return (ERR_TOOMUCH_ARGS);
-	entry = *(env_dictionary());
-	while (entry)
+	if (follow_links)
 	{
-		if (ft_printf("%s=%s\n", entry->key, entry->value) < 0)
-			return (ERR_PRINTF);
-		entry = entry->next;
+		if (stat(path, &stat_buff) == -1)
+			return (ERR_ERRNO);
 	}
+	else if (lstat(path, &stat_buff) == -1)
+		return (ERR_ERRNO);
+	*ret = S_ISDIR(stat_buff.st_mode)
+			|| (follow_links && S_ISLNK(stat_buff.st_mode));
 	return (OK);
 }

@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/09 21:13:04 by badam            ###   ########.fr       */
+/*   Created: 2020/10/08 18:39:37 by badam             #+#    #+#             */
+/*   Updated: 2020/10/09 21:37:32 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-t_error	builtin_env(size_t argc, char **argv)
+# include <stdbool.h>
+
+typedef struct		s_echo_opts
 {
-	t_env	*entry;
+	bool			nonewline;
+}					t_echo_opts;
 
-	(void)argv;
-	if (argc > 0)
-		return (ERR_TOOMUCH_ARGS);
-	entry = *(env_dictionary());
-	while (entry)
-	{
-		if (ft_printf("%s=%s\n", entry->key, entry->value) < 0)
-			return (ERR_PRINTF);
-		entry = entry->next;
-	}
-	return (OK);
-}
+typedef struct		s_cd_opts
+{
+	char			*home;
+	char			*path;
+	bool			relative;
+	bool			dot;
+}					t_cd_opts;
+
+#endif

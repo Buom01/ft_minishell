@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/24 14:24:00 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:42:49 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <sys/stat.h>
+# include <limits.h>
 # include "libft.h"
 
 typedef enum		e_error
@@ -29,7 +30,10 @@ typedef enum		e_error
 	ERR_PRINTF,
 	ERR_QUOTE,
 	ERR_PIPE,
-	ERR_EMPTY_COMMAND
+	ERR_EMPTY_COMMAND,
+	ERR_TOOMUCH_ARGS,
+	ERR_ROOTPARENT,
+	ERR_ERRNO
 }					t_error;
 
 typedef enum		e_builtin
@@ -64,11 +68,23 @@ void				env_unset(const char *key);
 t_env				*env_get(const char *key);
 char				*env_get_value(const char *key);
 
+t_error				path_pwd(char **str);
+t_error				path_trailslash(char **str);
+t_error				path_dir_exists(const char *path, bool follow_links,
+							bool *ret);
+t_error				path_canonize(char **str);
+t_error				path_relativize(char **path, char *pwd);
+char				*path_join(char *begin, char *end);
+
 t_builtin			get_builtin(char *command);
 t_error				builtins(t_builtin builtin, size_t argc, char **argv);
 t_error				builtin_export(size_t argc, char **argv);
 t_error				builtin_unset(size_t argc, char **argv);
 t_error				builtin_env(size_t argc, char **argv);
+t_error				builtin_pwd(size_t argc, char **argv);
+t_error				builtin_cd(size_t argc, char **argv);
+t_error				builtin_echo(size_t argc, char **argv);
+t_error				builtin_exit(size_t argc, char **argv);
 
 char				*whereis(const char *filepath);
 void				panic(t_error err_code);
