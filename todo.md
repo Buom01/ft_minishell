@@ -9,5 +9,6 @@
 ## badam:
 
 - [FAIT] [À REVOIR] Chercher ~~et lancer~~ le bon executable (basé sur une variable d’environnement PATH ou en utilisant un path absolu), comme dans bash
-- [FAIT] Gestion basique des variables d'environements (initialisation, obtention, réinitialisation)
-- [UNTESTED] Builtins: export, unset, env, exit, echo, pwd, cd
+- [TESTED] Gestion basique des variables d'environements (initialisation, obtention, réinitialisation)
+- [TESTED] Builtins: export, unset, env, echo, pwd, cd
+- [À REVOIR] Builtins: exit, cd
