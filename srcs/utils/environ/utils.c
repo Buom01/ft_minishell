@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:14:06 by badam             #+#    #+#             */
-/*   Updated: 2020/09/22 17:58:23 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/28 23:18:00 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,9 @@ char	*env_parse_value(const char *equality)
 
 	delimiter = ft_strchr(equality, '=');
 	return (ft_strdup(delimiter + 1));
+}
+
+bool	env_isinternal(const char *key)
+{
+	return (!ft_strcmp(key, "?"));
 }

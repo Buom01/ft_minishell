@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 22:59:34 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/28 23:18:20 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct		s_env
 }					t_env;
 
 bool				env_isvalid_equality(const char *equality);
+bool				env_isinternal(const char *key);
 char				*env_parse_key(const char *equality);
 char				*env_parse_value(const char *equality);
 t_env				**env_dictionary(void);
