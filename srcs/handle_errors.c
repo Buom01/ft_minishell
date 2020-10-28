@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 13:47:33 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/26 12:41:48 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/28 23:00:51 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,8 @@ void	print_warning(t_error err_code)
 		ft_printf("Syntax error : Empty command\n");
 	else if (err_code == ERR_SYNTAX)
 		ft_printf("Syntax error\n");
+	else if (err_code == ERR_ERRNO)
+		ft_printf("\n"); // Print errno
+	else
+		ft_printf("Unknown error\n");
 }

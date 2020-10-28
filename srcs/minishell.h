@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 22:09:31 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/28 22:59:34 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char				*path_join(char *begin, char *end);
 
 t_builtin			get_builtin(char *command);
 t_error				builtins(t_builtin builtin, size_t argc, char **argv);
-t_error				exec_builtin(char *command, size_t argc, char **argv);
+t_error				exec_builtin(size_t argc, char **argv);
 t_error				builtin_export(size_t argc, char **argv);
 t_error				builtin_unset(size_t argc, char **argv);
 t_error				builtin_env(size_t argc, char **argv);

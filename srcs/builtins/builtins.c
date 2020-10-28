@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:30:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 22:08:35 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/28 23:05:44 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,23 @@ t_error		builtins(t_builtin builtin, size_t argc, char **argv)
 		return (ERR_UNIMPLENTED);
 }
 
-t_error		exec_builtin(char *command, size_t argc, char **argv)
+t_error		exec_builtin(size_t argc, char **argv)
 {
-	return (builtins(get_builtin(command), argc, argv));
+	char		*cmd;
+	t_builtin	bi;
+	int			ret;
+
+	cmd = *argv;
+	bi = get_builtin(cmd);
+	argv++;
+	argc--;
+	if (bi == BI_NONE)
+		return (ERR);
+	if ((ret = builtins(bi, argc, argv)) != OK)
+	{
+		ft_printf("%s : ", cmd);
+		print_warning(ret);
+	}
+	env_set("?", ft_itoa(ret));
+	return (ret);
 }
