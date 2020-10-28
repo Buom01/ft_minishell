@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 14:44:47 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/20 17:34:15 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/28 12:03:59 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "libft.h"
 #include "minishell.h"
 #include "parsing.h"
-
-static void	ft_string_destroy_wrapper(void *content)
-{
-	ft_string_destroy(content);
-}
 
 void		copy_arr_val(int arr1[2], int arr2[2])
 {
@@ -71,6 +66,24 @@ t_list		*get_pipes_cmds(t_string *cmd)
 	return (pipes_cmds);
 }
 
+void		exec_pipe_cmd(t_list *pipe_cmd, t_list *pipes_cmds,
+							int pipefd[2], int last_pipefd[2])
+{
+	if (pipe_cmd == pipes_cmds && !pipe_cmd->next)
+		exec_redir(pipe_cmd->content, 0, 1);
+	else if (pipe_cmd == pipes_cmds)
+		exec_redir(pipe_cmd->content, 0, pipefd[1]);
+	else if (!pipe_cmd->next)
+		exec_redir(pipe_cmd->content, pipefd[0], 1);
+	else
+	{
+		copy_arr_val(last_pipefd, pipefd);
+		if (pipe(pipefd) == -1)
+			panic(ERR_PIPE);
+		exec_redir(pipe_cmd->content, last_pipefd[0], pipefd[1]);
+	}
+}
+
 void		exec_pipes(t_string *cmd)
 {
 	t_list	*pipes_cmds;
@@ -84,19 +97,7 @@ void		exec_pipes(t_string *cmd)
 		panic(ERR_PIPE);
 	while (pipe_cmd)
 	{
-		if (pipe_cmd == pipes_cmds && !pipe_cmd->next)
-			exec_redir(pipe_cmd->content, 0, 1);
-		else if (pipe_cmd == pipes_cmds)
-			exec_redir(pipe_cmd->content, 0, pipefd[1]);
-		else if (!pipe_cmd->next)
-			exec_redir(pipe_cmd->content, pipefd[0], 1);
-		else
-		{
-			copy_arr_val(last_pipefd, pipefd);
-			if (pipe(pipefd) == -1)
-				panic(ERR_PIPE);
-			exec_redir(pipe_cmd->content, last_pipefd[0], pipefd[1]);
-		}
+		exec_pipe_cmd(pipe_cmd, pipes_cmds, pipefd, last_pipefd);
 		pipe_cmd = pipe_cmd->next;
 	}
 	ft_lstclear(&pipes_cmds, &ft_string_destroy_wrapper);

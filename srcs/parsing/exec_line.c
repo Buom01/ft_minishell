@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 00:09:21 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/20 14:44:15 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/28 11:30:18 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include "parsing.h"
 
-static void	ft_string_destroy_wrapper(void *content)
+void		ft_string_destroy_wrapper(void *content)
 {
 	ft_string_destroy(content);
 }
