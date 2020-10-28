@@ -1,4 +1,7 @@
-*~
-*.swp
-*.swo
-*.vim
+**/*~
+**/*.swp
+**/*.swo
+**/*.vim
+**/*.o
+minishell
+libft/libft.a
