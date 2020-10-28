@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/26 12:13:47 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/28 11:21:06 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,29 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+size_t		get_argc(char **argv)
+{
+	size_t	argc;
+
+	argc = 0;
+	while (argv[argc])
+		argc++;
+	return (argc);
+}
+
 void		exec_action(t_string *cmd, int fd_in, int fd_out)
 {
 //	pid_t		pid;
-	char		**splitted;
+	char		**argv;
 	t_builtin	bi;
 //	int			status;
 
-	ft_printf("cmd : %s, fd_in : %d, fd_out : %d\n", cmd->str, fd_in, fd_out);
-	if (!(splitted = ft_split(cmd->str, "\f\t \n\r\v")))
+	(void)fd_in;
+	(void)fd_out;
+	if (!(argv = ft_split(cmd->str, "\f\t \n\r\v")))
 		panic(ERR_MALLOC);
-	bi = get_builtin(splitted[0]);
-	builtins(bi, ft_strlen((char *)splitted), splitted);
+	bi = get_builtin(argv[0]);
+	builtins(bi, get_argc(argv), argv);
 //	pid = fork();
 //	if (pid == 0)
 //	{
@@ -38,5 +49,5 @@ void		exec_action(t_string *cmd, int fd_in, int fd_out)
 //	{
 //		waitpid(pid, &status, 0);
 //	}
-	ft_clear_splitted(splitted);
+	ft_clear_splitted(argv);
 }
