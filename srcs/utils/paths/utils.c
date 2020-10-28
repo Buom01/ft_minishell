@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 23:58:26 by badam             #+#    #+#             */
-/*   Updated: 2020/10/19 23:18:50 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/28 23:26:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_error	path_trailslash(char **str)
 	ft_memcpy(str2, *str, str_len);
 	str2[str_len] = '/';
 	str2[str_len + 1] = '\0';
+	free(*str);
 	*str = str2;
-	free(str);
 	return (OK);
 }
 

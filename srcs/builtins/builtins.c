@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 14:30:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 23:05:44 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/28 23:26:54 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_error		exec_builtin(size_t argc, char **argv)
 		return (ERR);
 	if ((ret = builtins(bi, argc, argv)) != OK)
 	{
-		ft_printf("%s : ", cmd);
+		ft_printf("Error: %s: ", cmd);
 		print_warning(ret);
 	}
 	env_set("?", ft_itoa(ret));
