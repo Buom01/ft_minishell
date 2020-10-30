@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/28 23:05:30 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/30 13:55:42 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,34 @@ size_t		get_argc(char **argv)
 	return (argc);
 }
 
+void		exec_external_program(char **argv)
+{
+	pid_t		pid;
+	int			status;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(argv[0], argv, argv);
+		exit(0);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+	}
+}
+
 void		exec_action(t_string *cmd, int fd_in, int fd_out)
 {
-//	pid_t		pid;
+	size_t		argc;
 	char		**argv;
-//	int			status;
 
 	(void)fd_in;
 	(void)fd_out;
 	if (!(argv = ft_split(cmd->str, "\f\t \n\r\v")))
 		panic(ERR_MALLOC);
-	if (exec_builtin(get_argc(argv), argv) >= OK)
-		return ;
-//	pid = fork();
-//	if (pid == 0)
-//	{
-//		bi = get_builtin(cmd->str);
-//		builtins(bi, ft_strlen((char *)splitted), splitted);
-//	}
-//	else
-//	{
-//		waitpid(pid, &status, 0);
-//	}
+	argc = get_argc(argv);
+	if (exec_builtin(argc, argv) != OK)
+		exec_external_program(argv);
 	ft_clear_splitted(argv);
 }
