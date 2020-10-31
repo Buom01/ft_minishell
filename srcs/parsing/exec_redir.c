@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:51:12 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 15:05:01 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 17:49:00 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_string	*extract_redir(t_string *cmd, unsigned int i)
 	return (redir);
 }
 
-t_string	*get_next_redir(t_string *cmd, int *error)
+t_string	*get_next_redir(t_cmd *cmd, int *error)
 {
 	t_string		*next_redir;
 	int				inside_quote;
@@ -65,42 +65,41 @@ t_string	*get_next_redir(t_string *cmd, int *error)
 	inside_dquote = 0;
 	inside_quote = 0;
 	i = 0;
-	while (i < cmd->len)
+	while (i < cmd->string->len)
 	{
-		if (cmd->str[i] == '"' && !inside_quote)
+		if (cmd->string->str[i] == '"' && !inside_quote)
 			inside_dquote = !inside_dquote;
-		else if (cmd->str[i] == '\'' && !inside_dquote)
+		else if (cmd->string->str[i] == '\'' && !inside_dquote)
 			inside_quote = !inside_quote;
-		else if ((cmd->str[i] == '<' || cmd->str[i] == '>') &&
+		else if ((cmd->string->str[i] == '<' || cmd->string->str[i] == '>') &&
 				!inside_quote && !inside_dquote)
 			break ;
 		i++;
 	}
-	if (i == cmd->len)
+	if (i == cmd->string->len)
 		return (NULL);
-	if (!(next_redir = extract_redir(cmd, i)))
+	if (!(next_redir = extract_redir(cmd->string, i)))
 		*error = 1;
 	return (next_redir);
 }
 
-void		handle_redir(t_string *redir, int *fd_in, int *fd_out)
+void		handle_redir(t_cmd *cmd, t_string *redir)
 {
-	(void)fd_in;
 	if (!ft_strncmp(">>", redir->str, 2))
 	{
-		*fd_out = open(&redir->str[3], O_APPEND | O_CREAT);
+		cmd->fd_out = open(&redir->str[3], O_APPEND | O_CREAT);
 		ft_printf("double redir out\n");
 	}
 	else if (!ft_strncmp(">", redir->str, 1))
 	{
-		*fd_out = open(&redir->str[2], O_CREAT);
+		cmd->fd_out = open(&redir->str[2], O_CREAT);
 		ft_printf("simple redir out\n");
 	}
 	else if (!ft_strncmp("<", redir->str, 1))
 		ft_printf("simple redir in\n");
 }
 
-void		exec_redir(t_string *cmd, int fd_in, int fd_out, char **env)
+void		exec_redir(t_cmd *cmd, char **env)
 {
 	t_string	*next_redir;
 	int			error;
@@ -110,7 +109,7 @@ void		exec_redir(t_string *cmd, int fd_in, int fd_out, char **env)
 	{
 		if (error)
 			return ;
-		handle_redir(next_redir, &fd_in, &fd_out);
+		handle_redir(cmd, next_redir);
 	}
-	exec_action(cmd, fd_in, fd_out, env);
+	exec_action(cmd, env);
 }

@@ -6,11 +6,12 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 15:11:08 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 18:09:22 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 #include "libft.h"
 #include <unistd.h>
 #include <sys/types.h>
@@ -26,15 +27,14 @@ size_t		get_argc(char **argv)
 	return (argc);
 }
 
-void		exec_external_program(char **argv, char **env)
+void		exec_external_program(char **argv, char **env, t_cmd *cmd)
 {
-	pid_t		pid;
 	int			status;
 	char		*filepath;
 
 	env_init(env);
-	pid = fork();
-	if (pid == 0)
+	cmd->pid = fork();
+	if (cmd->pid == 0)
 	{
 		if (!(filepath = whereis(argv[0])))
 			print_warning(ERR_UNKNOWN_CMD);
@@ -44,21 +44,19 @@ void		exec_external_program(char **argv, char **env)
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		waitpid(cmd->pid, &status, 0);
 	}
 }
 
-void		exec_action(t_string *cmd, int fd_in, int fd_out, char **env)
+void		exec_action(t_cmd *cmd, char **env)
 {
 	size_t		argc;
 	char		**argv;
 
-	(void)fd_in;
-	(void)fd_out;
-	if (!(argv = ft_split(cmd->str, "\f\t \n\r\v")))
+	if (!(argv = ft_split(cmd->string->str, "\f\t \n\r\v")))
 		panic(ERR_MALLOC);
 	argc = get_argc(argv);
 	if (exec_builtin(argc, argv) != OK)
-		exec_external_program(argv, env);
+		exec_external_program(argv, env, cmd);
 	ft_clear_splitted(argv);
 }

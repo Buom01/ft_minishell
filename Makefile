@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/10/26 12:41:20 by frdescam         ###   ########.fr        #
+#    Updated: 2020/10/31 18:48:40 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,29 +18,30 @@ SHELL		= /bin/sh
 NAME		= minishell
 
 SRCS		= \
-	./srcs/utils/environ/utils.c	\
-	./srcs/utils/environ/setters.c	\
-	./srcs/utils/environ/environ.c	\
-	./srcs/utils/environ/getters.c	\
-	./srcs/utils/paths/utils.c		\
-	./srcs/utils/paths/canonize.c	\
-	./srcs/utils/paths/relativize.c	\
-	./srcs/utils/paths/exists.c		\
-	./srcs/utils/paths/join.c		\
-	./srcs/utils/whereis.c			\
-	./srcs/builtins/builtins.c		\
-	./srcs/builtins/export.c		\
-	./srcs/builtins/unset.c			\
-	./srcs/builtins/env.c			\
-	./srcs/builtins/pwd.c			\
-	./srcs/builtins/cd.c			\
-	./srcs/builtins/echo.c			\
-	./srcs/builtins/exit.c			\
-	./srcs/main.c					\
-	./srcs/handle_errors.c			\
-	./srcs/parsing/exec_line.c		\
-	./srcs/parsing/exec_pipes.c		\
-	./srcs/parsing/exec_redir.c		\
+	./srcs/utils/environ/utils.c		\
+	./srcs/utils/environ/setters.c		\
+	./srcs/utils/environ/environ.c		\
+	./srcs/utils/environ/getters.c		\
+	./srcs/utils/paths/utils.c			\
+	./srcs/utils/paths/canonize.c		\
+	./srcs/utils/paths/relativize.c		\
+	./srcs/utils/paths/exists.c			\
+	./srcs/utils/paths/join.c			\
+	./srcs/utils/whereis.c				\
+	./srcs/builtins/builtins.c			\
+	./srcs/builtins/export.c			\
+	./srcs/builtins/unset.c				\
+	./srcs/builtins/env.c				\
+	./srcs/builtins/pwd.c				\
+	./srcs/builtins/cd.c				\
+	./srcs/builtins/echo.c				\
+	./srcs/builtins/exit.c				\
+	./srcs/main.c						\
+	./srcs/handle_errors.c				\
+	./srcs/parsing/exec_line.c			\
+	./srcs/parsing/exec_pipes.c			\
+	./srcs/parsing/exec_pipes_utils.c	\
+	./srcs/parsing/exec_redir.c			\
 	./srcs/parsing/exec_action.c
 
 OBJS		= ${SRCS:.c=.o}
