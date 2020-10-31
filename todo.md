@@ -4,7 +4,7 @@
 
 - [FAIT] Afficher un prompt en l’attente d’une nouvelle commande
 - [FAIT] Parsing
-- Executer le bon executable
+- [FAIT] Executer le bon executable
 - Gérer correctement les fd / pipes / redirections
 
 
