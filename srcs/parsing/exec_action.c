@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/30 13:55:42 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 15:11:08 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,20 @@ size_t		get_argc(char **argv)
 	return (argc);
 }
 
-void		exec_external_program(char **argv)
+void		exec_external_program(char **argv, char **env)
 {
 	pid_t		pid;
 	int			status;
+	char		*filepath;
 
+	env_init(env);
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(argv[0], argv, argv);
+		if (!(filepath = whereis(argv[0])))
+			print_warning(ERR_UNKNOWN_CMD);
+		else
+			execve(filepath, argv, env);
 		exit(0);
 	}
 	else
@@ -43,7 +48,7 @@ void		exec_external_program(char **argv)
 	}
 }
 
-void		exec_action(t_string *cmd, int fd_in, int fd_out)
+void		exec_action(t_string *cmd, int fd_in, int fd_out, char **env)
 {
 	size_t		argc;
 	char		**argv;
@@ -54,6 +59,6 @@ void		exec_action(t_string *cmd, int fd_in, int fd_out)
 		panic(ERR_MALLOC);
 	argc = get_argc(argv);
 	if (exec_builtin(argc, argv) != OK)
-		exec_external_program(argv);
+		exec_external_program(argv, env);
 	ft_clear_splitted(argv);
 }

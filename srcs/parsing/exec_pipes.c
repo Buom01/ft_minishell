@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 14:44:47 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/28 12:03:59 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 14:55:54 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,24 @@ t_list		*get_pipes_cmds(t_string *cmd)
 }
 
 void		exec_pipe_cmd(t_list *pipe_cmd, t_list *pipes_cmds,
-							int pipefd[2], int last_pipefd[2])
+							int pipefd[2], int last_pipefd[2], char **env)
 {
 	if (pipe_cmd == pipes_cmds && !pipe_cmd->next)
-		exec_redir(pipe_cmd->content, 0, 1);
+		exec_redir(pipe_cmd->content, 0, 1, env);
 	else if (pipe_cmd == pipes_cmds)
-		exec_redir(pipe_cmd->content, 0, pipefd[1]);
+		exec_redir(pipe_cmd->content, 0, pipefd[1], env);
 	else if (!pipe_cmd->next)
-		exec_redir(pipe_cmd->content, pipefd[0], 1);
+		exec_redir(pipe_cmd->content, pipefd[0], 1, env);
 	else
 	{
 		copy_arr_val(last_pipefd, pipefd);
 		if (pipe(pipefd) == -1)
 			panic(ERR_PIPE);
-		exec_redir(pipe_cmd->content, last_pipefd[0], pipefd[1]);
+		exec_redir(pipe_cmd->content, last_pipefd[0], pipefd[1], env);
 	}
 }
 
-void		exec_pipes(t_string *cmd)
+void		exec_pipes(t_string *cmd, char **env)
 {
 	t_list	*pipes_cmds;
 	t_list	*pipe_cmd;
@@ -97,7 +97,7 @@ void		exec_pipes(t_string *cmd)
 		panic(ERR_PIPE);
 	while (pipe_cmd)
 	{
-		exec_pipe_cmd(pipe_cmd, pipes_cmds, pipefd, last_pipefd);
+		exec_pipe_cmd(pipe_cmd, pipes_cmds, pipefd, last_pipefd, env);
 		pipe_cmd = pipe_cmd->next;
 	}
 	ft_lstclear(&pipes_cmds, &ft_string_destroy_wrapper);
