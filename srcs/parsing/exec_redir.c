@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 16:51:12 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 17:49:00 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 20:00:41 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,23 @@ void		handle_redir(t_cmd *cmd, t_string *redir)
 {
 	if (!ft_strncmp(">>", redir->str, 2))
 	{
-		cmd->fd_out = open(&redir->str[3], O_APPEND | O_CREAT);
-		ft_printf("double redir out\n");
+		if (cmd->fd_out > 2)
+			close(cmd->fd_out);
+		cmd->fd_out = open(&redir->str[2], O_APPEND | O_CREAT, 00644);
 	}
 	else if (!ft_strncmp(">", redir->str, 1))
 	{
-		cmd->fd_out = open(&redir->str[2], O_CREAT);
-		ft_printf("simple redir out\n");
+		if (cmd->fd_out > 2)
+			close(cmd->fd_out);
+		cmd->fd_out = open(&redir->str[1], O_CREAT, 00644);
 	}
 	else if (!ft_strncmp("<", redir->str, 1))
-		ft_printf("simple redir in\n");
+	{
+		if (cmd->fd_in > 2)
+			close(cmd->fd_in);
+		if ((cmd->fd_in = open(&redir->str[1], 0)) == -1)
+			print_warning(ERR_OPEN);
+	}
 }
 
 void		exec_redir(t_cmd *cmd, char **env)

@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 13:47:33 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 15:14:22 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 19:57:22 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	print_warning(t_error err_code)
 		ft_printf("\n"); // Print errno
 	else if (err_code == ERR_UNKNOWN_CMD)
 		ft_printf("Error : Unknown command\n");
+	else if (err_code == ERR_OPEN)
+		ft_printf("Error : Cannot open file\n");
 	else
 		ft_printf("Unknown error\n");
 }
