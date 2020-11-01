@@ -6,14 +6,28 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 14:44:47 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 19:04:41 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/01 10:19:36 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <sys/wait.h>
 #include "libft.h"
 #include "minishell.h"
 #include "parsing.h"
+
+void		wait_for_processes(t_list *pipes_cmds)
+{
+	t_list	*pipe_cmd;
+	int		status;
+
+	pipe_cmd = pipes_cmds;
+	while (pipe_cmd)
+	{
+		waitpid(((t_cmd *)pipe_cmd->content)->pid, &status, 0);
+		pipe_cmd = pipe_cmd->next;
+	}
+}
 
 t_cmd		*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 {
@@ -95,5 +109,6 @@ void		exec_pipes(t_string *cmd, char **env)
 		exec_redir(((t_cmd *)pipe_cmd->content), env);
 		pipe_cmd = pipe_cmd->next;
 	}
+	wait_for_processes(pipes_cmds);
 	ft_lstclear(&pipes_cmds, &t_cmd_destroyer);
 }

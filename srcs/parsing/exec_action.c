@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 18:09:22 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/01 10:27:05 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "libft.h"
 #include <unistd.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 
 size_t		get_argc(char **argv)
 {
@@ -41,10 +40,6 @@ void		exec_external_program(char **argv, char **env, t_cmd *cmd)
 		else
 			execve(filepath, argv, env);
 		exit(0);
-	}
-	else
-	{
-		waitpid(cmd->pid, &status, 0);
 	}
 }
 
