@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2020/10/19 23:21:47 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/31 00:14:11 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_error			builtin_cd(size_t argc, char **argv)
 	options.home = env_get_value("HOME");
 	if (!argv && !options.home)
 		return (OK);
-	options.path = !argv ? options.home : *argv;
+	options.path = argc ? options.home : *argv;
 	options.relative = (*options.path != '/');
 	options.dot = (*options.path == '.');
 	if ((err = path_pwd(&pwd)) != OK)
