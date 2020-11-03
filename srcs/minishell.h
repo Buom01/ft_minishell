@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 23:18:20 by badam            ###   ########.fr       */
+/*   Updated: 2020/10/31 15:11:34 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ typedef enum		e_error
 	ERR_EMPTY_COMMAND,
 	ERR_TOOMUCH_ARGS,
 	ERR_ROOTPARENT,
-	ERR_ERRNO
+	ERR_ERRNO,
+	ERR_UNKNOWN_CMD
 }					t_error;
 
 typedef enum		e_builtin

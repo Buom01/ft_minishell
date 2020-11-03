@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 00:09:21 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/28 11:30:18 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 14:50:24 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_string	*get_next_cmd(t_string *line, unsigned int *i)
 	return (check_next_cmd_errors(next_cmd, inside_quote, inside_dquote));
 }
 
-void		exec_line(t_string *line)
+void		exec_line(t_string *line, char **env)
 {
 	unsigned int	i;
 	t_list			*cmds;
@@ -88,7 +88,7 @@ void		exec_line(t_string *line)
 	cmd = cmds;
 	while (cmd)
 	{
-		exec_pipes(((t_string *)cmd->content));
+		exec_pipes(((t_string *)cmd->content), env);
 		cmd = cmd->next;
 	}
 	ft_lstclear(&cmds, &ft_string_destroy_wrapper);

@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 14:44:47 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/28 12:03:59 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 19:04:41 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,12 @@
 #include "minishell.h"
 #include "parsing.h"
 
-void		copy_arr_val(int arr1[2], int arr2[2])
-{
-	arr1[0] = arr2[0];
-	arr1[1] = arr2[1];
-}
-
-t_string	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
+t_cmd		*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 {
 	int			start;
 	int			inside_quote;
 	int			inside_dquote;
-	t_string	*next_pipe_cmd;
+	t_cmd		*next_pipe_cmd;
 
 	inside_quote = 0;
 	inside_dquote = 0;
@@ -44,7 +38,8 @@ t_string	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 		}
 		(*i)++;
 	}
-	if (!(next_pipe_cmd = ft_string_sub(cmd, start, *i - start - 1)))
+	if (!(next_pipe_cmd = malloc(sizeof(t_cmd))) ||
+		!(next_pipe_cmd->string = ft_string_sub(cmd, start, *i - start - 1)))
 		panic(ERR_MALLOC);
 	return (next_pipe_cmd);
 }
@@ -61,30 +56,24 @@ t_list		*get_pipes_cmds(t_string *cmd)
 	{
 		if (!(new_elem = ft_lstnew("", get_next_pipe_cmd(cmd, &i))))
 			panic(ERR_MALLOC);
+		((t_cmd *)new_elem->content)->fd_in = 0;
+		((t_cmd *)new_elem->content)->fd_out = 1;
 		ft_lstadd_back(&pipes_cmds, new_elem);
 	}
 	return (pipes_cmds);
 }
 
-void		exec_pipe_cmd(t_list *pipe_cmd, t_list *pipes_cmds,
-							int pipefd[2], int last_pipefd[2])
+void		handle_middle_cmd(int pipefd[2], int last_pipefd[2],
+								t_list *pipe_cmd)
 {
-	if (pipe_cmd == pipes_cmds && !pipe_cmd->next)
-		exec_redir(pipe_cmd->content, 0, 1);
-	else if (pipe_cmd == pipes_cmds)
-		exec_redir(pipe_cmd->content, 0, pipefd[1]);
-	else if (!pipe_cmd->next)
-		exec_redir(pipe_cmd->content, pipefd[0], 1);
-	else
-	{
-		copy_arr_val(last_pipefd, pipefd);
-		if (pipe(pipefd) == -1)
-			panic(ERR_PIPE);
-		exec_redir(pipe_cmd->content, last_pipefd[0], pipefd[1]);
-	}
+	copy_arr_val(last_pipefd, pipefd);
+	if (pipe(pipefd) == -1)
+		panic(ERR_PIPE);
+	((t_cmd *)pipe_cmd->content)->fd_in = last_pipefd[0];
+	((t_cmd *)pipe_cmd->content)->fd_out = pipefd[1];
 }
 
-void		exec_pipes(t_string *cmd)
+void		exec_pipes(t_string *cmd, char **env)
 {
 	t_list	*pipes_cmds;
 	t_list	*pipe_cmd;
@@ -97,8 +86,14 @@ void		exec_pipes(t_string *cmd)
 		panic(ERR_PIPE);
 	while (pipe_cmd)
 	{
-		exec_pipe_cmd(pipe_cmd, pipes_cmds, pipefd, last_pipefd);
+		if (pipe_cmd == pipes_cmds && pipe_cmd->next)
+			((t_cmd *)pipe_cmd->content)->fd_out = pipefd[1];
+		else if (!pipe_cmd->next && pipe_cmd != pipes_cmds)
+			((t_cmd *)pipe_cmd->content)->fd_in = pipefd[0];
+		else if (pipe_cmd->next && pipe_cmd != pipes_cmds)
+			handle_middle_cmd(pipefd, last_pipefd, pipe_cmd);
+		exec_redir(((t_cmd *)pipe_cmd->content), env);
 		pipe_cmd = pipe_cmd->next;
 	}
-	ft_lstclear(&pipes_cmds, &ft_string_destroy_wrapper);
+	ft_lstclear(&pipes_cmds, &t_cmd_destroyer);
 }

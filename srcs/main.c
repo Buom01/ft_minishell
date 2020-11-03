@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/27 16:04:09 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 19:18:49 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,22 @@
 #include <stdlib.h>
 #include <minishell.h>
 #include "parsing/parsing.h"
+#include "libft.h"
+
+int	is_line_empty(t_string *line)
+{
+	char	**splitted;
+	int		ret;
+
+	if (!(splitted = ft_split(line->str, "\f\t \n\r\v")))
+		panic(ERR_MALLOC);
+	if (!*splitted)
+		ret = 1;
+	else
+		ret = 0;
+	ft_clear_splitted(splitted);
+	return (ret);
+}
 
 int	read_full_line(t_string *line)
 {
@@ -39,11 +55,13 @@ int	read_full_line(t_string *line)
 	return (read_ret);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	int			read_ret;
 	t_string	*line;
 
+	(void)argc;
+	(void)argv;
 	if (!(line = ft_string_new()))
 		panic(ERR_MALLOC);
 	ft_printf("This is a prompt please enter your cmd $ ");
@@ -51,7 +69,8 @@ int	main(void)
 	{
 		if (read_ret == 0)
 			break ;
-		exec_line(line);
+		if (!is_line_empty(line))
+			exec_line(line, env);
 		ft_string_destroy(line);
 		if (!(line = ft_string_new()))
 			panic(ERR_MALLOC);

@@ -3,7 +3,9 @@
 ## fdeĉ:
 
 - [FAIT] Afficher un prompt en l’attente d’une nouvelle commande
-- Parsing
+- [FAIT] Parsing
+- [FAIT] Executer le bon executable
+- Gérer correctement les fd / pipes / redirections
 
 
 ## badam:
