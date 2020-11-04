@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 18:09:22 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/04 12:37:03 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "libft.h"
 #include <unistd.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 
 size_t		get_argc(char **argv)
 {
@@ -29,10 +28,8 @@ size_t		get_argc(char **argv)
 
 void		exec_external_program(char **argv, char **env, t_cmd *cmd)
 {
-	int			status;
 	char		*filepath;
 
-	env_init(env);
 	cmd->pid = fork();
 	if (cmd->pid == 0)
 	{
@@ -41,10 +38,6 @@ void		exec_external_program(char **argv, char **env, t_cmd *cmd)
 		else
 			execve(filepath, argv, env);
 		exit(0);
-	}
-	else
-	{
-		waitpid(cmd->pid, &status, 0);
 	}
 }
 
@@ -56,7 +49,9 @@ void		exec_action(t_cmd *cmd, char **env)
 	if (!(argv = ft_split(cmd->string->str, "\f\t \n\r\v")))
 		panic(ERR_MALLOC);
 	argc = get_argc(argv);
-	if (exec_builtin(argc, argv) != OK)
+	dup2(cmd->fd_in, STDIN_FILENO);
+	dup2(cmd->fd_out, STDOUT_FILENO);
+	if (exec_builtin(argc, argv) == ERR)
 		exec_external_program(argv, env, cmd);
 	ft_clear_splitted(argv);
 }

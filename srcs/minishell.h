@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/31 15:11:34 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/10/31 19:56:35 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum		e_error
 	ERR_TOOMUCH_ARGS,
 	ERR_ROOTPARENT,
 	ERR_ERRNO,
+	ERR_OPEN,
 	ERR_UNKNOWN_CMD
 }					t_error;
 

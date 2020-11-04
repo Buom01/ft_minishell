@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 19:18:49 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/04 12:28:00 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	env_init(env);
 	if (!(line = ft_string_new()))
 		panic(ERR_MALLOC);
 	ft_printf("This is a prompt please enter your cmd $ ");
@@ -80,4 +81,5 @@ int	main(int argc, char **argv, char **env)
 	if (read_ret == -1)
 		panic(ERR_READ);
 	write(1, "exit\n", 5);
+	env_shutdown();
 }
