@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/01 10:27:05 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/04 12:25:14 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ size_t		get_argc(char **argv)
 
 void		exec_external_program(char **argv, char **env, t_cmd *cmd)
 {
-	int			status;
 	char		*filepath;
 
 	env_init(env);
@@ -51,6 +50,8 @@ void		exec_action(t_cmd *cmd, char **env)
 	if (!(argv = ft_split(cmd->string->str, "\f\t \n\r\v")))
 		panic(ERR_MALLOC);
 	argc = get_argc(argv);
+	dup2(cmd->fd_in, STDIN_FILENO);
+	dup2(cmd->fd_out, STDOUT_FILENO);
 	if (exec_builtin(argc, argv) != OK)
 		exec_external_program(argv, env, cmd);
 	ft_clear_splitted(argv);
