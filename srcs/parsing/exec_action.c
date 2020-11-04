@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:43:49 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/04 12:25:14 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/04 12:28:25 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void		exec_external_program(char **argv, char **env, t_cmd *cmd)
 {
 	char		*filepath;
 
-	env_init(env);
 	cmd->pid = fork();
 	if (cmd->pid == 0)
 	{
