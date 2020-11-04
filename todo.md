@@ -15,3 +15,4 @@
 - [TESTED] Gestion basique des variables d'environements (initialisation, obtention, réinitialisation)
 - [TESTED] Builtins: export, unset, env, echo, pwd, cd, exit
 - [À REVOIR] Builtins: cd (tester tout les cas!)
+- [À FAIRE] Completer les erreurs manquantes

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2020/10/31 00:14:11 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/04 03:03:31 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,12 @@ static t_error	exec(t_cd_opts *options, char **curpath, char *pwd)
 		if (!(*curpath = ft_strdup(options->path)))
 			return (ERR_MALLOC);
 	}
-	else if ((err = step_five(options, curpath)) != OK
-			|| (err = step_seven(curpath, pwd)) != OK
+	else if ((err = step_five(options, curpath)) != OK)
+		return (err);
+	if ((err = step_seven(curpath, pwd)) != OK
 			|| (err = path_canonize(curpath)) != OK
 			|| (err = path_relativize(curpath, pwd)) != OK)
-	{
-		if (curpath)
-			free(curpath);
 		return (err);
-	}
 	return (OK);
 }
 
@@ -112,20 +109,21 @@ t_error			builtin_cd(size_t argc, char **argv)
 	if (argc > 1)
 		return (ERR_TOOMUCH_ARGS);
 	options.home = env_get_value("HOME");
-	if (!argv && !options.home)
+	if (!argc && !options.home)
 		return (OK);
-	options.path = argc ? options.home : *argv;
+	options.path = !argc ? options.home : *argv;
 	options.relative = (*options.path != '/');
 	options.dot = (*options.path == '.');
-	if ((err = path_pwd(&pwd)) != OK)
-		return (err);
-	if ((err = exec(&options, &curpath, pwd)) != OK)
-		return (err);
-	if (chdir(curpath) == -1)
-		return (ERR_ERRNO);
-	env_set("OLDPWD", pwd);
-	env_set("PWD", curpath);
-	free(pwd);
-	free(curpath);
-	return (OK);
+	if ((err = path_pwd(&pwd)) == OK
+			&& (err = exec(&options, &curpath, pwd)) == OK
+			&& (err = chdir(curpath)) != 0)
+	{
+		env_set("OLDPWD", pwd);
+		env_set("PWD", curpath);
+	}
+	if (pwd)
+		free(pwd);
+	if (curpath)
+		free(curpath);
+	return (err == -1 ? ERR_ERRNO : err);
 }

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:42:29 by badam             #+#    #+#             */
-/*   Updated: 2020/10/15 22:30:19 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/04 01:57:38 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,13 @@ static t_error	rm_dotdotslash(char *buff)
 	size_t	len;
 	size_t	offset;
 
-	buff_cpy = buff;
 	++buff;
+	buff_cpy = buff;
 	while (*buff && *(buff + 1) && *(buff + 2))
 	{
-		if (*(buff - 1) == '/' && *buff == '.'
-				&& *(buff + 1) == '.' && *(buff + 2) == '/')
+		if (*buff == '.' && *(buff + 1) == '.' && *(buff + 2) == '/')
 		{
 			offset = 1;
-			buff--;
 			if (buff == buff_cpy)
 				return (ERR_ROOTPARENT);
 			while (offset++ && *(--buff) != '/' && buff_cpy < buff)
@@ -60,10 +58,9 @@ static t_error	rm_dotslash(char *buff)
 {
 	size_t	len;
 
-	++buff;
 	while (*buff && *(buff + 1))
 	{
-		if (*(buff - 1) == '/' && *buff == '.' && *(buff + 1) == '/')
+		if (*buff == '.' && *(buff + 1) == '/')
 		{
 			len = ft_strlen(buff + 2);
 			ft_memcpy(buff, buff + 2, len + 1);
@@ -92,7 +89,10 @@ t_error			path_canonize(char **str)
 	buff = ft_strdup(*str);
 	rm_doubleslash(buff);
 	if ((err = rm_dotdotslash(buff)) != OK)
+	{
+		free(buff);
 		return (err);
+	}
 	rm_dotslash(buff);
 	rm_trailing(buff);
 	free(*str);
