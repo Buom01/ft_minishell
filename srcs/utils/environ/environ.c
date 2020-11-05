@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:29:31 by badam             #+#    #+#             */
-/*   Updated: 2020/11/04 02:26:26 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/05 22:28:58 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void		env_init(char **environ)
 	t_env	**prev_next;
 
 	prev_next = env_dictionary();
+	if (*prev_next)
+		panic(ERR_DOUBLE_INIT_ENV_DICO);
 	environ_p = environ;
 	while (*environ_p)
 	{

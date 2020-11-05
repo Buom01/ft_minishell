@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/11/05 21:33:08 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/05 22:27:21 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ typedef enum		e_error
 	ERR_ROOTPARENT,
 	ERR_ERRNO,
 	ERR_OPEN,
-	ERR_UNKNOWN_CMD
+	ERR_UNKNOWN_CMD,
+	ERR_UNINIT_ENV_DICO,
+	ERR_DOUBLE_INIT_ENV_DICO
 }					t_error;
 
 typedef enum		e_builtin

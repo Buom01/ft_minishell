@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:08:13 by badam             #+#    #+#             */
-/*   Updated: 2020/09/22 17:43:10 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/05 22:58:40 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_env	*env_set(const char *key, const char *value)
 	else
 	{
 		prev_next = env_dictionary();
+		if (!(*prev_next))
+			panic(ERR_UNINIT_ENV_DICO);
 		while (*prev_next)
 			prev_next = &((*prev_next)->next);
 		if (!(entry = malloc(sizeof(t_env))))
@@ -59,7 +61,8 @@ void	env_unset(const char *key)
 	t_env	*entry;
 
 	prev_next = env_dictionary();
-	entry = *prev_next;
+	if (!(entry = *prev_next))
+		panic(ERR_UNINIT_ENV_DICO);
 	while (entry && ft_strcmp(entry->key, key) != 0)
 	{
 		prev_next = &(entry->next);

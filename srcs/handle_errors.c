@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 13:47:33 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/05 21:42:40 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/05 23:01:22 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	panic(t_error err_code)
 		ft_printf("Error : unimplented function ... exiting\n");
 	else if (err_code == ERR_PRINTF)
 		ft_printf("Error : ft_printf returned negative value ... exiting\n");
+	else if (err_code == ERR_UNINIT_ENV_DICO)
+		ft_printf("Error : environ dico must be initialized ... exiting\n");
+	else if (err_code == ERR_DOUBLE_INIT_ENV_DICO)
+		ft_printf("Error : environ dico is already initialized ... exiting\n");
 	else
 		ft_printf("Unknown Error ... exiting\n");
 	exit(ERR);
