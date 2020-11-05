@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/31 19:56:35 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/05 21:33:08 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <limits.h>
+# include <string.h>
+# include <errno.h>
 # include "libft.h"
 
 typedef enum		e_error

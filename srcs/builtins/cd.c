@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2020/11/04 03:03:31 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/04 22:42:28 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ static t_error	exec(t_cd_opts *options, char **curpath, char *pwd)
 {
 	t_error	err;
 
-	*curpath = NULL;
 	if (!options->relative || options->dot)
 	{
 		if (!(*curpath = ft_strdup(options->path)))
@@ -108,12 +107,12 @@ t_error			builtin_cd(size_t argc, char **argv)
 
 	if (argc > 1)
 		return (ERR_TOOMUCH_ARGS);
-	options.home = env_get_value("HOME");
-	if (!argc && !options.home)
+	if (!argc && !(options.home = env_get_value("HOME")))
 		return (OK);
 	options.path = !argc ? options.home : *argv;
 	options.relative = (*options.path != '/');
 	options.dot = (*options.path == '.');
+	curpath = NULL;
 	if ((err = path_pwd(&pwd)) == OK
 			&& (err = exec(&options, &curpath, pwd)) == OK
 			&& (err = chdir(curpath)) != 0)
@@ -125,5 +124,5 @@ t_error			builtin_cd(size_t argc, char **argv)
 		free(pwd);
 	if (curpath)
 		free(curpath);
-	return (err == -1 ? ERR_ERRNO : err);
+	return (err == ERR ? ERR_ERRNO : err);
 }
