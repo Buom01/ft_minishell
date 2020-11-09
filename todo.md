@@ -5,7 +5,7 @@
 - [FAIT] Afficher un prompt en l’attente d’une nouvelle commande
 - [FAIT] Parsing
 - [FAIT] Executer le bon executable
-- Gérer correctement les fd / pipes / redirections
+- [FAIT] Gérer correctement les fd / pipes / redirections
 
 
 ## badam:
