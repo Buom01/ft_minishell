@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/08 18:40:55 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/09 20:18:51 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "parsing/parsing.h"
 #include "libft.h"
 
-int	is_line_empty(t_string *line)
+int		is_line_empty(t_string *line)
 {
 	char	**splitted;
 	int		ret;
@@ -32,7 +32,7 @@ int	is_line_empty(t_string *line)
 	return (ret);
 }
 
-int	read_full_line(t_string *line)
+int		read_full_line(t_string *line)
 {
 	char	buf[11];
 	int		read_ret;
@@ -76,7 +76,7 @@ void	wait_for_input(t_data *data)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+int		main(int argc, char **argv, char **env)
 {
 	t_data		data;
 

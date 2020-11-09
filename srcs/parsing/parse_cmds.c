@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:50:36 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/09 17:25:34 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/09 20:20:04 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "minishell.h"
 #include "parsing.h"
 
-void			fill_pipe_fds(t_list *pipe_cmds)
+void		fill_pipe_fds(t_list *pipe_cmds)
 {
 	t_list	*pipe_cmd_elem;
 	int		pipefd[2];
@@ -44,11 +44,11 @@ void			fill_pipe_fds(t_list *pipe_cmds)
 	}
 }
 
-t_pipe_cmd		*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
+t_pipe_cmd	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 {
-	int			start;
-	int			inside_quote;
-	int			inside_dquote;
+	int				start;
+	int				inside_quote;
+	int				inside_dquote;
 	t_pipe_cmd		*next_pipe_cmd;
 
 	inside_quote = 0;
