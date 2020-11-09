@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:50:36 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/08 18:04:36 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/09 17:25:34 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,34 @@
 #include "libft.h"
 #include "minishell.h"
 #include "parsing.h"
+
+void			fill_pipe_fds(t_list *pipe_cmds)
+{
+	t_list	*pipe_cmd_elem;
+	int		pipefd[2];
+	int		lastpipefd[2];
+
+	pipe_cmd_elem = pipe_cmds;
+	while (pipe_cmd_elem)
+	{
+		if (pipe_cmd_elem == pipe_cmds && pipe_cmd_elem->next)
+		{
+			pipe(pipefd);
+			((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in = STDIN_FILENO;
+			((t_pipe_cmd *)pipe_cmd_elem->content)->fd_out = pipefd[1];
+		}
+		else if (pipe_cmd_elem != pipe_cmds && pipe_cmd_elem->next)
+		{
+			lastpipefd[0] = pipefd[0];
+			pipe(pipefd);
+			((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in = lastpipefd[0];
+			((t_pipe_cmd *)pipe_cmd_elem->content)->fd_out = pipefd[1];
+		}
+		else if (pipe_cmd_elem != pipe_cmds && !pipe_cmd_elem->next)
+			((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in = pipefd[0];
+		pipe_cmd_elem = pipe_cmd_elem->next;
+	}
+}
 
 t_pipe_cmd		*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 {
@@ -57,8 +85,8 @@ t_list		*get_pipes_cmds(t_string *cmd)
 	{
 		if (!(new_elem = ft_lstnew("", get_next_pipe_cmd(cmd, &i))))
 			panic(ERR_MALLOC);
-		((t_pipe_cmd *)new_elem->content)->fd_in = 0;
-		((t_pipe_cmd *)new_elem->content)->fd_out = 1;
+		((t_pipe_cmd *)new_elem->content)->fd_in = STDIN_FILENO;
+		((t_pipe_cmd *)new_elem->content)->fd_out = STDOUT_FILENO;
 		ft_lstadd_back(&pipes_cmds, new_elem);
 	}
 	return (pipes_cmds);
@@ -74,6 +102,7 @@ void		parse_cmds(t_data *data)
 	{
 		cmd = cmd_elem->content;
 		cmd->pipe_cmds = get_pipes_cmds(cmd->cmd);
+		fill_pipe_fds(cmd->pipe_cmds);
 		cmd_elem = cmd_elem->next;
 	}
 }

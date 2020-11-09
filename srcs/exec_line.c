@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/08 20:09:01 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/09 19:16:23 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,38 @@ size_t		get_argc(char **argv)
 	return (argc);
 }
 
+void		close_all_useless_fd(t_data *data, t_pipe_cmd *pipe_cmd)
+{
+	t_list	*cmds_elem;
+	t_list	*pipe_cmd_elem;
+
+	cmds_elem = data->cmds;
+	while (cmds_elem)
+	{
+		pipe_cmd_elem = ((t_cmd *)cmds_elem->content)->pipe_cmds;
+		while (pipe_cmd_elem && pipe_cmd_elem->content != pipe_cmd)
+		{
+			if (((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in > 2)
+				close(((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in);
+			if (((t_pipe_cmd *)pipe_cmd_elem->content)->fd_out > 2)
+				close(((t_pipe_cmd *)pipe_cmd_elem->content)->fd_out);
+			pipe_cmd_elem = pipe_cmd_elem->next;
+		}
+		cmds_elem = cmds_elem->next;
+	}
+}
+
 void		exec_pipe_cmd(t_data *data, t_pipe_cmd *pipe_cmd)
 {
 	char	*filepath;
 	int		argc;
 	char	**argv;
 
+	close_all_useless_fd(data, pipe_cmd);
 	pipe_cmd->pid = fork();
 	if (pipe_cmd->pid == 0)
 	{
+		close_all_useless_fd(data, pipe_cmd);
 		dup2(pipe_cmd->fd_in, STDIN_FILENO);
 		dup2(pipe_cmd->fd_out, STDOUT_FILENO);
 		argv = ft_split(pipe_cmd->pipe_cmd->str, "\f\t \n\r\v");
@@ -47,6 +70,7 @@ void		exec_pipe_cmd(t_data *data, t_pipe_cmd *pipe_cmd)
 			else
 				execve(filepath, argv, data->env);
 		}
+		close(pipe_cmd->fd_out);
 		exit(0);
 	}
 }
