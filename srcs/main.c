@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/04 12:28:00 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/08 18:40:55 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,42 @@ int	read_full_line(t_string *line)
 	return (read_ret);
 }
 
-int	main(int argc, char **argv, char **env)
+void	wait_for_input(t_data *data)
 {
 	int			read_ret;
-	t_string	*line;
+
+	if (!(data->line = ft_string_new()))
+		panic(ERR_MALLOC);
+	ft_printf("This is a prompt please enter your cmd $ ");
+	while ((read_ret = read_full_line(data->line)) >= 0)
+	{
+		if (read_ret == 0)
+		{
+			write(1, "exit\n", 5);
+			exit(0);
+		}
+		if (read_ret == -1)
+			panic(ERR_READ);
+		if (!is_line_empty(data->line))
+			return ;
+	}
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_data		data;
 
 	(void)argc;
 	(void)argv;
-	env_init(env);
-	if (!(line = ft_string_new()))
-		panic(ERR_MALLOC);
-	ft_printf("This is a prompt please enter your cmd $ ");
-	while ((read_ret = read_full_line(line)) >= 0)
+	data.env = env;
+	env_init(data.env);
+	while (1)
 	{
-		if (read_ret == 0)
-			break ;
-		if (!is_line_empty(line))
-			exec_line(line, env);
-		ft_string_destroy(line);
-		if (!(line = ft_string_new()))
-			panic(ERR_MALLOC);
-		ft_printf("This is a prompt please enter your cmd $ ");
+		wait_for_input(&data);
+		parse_line(&data);
+		parse_cmds(&data);
+		parse_redirs(&data);
+		exec_line(&data);
 	}
-	ft_string_destroy(line);
-	if (read_ret == -1)
-		panic(ERR_READ);
-	write(1, "exit\n", 5);
 	env_shutdown();
 }

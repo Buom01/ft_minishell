@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/10/31 19:56:35 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/08 19:32:04 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,50 @@ typedef enum		e_builtin
 	BUILTINS_COUNT
 }					t_builtin;
 
+/*
+**  Data structure :
+**
+**              ┌───────────────────  data
+**      main()  ┤                     ├─ env
+**              ├───────────────────  ├─ line
+** parse_line() ┤                     └─ cmds            -> list
+**              ├───────────────────     ├─ cmd
+**              │            ┌──────     └─ pipe_cmds    -> list
+**              │  parse_    │              ├─ pipe_cmd
+** parse_cmds() ┤  redirs()  ┤              ├─ fd_in
+**              │            └──────        ├─ fd_out
+**              └───────────────────        └─ pid
+*/
+
+typedef struct		s_data
+{
+	char			**env;
+	t_string		*line;
+	t_list			*cmds;
+}					t_data;
+
+typedef struct		s_cmd
+{
+	t_string		*cmd;
+	t_list			*pipe_cmds;
+}					t_cmd;
+
+typedef struct		s_pipe_cmd
+{
+	t_string		*pipe_cmd;
+	pid_t			pid;
+	int				fd_in;
+	int				fd_out;
+}					t_pipe_cmd;
+
 typedef struct		s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
 }					t_env;
+
+void				exec_line(t_data *data);
 
 bool				env_isvalid_equality(const char *equality);
 bool				env_isinternal(const char *key);
