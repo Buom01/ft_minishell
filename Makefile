@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/11/10 10:28:02 by frdescam         ###   ########.fr        #
+#    Updated: 2020/11/11 17:29:20 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS		= \
 	./srcs/parsing/parse_line.c			\
 	./srcs/parsing/parse_cmds.c			\
 	./srcs/parsing/parse_redirs.c		\
+	./srcs/parsing/parse_redirs_utils.c	\
 	./srcs/exec_line.c
 
 OBJS		= ${SRCS:.c=.o}
