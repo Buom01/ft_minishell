@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_line.c                                        :+:      :+:    :+:   */
+/*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/30 00:09:21 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/31 14:50:24 by frdescam         ###   ########.fr       */
+/*   Created: 2020/11/08 16:17:19 by frdescam          #+#    #+#             */
+/*   Updated: 2020/11/08 18:39:49 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,23 @@ t_string	*get_next_cmd(t_string *line, unsigned int *i)
 	return (check_next_cmd_errors(next_cmd, inside_quote, inside_dquote));
 }
 
-void		exec_line(t_string *line, char **env)
+t_error		parse_line(t_data *data)
 {
 	unsigned int	i;
-	t_list			*cmds;
-	t_list			*cmd;
-	t_string		*next_cmd;
+	t_list			*new_elem;
+	t_cmd			*cmd;
 
-	cmds = NULL;
+	data->cmds = NULL;
 	i = 0;
-	while (i < line->len)
+	while (i < data->line->len)
 	{
-		if (!(next_cmd = get_next_cmd(line, &i)))
-		{
-			ft_lstclear(&cmds, &ft_string_destroy_wrapper);
-			return ;
-		}
-		if (!(cmd = ft_lstnew("", next_cmd)))
+		if (!(cmd = malloc(sizeof(t_cmd))))
 			panic(ERR_MALLOC);
-		ft_lstadd_back(&cmds, cmd);
+		if (!(cmd->cmd = get_next_cmd(data->line, &i)))
+			return (ERR);
+		if (!(new_elem = ft_lstnew("", cmd)))
+			panic(ERR_MALLOC);
+		ft_lstadd_back(&data->cmds, new_elem);
 	}
-	cmd = cmds;
-	while (cmd)
-	{
-		exec_pipes(((t_string *)cmd->content), env);
-		cmd = cmd->next;
-	}
-	ft_lstclear(&cmds, &ft_string_destroy_wrapper);
+	return (OK);
 }
