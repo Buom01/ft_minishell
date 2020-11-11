@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:11:41 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/11 17:33:20 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/11 17:47:40 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ void		parse_redirs(t_data *data)
 		while (pipe_cmd_elem)
 		{
 			while ((next_redir = get_next_redir(pipe_cmd_elem->content)))
+			{
 				handle_redir(pipe_cmd_elem->content, next_redir);
+				ft_string_destroy(next_redir);
+			}
 			pipe_cmd_elem = pipe_cmd_elem->next;
 		}
 		cmd_elem = cmd_elem->next;
