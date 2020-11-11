@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:11:41 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/11 17:47:40 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/11 18:01:03 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void		handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
 	{
 		if (pipe_cmd->fd_out > 2)
 			close(pipe_cmd->fd_out);
-		pipe_cmd->fd_out = open(filename->str, O_RDWR | O_CREAT, 00644);
+		pipe_cmd->fd_out =
+			open(filename->str, O_RDWR | O_TRUNC | O_CREAT, 00644);
 	}
 	else if (!ft_strncmp("<", redir->str, 1))
 	{
