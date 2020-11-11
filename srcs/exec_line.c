@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/09 19:16:23 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:46:24 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t		get_argc(char **argv)
 	return (argc);
 }
 
-void		close_all_useless_fd(t_data *data, t_pipe_cmd *pipe_cmd)
+void		close_all_useless_fd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 {
 	t_list	*cmds_elem;
 	t_list	*pipe_cmd_elem;
@@ -36,7 +36,8 @@ void		close_all_useless_fd(t_data *data, t_pipe_cmd *pipe_cmd)
 	while (cmds_elem)
 	{
 		pipe_cmd_elem = ((t_cmd *)cmds_elem->content)->pipe_cmds;
-		while (pipe_cmd_elem && pipe_cmd_elem->content != pipe_cmd)
+		while (pipe_cmd_elem && cmds_elem->content == cmd &&
+				pipe_cmd_elem->content != pipe_cmd)
 		{
 			if (((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in > 2)
 				close(((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in);
@@ -48,17 +49,16 @@ void		close_all_useless_fd(t_data *data, t_pipe_cmd *pipe_cmd)
 	}
 }
 
-void		exec_pipe_cmd(t_data *data, t_pipe_cmd *pipe_cmd)
+void		exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 {
 	char	*filepath;
 	int		argc;
 	char	**argv;
 
-	close_all_useless_fd(data, pipe_cmd);
 	pipe_cmd->pid = fork();
 	if (pipe_cmd->pid == 0)
 	{
-		close_all_useless_fd(data, pipe_cmd);
+		close_all_useless_fd(data, cmd, pipe_cmd);
 		dup2(pipe_cmd->fd_in, STDIN_FILENO);
 		dup2(pipe_cmd->fd_out, STDOUT_FILENO);
 		argv = ft_split(pipe_cmd->pipe_cmd->str, "\f\t \n\r\v");
@@ -73,6 +73,7 @@ void		exec_pipe_cmd(t_data *data, t_pipe_cmd *pipe_cmd)
 		close(pipe_cmd->fd_out);
 		exit(0);
 	}
+	close_all_useless_fd(data, cmd, pipe_cmd);
 }
 
 void		wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
@@ -96,7 +97,7 @@ void		exec_cmd(t_data *data, t_cmd *cmd)
 	pipe_cmd_elem = cmd->pipe_cmds;
 	while (pipe_cmd_elem)
 	{
-		exec_pipe_cmd(data, pipe_cmd_elem->content);
+		exec_pipe_cmd(data, cmd, pipe_cmd_elem->content);
 		pipe_cmd_elem = pipe_cmd_elem->next;
 	}
 	wait_for_all_process_to_finish(data, cmd);

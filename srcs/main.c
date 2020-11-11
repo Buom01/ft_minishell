@@ -6,14 +6,15 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/09 20:18:51 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:16:57 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <minishell.h>
+#include <signal.h>
+#include "minishell.h"
 #include "parsing/parsing.h"
 #include "libft.h"
 
@@ -66,6 +67,8 @@ void	wait_for_input(t_data *data)
 	{
 		if (read_ret == 0)
 		{
+			free_data(data);
+			env_shutdown();
 			write(1, "exit\n", 5);
 			exit(0);
 		}
@@ -73,7 +76,16 @@ void	wait_for_input(t_data *data)
 			panic(ERR_READ);
 		if (!is_line_empty(data->line))
 			return ;
+		ft_printf("This is a prompt please enter your cmd $ ");
 	}
+}
+
+void	handle_sig(int sig)
+{
+	if (sig == 2)
+		ft_printf("\n");
+	else
+		ft_printf("Quit\n");
 }
 
 int		main(int argc, char **argv, char **env)
@@ -82,8 +94,11 @@ int		main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	init_data(&data);
 	data.env = env;
 	env_init(data.env);
+	signal(SIGINT, &handle_sig);
+	signal(SIGQUIT, &handle_sig);
 	while (1)
 	{
 		wait_for_input(&data);
@@ -91,6 +106,6 @@ int		main(int argc, char **argv, char **env)
 		parse_cmds(&data);
 		parse_redirs(&data);
 		exec_line(&data);
+		free_data(&data);
 	}
-	env_shutdown();
 }
