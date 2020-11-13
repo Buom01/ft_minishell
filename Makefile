@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/11/11 17:29:20 by frdescam         ###   ########.fr        #
+#    Updated: 2020/11/13 17:29:46 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS		= \
 	./srcs/utils/paths/exists.c			\
 	./srcs/utils/paths/join.c			\
 	./srcs/utils/whereis.c				\
-	./srcs/utils/data_utils.c			\
+	./srcs/utils/main_utils.c			\
 	./srcs/builtins/builtins.c			\
 	./srcs/builtins/export.c			\
 	./srcs/builtins/unset.c				\
