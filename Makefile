@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/11/08 18:14:11 by frdescam         ###   ########.fr        #
+#    Updated: 2020/11/13 16:50:49 by badam            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ NAME		= minishell
 
 SRCS		= \
 	./srcs/utils/environ/utils.c		\
+	./srcs/utils/environ/utils2.c		\
 	./srcs/utils/environ/setters.c		\
 	./srcs/utils/environ/environ.c		\
 	./srcs/utils/environ/getters.c		\

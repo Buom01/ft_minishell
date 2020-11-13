@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/11/11 03:06:40 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/13 16:23:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void				exec_line(t_data *data);
 
 bool				env_isvalid_equality(const char *equality);
 bool				env_isinternal(const char *key);
+char				*env_toequality(t_env *env);
+size_t				env_listlen(t_env *list);
 char				*env_parse_key(const char *equality);
 char				*env_parse_value(const char *equality);
 t_env				**env_dictionary(void);
@@ -112,6 +114,8 @@ t_env				*env_set(const char *key, const char *value);
 void				env_unset(const char *key);
 t_env				*env_get(const char *key);
 char				*env_get_value(const char *key);
+char				**env_get_array();
+void				env_clear_array(char **envs);
 
 t_error				path_pwd(char **str);
 t_error				path_trailslash(char **str);

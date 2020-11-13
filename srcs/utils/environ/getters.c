@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:53:18 by badam             #+#    #+#             */
-/*   Updated: 2020/11/05 22:27:01 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/13 16:40:54 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,36 @@ char		*env_get_value(const char *key)
 	if ((entry = env_get(key)))
 		return (entry->value);
 	return (NULL);
+}
+
+char		**env_get_array()
+{
+	size_t	listlen;
+	t_env	*entry;
+	char	**envs;
+	char	**envs_cpy;
+
+	entry = *(env_dictionary());
+	listlen = env_listlen(entry);
+	if (!(envs = malloc(sizeof(char*) * (listlen + 1))))
+		panic(ERR_MALLOC);
+	envs_cpy = envs;
+	while (entry)
+	{
+		if (!env_isinternal(entry->key))
+			*(envs_cpy++) = env_toequality(entry);
+		entry = entry->next;
+	}
+	envs_cpy = NULL;
+	return (envs);
+}
+
+void		env_clear_array(char **envs)
+{
+	if (envs)
+		while (*envs)
+		{
+			ft_printf("Equality: %s\n", *envs);
+			free(*(envs++));
+		}
 }

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:14:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 23:18:00 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/13 16:41:22 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,20 @@ char	*env_parse_value(const char *equality)
 bool	env_isinternal(const char *key)
 {
 	return (!ft_strcmp(key, "?"));
+}
+
+char	*env_toequality(t_env *env)
+{
+	size_t	keyl;
+	size_t	vall;
+	char	*eqlt;
+
+	keyl = ft_strlen(env->key);
+	vall = ft_strlen(env->value);
+	if (!(eqlt = malloc(sizeof(char) * (keyl + vall + 2))))
+		panic(ERR_MALLOC);
+	ft_memcpy(eqlt, env->key, keyl);
+	*(eqlt + keyl) = '=';
+	ft_memcpy(eqlt + keyl + 1, env->value, keyl + 1);
+	return (eqlt);
 }
