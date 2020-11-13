@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/11/13 16:23:06 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/13 16:54:39 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef struct		s_env
 }					t_env;
 
 void				exec_line(t_data *data);
+void				init_data(t_data *data);
+void				free_data(t_data *data);
 
 bool				env_isvalid_equality(const char *equality);
 bool				env_isinternal(const char *key);

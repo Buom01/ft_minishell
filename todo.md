@@ -6,6 +6,8 @@
 - [FAIT] Parsing
 - [FAIT] Executer le bon executable
 - [FAIT] Gérer correctement les fd / pipes / redirections
+- [EN COURS] Fix bugs, fix norme
+- BONUS ?
 
 
 ## badam:

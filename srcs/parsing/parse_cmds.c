@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:50:36 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/09 20:20:04 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/10 11:33:03 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_pipe_cmd	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 	inside_quote = 0;
 	inside_dquote = 0;
 	start = *i;
-	while (*i < cmd->len)
+	while (*i <= cmd->len)
 	{
 		if (cmd->str[*i] == '"' && !inside_quote)
 			inside_dquote = !inside_dquote;
