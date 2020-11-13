@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/11 10:16:57 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/13 17:16:05 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	wait_for_input(t_data *data)
 	if (!(data->line = ft_string_new()))
 		panic(ERR_MALLOC);
 	ft_printf("This is a prompt please enter your cmd $ ");
+	*should_prompt_be_printed() = 1;
 	while ((read_ret = read_full_line(data->line)) >= 0)
 	{
 		if (read_ret == 0)
@@ -75,7 +76,10 @@ void	wait_for_input(t_data *data)
 		if (read_ret == -1)
 			panic(ERR_READ);
 		if (!is_line_empty(data->line))
+		{
+			*should_prompt_be_printed() = 0;
 			return ;
+		}
 		ft_printf("This is a prompt please enter your cmd $ ");
 	}
 }
@@ -83,7 +87,11 @@ void	wait_for_input(t_data *data)
 void	handle_sig(int sig)
 {
 	if (sig == 2)
+	{
 		ft_printf("\n");
+		if (*should_prompt_be_printed())
+			ft_printf("This is a prompt please enter your cmd $ ");
+	}
 	else
 		ft_printf("Quit\n");
 }
