@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:14:06 by badam             #+#    #+#             */
-/*   Updated: 2020/11/13 16:41:22 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/17 14:29:34 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ char	*env_toequality(t_env *env)
 		panic(ERR_MALLOC);
 	ft_memcpy(eqlt, env->key, keyl);
 	*(eqlt + keyl) = '=';
-	ft_memcpy(eqlt + keyl + 1, env->value, keyl + 1);
+	ft_memcpy(eqlt + keyl + 1, env->value, vall + 1);
 	return (eqlt);
 }

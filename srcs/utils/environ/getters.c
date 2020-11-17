@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:53:18 by badam             #+#    #+#             */
-/*   Updated: 2020/11/13 16:40:54 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/17 14:30:01 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char		**env_get_array()
 			*(envs_cpy++) = env_toequality(entry);
 		entry = entry->next;
 	}
-	envs_cpy = NULL;
+	*envs_cpy = NULL;
 	return (envs);
 }
 
