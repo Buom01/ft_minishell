@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:38:42 by frdescam          #+#    #+#             */
-/*   Updated: 2019/10/17 22:31:28 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/11/14 10:38:47 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char				*ft_itoa(int n)
 	else
 		n_l = n;
 	nb_digit = get_nb_digit(n_l, sign);
-	if (!(outstr = malloc(sizeof(char) * nb_digit + 1)))
+	if (!(outstr = malloc(sizeof(char) * (nb_digit + 1))))
 		return (NULL);
 	convert_nb(outstr, n_l, nb_digit, sign);
 	return (outstr);

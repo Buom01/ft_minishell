@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data_utils.c                                       :+:      :+:    :+:   */
+/*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/10 10:26:11 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/10 11:13:08 by frdescam         ###   ########.fr       */
+/*   Created: 2020/11/13 17:14:45 by frdescam          #+#    #+#             */
+/*   Updated: 2020/11/13 17:16:01 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,11 @@ void	free_data(t_data *data)
 		free_cmds(data->cmds);
 		data->cmds = NULL;
 	}
+}
+
+int		*should_prompt_be_printed(void)
+{
+	static int	i = 0;
+
+	return (&i);
 }
