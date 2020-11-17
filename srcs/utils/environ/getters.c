@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:53:18 by badam             #+#    #+#             */
-/*   Updated: 2020/11/17 14:30:01 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/17 14:41:04 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,5 @@ void		env_clear_array(char **envs)
 {
 	if (envs)
 		while (*envs)
-		{
-			ft_printf("Equality: %s\n", *envs);
 			free(*(envs++));
-		}
 }
