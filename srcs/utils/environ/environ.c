@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:29:31 by badam             #+#    #+#             */
-/*   Updated: 2020/11/05 22:28:58 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/21 12:34:24 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		env_init(char **environ)
 	environ_p = environ;
 	while (*environ_p)
 	{
-		if (env_isvalid_equality(*environ_p))
+		if (env_isvalid_equality(*environ_p, false))
 		{
 			if (!(entry = malloc(sizeof(t_env))))
 				panic(ERR_MALLOC);

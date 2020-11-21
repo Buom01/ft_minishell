@@ -6,30 +6,44 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:14:06 by badam             #+#    #+#             */
-/*   Updated: 2020/11/17 14:29:34 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/21 12:31:52 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	env_isvalid_equality(const char *equality)
+t_env_equality	env_isvalid_equality(const char *str, bool sanitizename)
 {
-	return (ft_strchr(equality, '=') != NULL);
+	char	*cur;
+
+	if (!str)
+		return (ENV_EQ_NONE);
+	if (sanitizename)
+	{
+		if (!env_verify_name(str))
+			return (ENV_EQ_MISFORMAT);
+	}
+	else if (!*str || *str == '=')
+		return (ENV_EQ_MISFORMAT);
+	cur = (char*)ft_strchr(str, '=');
+	if (cur == NULL)
+		return (ENV_EQ_NONE);
+	return (ENV_EQ_UNIFIED);
 }
 
-char	*env_parse_key(const char *equality)
+char	*env_parse_key(const char *eqlt)
 {
 	char	*delimiter;
 
-	delimiter = ft_strchr(equality, '=');
-	return (ft_substr(equality, 0, delimiter - equality));
+	delimiter = ft_strchr(eqlt, '=');
+	return (ft_substr(eqlt, 0, delimiter - eqlt));
 }
 
-char	*env_parse_value(const char *equality)
+char	*env_parse_value(const char *eqlt)
 {
 	char	*delimiter;
 
-	delimiter = ft_strchr(equality, '=');
+	delimiter = ft_strchr(eqlt, '=');
 	return (ft_strdup(delimiter + 1));
 }
 

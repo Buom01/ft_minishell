@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/11/17 14:38:09 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/21 12:33:36 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <errno.h>
 # include "libft.h"
+# include "builtins/builtins.h"
 
 typedef enum		e_error
 {
@@ -103,12 +104,13 @@ void				init_data(t_data *data);
 void				free_data(t_data *data);
 int					*should_prompt_be_printed(void);
 
-bool				env_isvalid_equality(const char *equality);
+bool				env_verify_name(const char *str);
+t_env_equality		env_isvalid_equality(const char *str, bool sanitizename);
 bool				env_isinternal(const char *key);
 char				*env_toequality(t_env *env);
 size_t				env_listlen(t_env *list);
-char				*env_parse_key(const char *equality);
-char				*env_parse_value(const char *equality);
+char				*env_parse_key(const char *eqlt);
+char				*env_parse_value(const char *eqlt);
 t_env				**env_dictionary(void);
 void				env_init(char **environ);
 void				env_shutdown(void);
