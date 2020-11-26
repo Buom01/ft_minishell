@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:53:18 by badam             #+#    #+#             */
-/*   Updated: 2020/11/17 14:41:04 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/26 21:38:28 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char		*env_get_value(const char *key)
 	return (NULL);
 }
 
-char		**env_get_array()
+char		**env_get_array(void)
 {
 	size_t	listlen;
 	t_env	*entry;

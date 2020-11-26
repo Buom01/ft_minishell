@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/11/21 12:33:36 by badam            ###   ########.fr       */
+/*   Updated: 2020/11/26 21:39:08 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_env				*env_set(const char *key, const char *value);
 void				env_unset(const char *key);
 t_env				*env_get(const char *key);
 char				*env_get_value(const char *key);
-char				**env_get_array();
+char				**env_get_array(void);
 void				env_clear_array(char **envs);
 
 t_error				path_pwd(char **str);
