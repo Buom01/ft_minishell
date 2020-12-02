@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 18:30:08 by badam             #+#    #+#             */
-/*   Updated: 2020/10/15 22:36:49 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/02 16:22:32 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*path_join(char *begin, char *end)
 		joined_cpy += beginlen;
 		*(joined_cpy++) = '/';
 		ft_memcpy(joined_cpy, end, endlen);
-		*(joined_cpy++) = '\0';
+		joined_cpy += endlen;
+		*joined_cpy = '\0';
 		return (joined);
 	}
 }
