@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 17:24:32 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/02 17:38:49 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,17 @@ static t_error	step_five_test_cdpath(char **cdpath_array,
 			cdpath = path_join(*cdpath_array, options->path);
 		else
 			cdpath = ft_strjoin("./", options->path);
-		if (!cdpath)
-		{
-			err = ERR_MALLOC;
+		if (!cdpath && (err = ERR_MALLOC))
 			break ;
-		}
 		if ((err = path_dir_exists(cdpath, true, &exists)) != OK)
 			break ;
-		if (exists)
-		{
-			*curpath = cdpath;
+		if (exists && (*curpath = cdpath))
 			break ;
-		}
 		free(cdpath);
-		cdpath = NULL;
 		cdpath_array++;
 	}
-	if (cdpath)
+	if (err != OK)
 		free(cdpath);
-	print_warning(err);
 	return (err);
 }
 
@@ -124,12 +116,8 @@ t_error			builtin_cd(size_t argc, char **argv)
 	options.dot = (*options.path == '.');
 	curpath = NULL;
 	if ((err = path_pwd(&pwd)) == OK
-			&& (err = exec(&options, &curpath, pwd)) == OK
-			&& (((err = chdir(curpath)) == OK) || !(err = ERR_ERRNO)))
-	{
-		env_set("OLDPWD", pwd);
-		env_set("PWD", curpath);
-	}
+			&& (err = exec(&options, &curpath, pwd)) == OK)
+		err = path_chdir(curpath, pwd);
 	if (pwd)
 		free(pwd);
 	if (curpath)
