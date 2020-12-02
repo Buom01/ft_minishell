@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 17:38:56 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/02 20:56:26 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void				env_clear_array(char **envs);
 
 t_error				path_pwd(char **str);
 t_error				path_chdir(const char *newpath, const char *oldpath);
+char				**path_oldpath(void);
 t_error				path_trailslash(char **str);
 t_error				path_dir_exists(const char *path, bool follow_links,
 							bool *ret);

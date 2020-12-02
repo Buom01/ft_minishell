@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 17:38:49 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/02 20:58:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ static t_error	exec(t_cd_opts *options, char **curpath, char *pwd)
 {
 	t_error	err;
 
+	if (ft_strcmp(options->path, "-") == 0)
+		if (!(options->path = *(path_oldpath())))
+			options->path = options->home;
 	if (!options->relative || options->dot)
 	{
 		if (!(*curpath = ft_strdup(options->path)))
