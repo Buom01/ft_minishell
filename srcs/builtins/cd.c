@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2020/11/04 22:42:28 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/02 17:24:32 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static t_error	step_five_test_cdpath(char **cdpath_array,
 	bool	exists;
 	t_error	err;
 
+	err = OK;
 	while (*cdpath_array)
 	{
 		if (**cdpath_array)
@@ -27,34 +28,43 @@ static t_error	step_five_test_cdpath(char **cdpath_array,
 		else
 			cdpath = ft_strjoin("./", options->path);
 		if (!cdpath)
-			return (ERR_MALLOC);
+		{
+			err = ERR_MALLOC;
+			break ;
+		}
 		if ((err = path_dir_exists(cdpath, true, &exists)) != OK)
-			return (err);
+			break ;
 		if (exists)
 		{
 			*curpath = cdpath;
 			break ;
 		}
 		free(cdpath);
+		cdpath = NULL;
 		cdpath_array++;
 	}
-	return (OK);
+	if (cdpath)
+		free(cdpath);
+	print_warning(err);
+	return (err);
 }
 
 static t_error	step_five(t_cd_opts *options, char **curpath)
 {
 	char	*env_cdpath;
 	char	**cdpath_array;
+	char	**cdpath_array_cpy;
 	t_error	err;
 
 	if ((env_cdpath = env_get_value("CDPATH")))
 	{
 		if (!(cdpath_array = ft_split(env_cdpath, ":")))
 			return (ERR_MALLOC);
+		cdpath_array_cpy = cdpath_array;
 		err = step_five_test_cdpath(cdpath_array, options, curpath);
 		while (*cdpath_array)
 			free(*(cdpath_array++));
-		free(cdpath_array);
+		free(cdpath_array_cpy);
 		if (err != OK)
 			return (err);
 		if (*curpath)
@@ -115,7 +125,7 @@ t_error			builtin_cd(size_t argc, char **argv)
 	curpath = NULL;
 	if ((err = path_pwd(&pwd)) == OK
 			&& (err = exec(&options, &curpath, pwd)) == OK
-			&& (err = chdir(curpath)) != 0)
+			&& (((err = chdir(curpath)) == OK) || !(err = ERR_ERRNO)))
 	{
 		env_set("OLDPWD", pwd);
 		env_set("PWD", curpath);
