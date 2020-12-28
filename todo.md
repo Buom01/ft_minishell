@@ -18,3 +18,34 @@
 - [TESTED] Builtins: export, unset, env, echo, pwd, cd, exit
 - [À FAIRE] Completer les erreurs manquantes
 - CTRL+...
+
+
+--- Tests non réussi ---
+
+quotes
+|echo "hello" > one > two
+|echo hi"     "hihi
+|echo "_ _;_ _"
+|'echo test'
+|echo '$PWD'
+|echo "$PWD"
+
+echo $env
+$?  # A verifier
+CTRL+...
+
+echo ><
+echo "hello" > one > two
+(ls < nope  # sans permission sur nope)
+
+cat /dev/urandom | head
+
+
+# A tester après
+export PATH=$PATH:toto                                                          
+                                                                                
+export loop='bonjour$loop'                                                      
+echo $loop  
+
+# A vérifier
+env: alpha sorting ????????? 
