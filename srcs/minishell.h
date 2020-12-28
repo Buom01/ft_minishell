@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 20:56:26 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/28 02:11:24 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct		s_cmd
 typedef struct		s_pipe_cmd
 {
 	t_string		*pipe_cmd;
+	bool			forked;
 	pid_t			pid;
 	int				fd_in;
 	int				fd_out;
