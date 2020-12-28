@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2020/12/28 02:37:57 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/28 18:16:02 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void		exec_cmd(t_data *data, t_cmd *cmd)
 	t_list	*pipe_cmd_elem;
 	bool	should_fork;
 
+	data->env = env_get_array();
 	pipe_cmd_elem = cmd->pipe_cmds;
 	should_fork = !(pipe_cmd_elem && !(pipe_cmd_elem->next));
 	while (pipe_cmd_elem)
@@ -109,6 +110,7 @@ void		exec_cmd(t_data *data, t_cmd *cmd)
 		pipe_cmd_elem = pipe_cmd_elem->next;
 	}
 	wait_for_all_process_to_finish(data, cmd);
+	env_clear_array(data->env);
 }
 
 void		exec_line(t_data *data)

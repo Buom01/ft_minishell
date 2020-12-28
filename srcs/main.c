@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/13 17:16:05 by frdescam         ###   ########.fr       */
+/*   Updated: 2020/12/28 18:16:02 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ int		main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	init_data(&data);
-	data.env = env;
-	env_init(data.env);
+	env_init(env);
 	signal(SIGINT, &handle_sig);
 	signal(SIGQUIT, &handle_sig);
 	while (1)
