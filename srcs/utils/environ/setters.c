@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:08:13 by badam             #+#    #+#             */
-/*   Updated: 2020/11/05 22:58:40 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/28 19:59:19 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_env	*env_set(const char *key, const char *value)
 		if (!(entry->key = ft_strdup(key))
 				|| !(entry->value = ft_strdup(value)))
 			panic(ERR_MALLOC);
+		entry->next = NULL;
 		*prev_next = entry;
 		return (entry);
 	}
