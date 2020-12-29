@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2020/12/28 02:11:24 by badam            ###   ########.fr       */
+/*   Updated: 2020/12/29 17:19:03 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <errno.h>
 # include "libft.h"
 # include "builtins/builtins.h"
+
+# define MSG_PROMPT "This is a prompt please enter your cmd $ "
 
 typedef enum		e_error
 {
