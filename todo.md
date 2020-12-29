@@ -17,8 +17,7 @@
 - [TESTED] Gestion basique des variables d'environements (initialisation, obtention, réinitialisation)
 - [TESTED] Builtins: export, unset, env, echo, pwd, cd, exit
 - [À FAIRE] Completer les erreurs manquantes
-- Finitions de CTRL+...
-
+- Préprocessing
 
 --- Tests non réussi ---
 
