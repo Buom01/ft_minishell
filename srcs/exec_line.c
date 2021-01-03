@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2020/12/28 18:16:02 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/04 00:04:30 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,26 @@ void		close_all_useless_fd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 void		exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd,
 					bool should_fork)
 {
-	char	*filepath;
-	int		argc;
-	char	**argv;
+	char		*filepath;
+	t_builtin	bi;
 
-	argv = ft_split(pipe_cmd->pipe_cmd->str, "\f\t \n\r\v");
-	argc = get_argc(argv);
-	pipe_cmd->forked = should_fork || get_builtin(*argv) == BI_NONE;
+	bi = get_builtin(pipe_cmd->cmd);
+	pipe_cmd->forked = should_fork || bi == BI_NONE;
 	if (!pipe_cmd->forked)
-		exec_builtin(argc, argv);  // Handle error
+		exec_builtin(bi, pipe_cmd->argc, pipe_cmd->argv);
 	else if ((pipe_cmd->pid = fork()) == 0)
 	{
 		close_all_useless_fd(data, cmd, pipe_cmd);
 		dup2(pipe_cmd->fd_in, STDIN_FILENO);
 		dup2(pipe_cmd->fd_out, STDOUT_FILENO);
-		if (exec_builtin(argc, argv) == ERR)  // Handle error
+		if (bi != BI_NONE)
+			exec_builtin(bi, pipe_cmd->argc, pipe_cmd->argv);
+		else
 		{
-			if (!(filepath = whereis(argv[0])))
+			if (!(filepath = whereis(pipe_cmd->cmd)))
 				print_warning(ERR_UNKNOWN_CMD);
 			else
-				execve(filepath, argv, data->env);  // get env from env_get_array
+				execve(filepath, pipe_cmd->argv, data->env);
 		}
 		close(pipe_cmd->fd_out);
 		exit(0);

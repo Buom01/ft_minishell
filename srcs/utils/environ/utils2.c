@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 03:50:47 by badam             #+#    #+#             */
-/*   Updated: 2020/11/21 12:38:46 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/03 04:31:58 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,21 @@ bool	env_verify_name(const char *str)
 		++str;
 	}
 	return (true);
+}
+
+size_t	env_get_name_len(const char *str)
+{
+	size_t	len;
+
+	len = 0;
+	if (!ft_isalpha(*str) && *str != '_')
+		return (len);
+	++len;
+	++str;
+	while (ft_isalnum(*str) || *str == '_')
+	{
+		++str;
+		++len;
+	}
+	return (len);
 }

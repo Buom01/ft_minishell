@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:17:19 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/08 18:39:49 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/03 02:14:21 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_error		parse_line(t_data *data)
 	{
 		if (!(cmd = malloc(sizeof(t_cmd))))
 			panic(ERR_MALLOC);
+		ft_bzero(cmd, sizeof(t_cmd));
 		if (!(cmd->cmd = get_next_cmd(data->line, &i)))
 			return (ERR);
 		if (!(new_elem = ft_lstnew("", cmd)))

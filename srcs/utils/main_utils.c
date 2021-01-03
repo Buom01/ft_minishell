@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:14:45 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/13 17:16:01 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/03 02:04:13 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	init_data(t_data *data)
-{
-	data->env = NULL;
-	data->line = NULL;
-	data->cmds = NULL;
-}
-
 void	free_cmds(t_list *cmds)
 {
-	t_list	*cmds_elem;
-	t_list	*pipe_cmd_elem;
-	t_list	*tmp_next;
+	t_list		*cmds_elem;
+	t_list		*pipe_cmd_elem;
+	t_pipe_cmd	*pipe_cmd;
+	t_list		*tmp_next;
 
 	cmds_elem = cmds;
 	while (cmds_elem)
@@ -33,7 +27,11 @@ void	free_cmds(t_list *cmds)
 		pipe_cmd_elem = ((t_cmd *)cmds_elem->content)->pipe_cmds;
 		while (pipe_cmd_elem)
 		{
-			ft_string_destroy(((t_pipe_cmd *)pipe_cmd_elem->content)->pipe_cmd);
+			pipe_cmd = (t_pipe_cmd *)pipe_cmd_elem->content;
+			ft_string_destroy(pipe_cmd->pipe_cmd);
+			while (pipe_cmd->argc)
+				free(*(pipe_cmd->argv + --pipe_cmd->argc));
+			free(pipe_cmd->argv);
 			free(pipe_cmd_elem->content);
 			free((char *)pipe_cmd_elem->name);
 			tmp_next = pipe_cmd_elem->next;
@@ -52,15 +50,10 @@ void	free_cmds(t_list *cmds)
 void	free_data(t_data *data)
 {
 	if (data->line)
-	{
 		ft_string_destroy(data->line);
-		data->line = NULL;
-	}
 	if (data->cmds)
-	{
 		free_cmds(data->cmds);
-		data->cmds = NULL;
-	}
+	ft_bzero(data, sizeof(t_data));
 }
 
 int		*should_prompt_be_printed(void)

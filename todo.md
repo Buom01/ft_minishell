@@ -21,12 +21,13 @@
 
 --- Tests non réussi ---
 
+echo \'
+
+echo $_  # Problème de mémoire due à pp_realloc ? Tout semble pourtant bon
+
 quotes
 |echo "hello" > one > two
-|echo hi"     "hihi
-|echo "_ _;_ _"
-|'echo test'
-|echo '$PWD'
+|echo $test
 |echo "$PWD"
 
 echo $env
@@ -47,4 +48,7 @@ export loop='bonjour$loop'
 echo $loop  
 
 # A vérifier
+st->cursor += ...; dans post_process*.c
 env: alpha sorting ????????? 
+devons-nous gérer le @ entre " ?
+normalement nous n'avons pas à gérer $'...'

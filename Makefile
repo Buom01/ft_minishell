@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2020/12/02 17:39:25 by badam            ###   ########.fr        #
+#    Updated: 2021/01/03 21:12:25 by badam            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,33 +18,36 @@ SHELL		= /bin/sh
 NAME		= minishell
 
 SRCS		= \
-	./srcs/utils/environ/utils.c		\
-	./srcs/utils/environ/utils2.c		\
-	./srcs/utils/environ/setters.c		\
-	./srcs/utils/environ/environ.c		\
-	./srcs/utils/environ/getters.c		\
-	./srcs/utils/paths/utils.c			\
-	./srcs/utils/paths/chdir.c			\
-	./srcs/utils/paths/canonize.c		\
-	./srcs/utils/paths/relativize.c		\
-	./srcs/utils/paths/exists.c			\
-	./srcs/utils/paths/join.c			\
-	./srcs/utils/whereis.c				\
-	./srcs/utils/main_utils.c			\
-	./srcs/builtins/builtins.c			\
-	./srcs/builtins/export.c			\
-	./srcs/builtins/unset.c				\
-	./srcs/builtins/env.c				\
-	./srcs/builtins/pwd.c				\
-	./srcs/builtins/cd.c				\
-	./srcs/builtins/echo.c				\
-	./srcs/builtins/exit.c				\
-	./srcs/main.c						\
-	./srcs/handle_errors.c				\
-	./srcs/parsing/parse_line.c			\
-	./srcs/parsing/parse_cmds.c			\
-	./srcs/parsing/parse_redirs.c		\
-	./srcs/parsing/parse_redirs_utils.c	\
+	./srcs/utils/environ/utils.c			\
+	./srcs/utils/environ/utils2.c			\
+	./srcs/utils/environ/setters.c			\
+	./srcs/utils/environ/environ.c			\
+	./srcs/utils/environ/getters.c			\
+	./srcs/utils/paths/utils.c				\
+	./srcs/utils/paths/chdir.c				\
+	./srcs/utils/paths/canonize.c			\
+	./srcs/utils/paths/relativize.c			\
+	./srcs/utils/paths/exists.c				\
+	./srcs/utils/paths/join.c				\
+	./srcs/utils/whereis.c					\
+	./srcs/utils/main_utils.c				\
+	./srcs/builtins/builtins.c				\
+	./srcs/builtins/export.c				\
+	./srcs/builtins/unset.c					\
+	./srcs/builtins/env.c					\
+	./srcs/builtins/pwd.c					\
+	./srcs/builtins/cd.c					\
+	./srcs/builtins/echo.c					\
+	./srcs/builtins/exit.c					\
+	./srcs/main.c							\
+	./srcs/handle_errors.c					\
+	./srcs/parsing/parse_line.c				\
+	./srcs/parsing/parse_cmds.c				\
+	./srcs/parsing/parse_redirs_utils.c		\
+	./srcs/parsing/parse_redirs.c			\
+	./srcs/parsing/post_process_utils.c		\
+	./srcs/parsing/post_process_fragments.c	\
+	./srcs/parsing/post_process.c			\
 	./srcs/exec_line.c
 
 OBJS		= ${SRCS:.c=.o}

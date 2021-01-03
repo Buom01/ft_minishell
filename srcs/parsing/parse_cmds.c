@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:50:36 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/10 11:33:03 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/03 02:08:30 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ t_pipe_cmd	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 		}
 		(*i)++;
 	}
-	if (!(next_pipe_cmd = malloc(sizeof(t_pipe_cmd))) ||
-		!(next_pipe_cmd->pipe_cmd = ft_string_sub(cmd, start, *i - start - 1)))
+	if (!(next_pipe_cmd = malloc(sizeof(t_pipe_cmd))))
+		panic(ERR_MALLOC);
+	ft_bzero(next_pipe_cmd, sizeof(t_pipe_cmd));
+	if (!(next_pipe_cmd->pipe_cmd = ft_string_sub(cmd, start, *i - start - 1)))
 		panic(ERR_MALLOC);
 	return (next_pipe_cmd);
 }

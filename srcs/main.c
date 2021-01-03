@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2020/12/29 17:18:12 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/03 02:19:47 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int		main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	init_data(&data);
+	ft_bzero(&data, sizeof(t_data));
 	env_init(env);
 	signal(SIGINT, &handle_sig);
 	signal(SIGQUIT, &handle_sig);
@@ -112,6 +112,7 @@ int		main(int argc, char **argv, char **env)
 		parse_line(&data);
 		parse_cmds(&data);
 		parse_redirs(&data);
+		post_process(&data);
 		exec_line(&data);
 		free_data(&data);
 	}

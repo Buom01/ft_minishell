@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 18:27:41 by badam             #+#    #+#             */
-/*   Updated: 2020/10/30 22:44:15 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/03 02:19:19 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_error	builtin_echo(size_t argc, char **argv)
 {
 	t_echo_opts	options;
 
-	ft_bzero(&options, sizeof(options));
+	ft_bzero(&options, sizeof(t_echo_opts));
 	while (argc)
 	{
 		if (!ft_strcmp(*argv, "-n"))
