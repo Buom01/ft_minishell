@@ -23,7 +23,9 @@
 
 echo \'
 
-echo $_  # Problème de mémoire due à pp_realloc ? Tout semble pourtant bon
+echo 'sdfsdf''sdsdfsd'  # surement un problème avec cursor++ et pp_strip
+
+echo $_  # a debug avec valgrind
 
 quotes
 |echo "hello" > one > two
