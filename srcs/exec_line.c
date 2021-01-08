@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/04 00:04:30 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/08 15:23:24 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-size_t		get_argc(char **argv)
+size_t	get_argc(char **argv)
 {
 	size_t	argc;
 
@@ -27,7 +27,7 @@ size_t		get_argc(char **argv)
 	return (argc);
 }
 
-void		close_all_useless_fd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
+void	close_all_useless_fd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 {
 	t_list	*cmds_elem;
 	t_list	*pipe_cmd_elem;
@@ -36,8 +36,8 @@ void		close_all_useless_fd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 	while (cmds_elem)
 	{
 		pipe_cmd_elem = ((t_cmd *)cmds_elem->content)->pipe_cmds;
-		while (pipe_cmd_elem && cmds_elem->content == cmd &&
-				pipe_cmd_elem->content != pipe_cmd)
+		while (pipe_cmd_elem && cmds_elem->content == cmd
+			&& pipe_cmd_elem->content != pipe_cmd)
 		{
 			if (((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in > 2)
 				close(((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in);
@@ -49,16 +49,26 @@ void		close_all_useless_fd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 	}
 }
 
-void		exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd,
-					bool should_fork)
+void	exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd,
+		bool should_fork)
 {
 	char		*filepath;
 	t_builtin	bi;
+	int			tmp_fdin;
+	int			tmp_fdout;
 
 	bi = get_builtin(pipe_cmd->cmd);
 	pipe_cmd->forked = should_fork || bi == BI_NONE;
 	if (!pipe_cmd->forked)
+	{
+		tmp_fdin = dup(STDIN_FILENO);
+		tmp_fdout = dup(STDOUT_FILENO);
+		dup2(pipe_cmd->fd_in, STDIN_FILENO);
+		dup2(pipe_cmd->fd_out, STDOUT_FILENO);
 		exec_builtin(bi, pipe_cmd->argc, pipe_cmd->argv);
+		dup2(tmp_fdin, STDIN_FILENO);
+		dup2(tmp_fdout, STDOUT_FILENO);
+	}
 	else if ((pipe_cmd->pid = fork()) == 0)
 	{
 		close_all_useless_fd(data, cmd, pipe_cmd);
@@ -79,7 +89,7 @@ void		exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd,
 	close_all_useless_fd(data, cmd, pipe_cmd);
 }
 
-void		wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
+void	wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
 {
 	t_list	*pipe_cmd_elem;
 	int		status;
@@ -96,7 +106,7 @@ void		wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
 	}
 }
 
-void		exec_cmd(t_data *data, t_cmd *cmd)
+void	exec_cmd(t_data *data, t_cmd *cmd)
 {
 	t_list	*pipe_cmd_elem;
 	bool	should_fork;
@@ -113,7 +123,7 @@ void		exec_cmd(t_data *data, t_cmd *cmd)
 	env_clear_array(data->env);
 }
 
-void		exec_line(t_data *data)
+void	exec_line(t_data *data)
 {
 	t_list	*cmds_elem;
 
