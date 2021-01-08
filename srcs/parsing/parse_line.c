@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:17:19 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/03 02:14:21 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/08 14:34:53 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_string	*get_next_cmd(t_string *line, unsigned int *i)
 	{
 		if (line->str[*i] == '"' && !inside_quote)
 			inside_dquote = !inside_dquote;
-		else if (line->str[*i] == '\'' && !inside_dquote)
+		else if (line->str[*i] == '\'' && !inside_dquote && *i > 0
+			&& line->str[(*i) - 1] != '\\')
 			inside_quote = !inside_quote;
 		else if (line->str[*i] == ';' && !inside_quote && !inside_dquote)
 		{
