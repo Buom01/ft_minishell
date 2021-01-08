@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 03:50:47 by badam             #+#    #+#             */
-/*   Updated: 2021/01/03 04:31:58 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/08 01:49:03 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ size_t	env_get_name_len(const char *str)
 
 	len = 0;
 	if (!ft_isalpha(*str) && *str != '_')
+	{
+		if (ft_isdigit(*str))
+			return (1);
 		return (len);
+	}
 	++len;
 	++str;
 	while (ft_isalnum(*str) || *str == '_')

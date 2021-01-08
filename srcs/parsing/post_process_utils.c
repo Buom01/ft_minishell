@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 03:27:13 by badam             #+#    #+#             */
-/*   Updated: 2021/01/03 23:56:33 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/08 01:41:26 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	pp_replace(t_pprocess_state *st, ssize_t old_len, char *new_word,
 		pp_realloc(st, str, total_len);
 	at = st->cursor;
 	ft_memmove(at + new_len, at + old_len,
-			str->len - old_len + new_len - (at - str->str) + 1);
+			str->len - old_len - (at - str->str) + 1);
 	ft_memcpy(at, new_word, new_len);
 	str->len -= old_len - new_len;
-	st->cursor += new_len;
+	st->cursor += new_len - 1;
 }
 
 void	pp_strip(t_pprocess_state *st, ssize_t strip_len, t_string *str)
@@ -55,4 +55,5 @@ void	pp_strip(t_pprocess_state *st, ssize_t strip_len, t_string *str)
 	at = st->cursor;
 	ft_memmove(at, at + strip_len, str->len - strip_len - (at - str->str) + 1);
 	str->len -= strip_len;
+	st->cursor--;
 }

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 21:08:03 by badam             #+#    #+#             */
-/*   Updated: 2021/01/03 23:57:40 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/08 01:35:47 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	process_env(t_string *cmd, t_pprocess_state *st, char *cursor)
 			env_value = "";
 		free(env_name);
 		pp_replace(st, 1 + len, env_value, cmd);
-		st->cursor--;
 	}
 }
 
@@ -51,6 +50,5 @@ bool	process_space(t_string *cmd, t_pprocess_state *st, char *cursor)
 	while (*cursor && ft_strchr("\f\t  \n\r\v", *(cursor++)))
 		space_len++;
 	pp_replace(st, space_len, " ", cmd);
-	st->cursor--;
 	return (true);
 }
