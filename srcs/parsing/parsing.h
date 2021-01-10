@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 14:34:05 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/03 21:14:31 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/10 19:04:40 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef	struct		s_pprocess_state
 
 t_error				parse_line(t_data *data);
 void				parse_cmds(t_data *data);
-void				parse_redirs(t_data *data);
+t_error				parse_redirs(t_data *data);
 void				pp_replace(t_pprocess_state *st, ssize_t old_len,
 							char *new_word,	t_string *str);
 void				pp_strip(t_pprocess_state *st, ssize_t strip_len,

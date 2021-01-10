@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/03 02:19:47 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/10 19:05:46 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,11 @@ int		main(int argc, char **argv, char **env)
 		wait_for_input(&data);
 		parse_line(&data);
 		parse_cmds(&data);
-		parse_redirs(&data);
+		if (parse_redirs(&data) == ERR)
+		{
+			free_data(&data);
+			continue ;
+		}
 		post_process(&data);
 		exec_line(&data);
 		free_data(&data);

@@ -23,7 +23,6 @@
 
 echo \'  # pb qui se situe avant le post-process
 sdfsd  # leaks
-echo ><
 
 (ls < nope  # sans permission sur nope)
 
@@ -33,3 +32,4 @@ cat /dev/urandom | head  #fermer les pipes en cas d'arrêt
 env: alpha sorting ????????? 
 devons-nous gérer le @ entre " ?
 normalement nous n'avons pas à gérer $'...' ni $(pwd)
+echo ><

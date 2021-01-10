@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:11:41 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/11 18:01:03 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/10 19:16:20 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		skip_start(t_string *redir, int *i)
 {
 	if (redir->str[*i] == '>')
 		(*i)++;
-	while (ft_strchr("\f\t \n\r\v", redir->str[*i]))
+	while (redir->str[*i] && ft_strchr("\f\t \n\r\v", redir->str[*i]))
 		(*i)++;
 }
 
@@ -63,15 +63,17 @@ void		handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
 	{
 		if (pipe_cmd->fd_out > 2)
 			close(pipe_cmd->fd_out);
-		pipe_cmd->fd_out =
-			open(filename->str, O_RDWR | O_APPEND | O_CREAT, 00644);
+		if ((pipe_cmd->fd_out =
+			open(filename->str, O_RDWR | O_APPEND | O_CREAT, 00644)) == -1)
+			print_warning(ERR_OPEN);
 	}
 	else if (!ft_strncmp(">", redir->str, 1))
 	{
 		if (pipe_cmd->fd_out > 2)
 			close(pipe_cmd->fd_out);
-		pipe_cmd->fd_out =
-			open(filename->str, O_RDWR | O_TRUNC | O_CREAT, 00644);
+		if ((pipe_cmd->fd_out =
+			open(filename->str, O_RDWR | O_TRUNC | O_CREAT, 00644)) == -1)
+			print_warning(ERR_OPEN);
 	}
 	else if (!ft_strncmp("<", redir->str, 1))
 	{
@@ -83,7 +85,7 @@ void		handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
 	ft_string_destroy(filename);
 }
 
-void		parse_redirs(t_data *data)
+t_error		parse_redirs(t_data *data)
 {
 	t_list		*cmd_elem;
 	t_list		*pipe_cmd_elem;
@@ -99,9 +101,13 @@ void		parse_redirs(t_data *data)
 			{
 				handle_redir(pipe_cmd_elem->content, next_redir);
 				ft_string_destroy(next_redir);
+				if (((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in == -1
+					|| ((t_pipe_cmd *)pipe_cmd_elem->content)->fd_out == -1)
+					return (ERR);
 			}
 			pipe_cmd_elem = pipe_cmd_elem->next;
 		}
 		cmd_elem = cmd_elem->next;
 	}
+	return (OK);
 }
