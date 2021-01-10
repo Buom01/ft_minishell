@@ -23,7 +23,6 @@
 
 echo \'  # pb qui se situe avant le post-process
 sdfsd  # leaks
-echo "hello" > one > two
 echo ><
 
 (ls < nope  # sans permission sur nope)
