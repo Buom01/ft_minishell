@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 21:08:03 by badam             #+#    #+#             */
-/*   Updated: 2021/01/08 01:35:47 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/10 23:56:53 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	process_escape(t_string *cmd, t_pprocess_state *st, char *cursor)
 		pp_strip(st, 2, cmd);
 	else if (ft_strchr("$`\"\\", *(cursor + 1)) || !st->in_dquote)
 		pp_strip(st, 1, cmd);
+	++(st->cursor);
 }
 
 bool	process_space(t_string *cmd, t_pprocess_state *st, char *cursor)
@@ -48,7 +49,7 @@ bool	process_space(t_string *cmd, t_pprocess_state *st, char *cursor)
 		return (false);
 	space_len = 0;
 	while (*cursor && ft_strchr("\f\t  \n\r\v", *(cursor++)))
-		space_len++;
+		++space_len;
 	pp_replace(st, space_len, " ", cmd);
 	return (true);
 }

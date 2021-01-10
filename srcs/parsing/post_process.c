@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:59:37 by badam             #+#    #+#             */
-/*   Updated: 2021/01/03 23:58:11 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/10 23:58:11 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ static bool	process_char(t_string *cmd, t_pprocess_state *st, char *cursor)
 	strip = 0;
 	if (st->in_quote)
 	{
-		if (*cursor == '\'' && ++strip)
+		if (*cursor == '\\' && *(cursor + 1) == '\'')
+		{
+			pp_strip(st, 1, cmd);
+			++(st->cursor);
+		}
+		else if (*cursor == '\'' && ++strip)
 			st->in_quote = false;
 	}
 	else if (ft_strchr("\f\t  \n\r\v", *cursor))
