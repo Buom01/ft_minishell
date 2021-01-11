@@ -21,12 +21,11 @@
 
 --- Tests non réussi ---
 
-echo \'  # pb qui se situe avant le post-process
 sdfsd  # leaks
 
-(ls < nope  # sans permission sur nope)
-
 cat /dev/urandom | head  #fermer les pipes en cas d'arrêt
+
+cmd1; cmd2
 
 # A vérifier
 env: alpha sorting ????????? 
