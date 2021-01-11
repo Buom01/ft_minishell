@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 14:34:05 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/10 19:04:40 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/11 21:21:07 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 typedef	struct		s_pprocess_state
 {
+	t_pipe_cmd		*cmd;
 	char			*cursor;
 	char			*anchor;
 	bool			in_quote;

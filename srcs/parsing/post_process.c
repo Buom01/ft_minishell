@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:59:37 by badam             #+#    #+#             */
-/*   Updated: 2021/01/10 23:58:11 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/11 21:25:42 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,20 @@ static void	push_arg(t_pipe_cmd *cmd, char **old_argv, t_pprocess_state *st)
 	st->anchor = st->cursor + 1;
 }
 
+static void	init_state(t_pprocess_state *st, t_list *pipe_cmds)
+{
+	ft_bzero(st, sizeof(t_pprocess_state));
+	st->cmd = (t_pipe_cmd *)(pipe_cmds->content);
+	st->cursor = st->cmd->pipe_cmd->str;
+	while (*(st->cursor) && ft_strchr("\f\t  \n\r\v", *(st->cursor)))
+		st->cursor++;
+	st->anchor = st->cursor;
+}
+
 void		post_process(t_data *data)
 {
 	t_list				*cmds;
 	t_list				*pipe_cmds;
-	t_pipe_cmd			*cmd;
 	t_pprocess_state	st;
 
 	cmds = data->cmds;
@@ -77,14 +86,11 @@ void		post_process(t_data *data)
 		pipe_cmds = (t_list *)(((t_cmd *)(cmds->content))->pipe_cmds);
 		while (pipe_cmds)
 		{
-			cmd = (t_pipe_cmd *)(pipe_cmds->content);
-			ft_bzero(&st, sizeof(t_pprocess_state));
-			st.cursor = cmd->pipe_cmd->str;
-			st.anchor = st.cursor;
+			init_state(&st, pipe_cmds);
 			while (*st.cursor)
 			{
-				if (process_char(cmd->pipe_cmd, &st, st.cursor))
-					push_arg(cmd, cmd->argv, &st);
+				if (process_char(st.cmd->pipe_cmd, &st, st.cursor))
+					push_arg(st.cmd, st.cmd->argv, &st);
 				st.cursor++;
 			}
 			pipe_cmds = pipe_cmds->next;
