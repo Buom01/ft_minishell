@@ -19,17 +19,13 @@
 - [FAIT]ocessing
 - Completer les erreurs manquantes
 - Revoir CD
+- Vérifier les builtins quant au man
 
---- Tests non réussi ---
-
-echo todo | cat -e
-
-sdfsd  # leaks
-
-cat /dev/urandom | head  #fermer les pipes en cas d'arrêt
-
-# A vérifier
-env: alpha sorting ????????? 
-devons-nous gérer le @ entre " ?
-normalement nous n'avons pas à gérer $'...' ni $(pwd)
-echo ><
+--- À faire ---
+vérifier les leaks
+vérifier les malloc
+vérifier les fonctions intérdites et autorisées
+norme
+patch: echo $?
+fermer les pipes en cas d'arrêt: cat /dev/urandom | head
+supprimer ce todo et push
