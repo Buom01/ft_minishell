@@ -22,6 +22,8 @@
 
 --- Tests non réussi ---
 
+echo todo | cat -e
+
 sdfsd  # leaks
 
 cat /dev/urandom | head  #fermer les pipes en cas d'arrêt
