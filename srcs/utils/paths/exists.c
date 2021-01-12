@@ -6,17 +6,17 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 23:14:27 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 17:23:16 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:02:33 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_error	path_dir_exists(const char *path, bool follow_links, bool *ret)
+t_error	path_dir_exists(const char *path, bool follow, bool *ret)
 {
 	struct stat	stat_buff;
 
-	if (follow_links)
+	if (follow)
 	{
 		if (stat(path, &stat_buff) == -1)
 		{
@@ -33,6 +33,6 @@ t_error	path_dir_exists(const char *path, bool follow_links, bool *ret)
 		}
 	}
 	*ret = S_ISDIR(stat_buff.st_mode)
-			|| (follow_links && S_ISLNK(stat_buff.st_mode));
+		|| (follow && S_ISLNK(stat_buff.st_mode));
 	return (OK);
 }

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 17:34:37 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 20:48:39 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:08:16 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ char	**path_oldpath(void)
 
 t_error	path_chdir(const char *newpath, const char *oldpath)
 {
-	t_error err;
+	t_error	err;
 	char	**intern_oldpath;
 
-	if ((err = chdir(newpath)) == OK)
+	err = chdir(newpath);
+	err = chdir(newpath);
+	if (err == OK)
 	{
 		intern_oldpath = path_oldpath();
 		if (*intern_oldpath)
 			free(*intern_oldpath);
-		if (!(*intern_oldpath = ft_strdup(oldpath)))
+		*intern_oldpath = ft_strdup(oldpath);
+		if (!*intern_oldpath)
 			return (ERR_MALLOC);
 		env_set("OLDPWD", oldpath);
 		env_set("PWD", newpath);

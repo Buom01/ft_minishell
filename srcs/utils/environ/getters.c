@@ -6,33 +6,35 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:53:18 by badam             #+#    #+#             */
-/*   Updated: 2020/11/26 21:38:28 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:24:25 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env		*env_get(const char *key)
+t_env	*env_get(const char *key)
 {
 	t_env	*entry;
 
-	if (!(entry = *(env_dictionary())))
+	entry = *(env_dictionary());
+	if (!entry)
 		panic(ERR_UNINIT_ENV_DICO);
 	while (entry && ft_strcmp(entry->key, key) != 0)
 		entry = entry->next;
 	return (entry);
 }
 
-char		*env_get_value(const char *key)
+char	*env_get_value(const char *key)
 {
 	t_env	*entry;
 
-	if ((entry = env_get(key)))
-		return (entry->value);
-	return (NULL);
+	entry = env_get(key);
+	if (!entry)
+		return (NULL);
+	return (entry->value);
 }
 
-char		**env_get_array(void)
+char	**env_get_array(void)
 {
 	size_t	listlen;
 	t_env	*entry;
@@ -41,7 +43,8 @@ char		**env_get_array(void)
 
 	entry = *(env_dictionary());
 	listlen = env_listlen(entry);
-	if (!(envs = malloc(sizeof(char*) * (listlen + 1))))
+	envs = malloc(sizeof(char*) * (listlen + 1));
+	if (!envs)
 		panic(ERR_MALLOC);
 	envs_cpy = envs;
 	while (entry)
@@ -54,7 +57,7 @@ char		**env_get_array(void)
 	return (envs);
 }
 
-void		env_clear_array(char **envs)
+void	env_clear_array(char **envs)
 {
 	if (envs)
 		while (*envs)

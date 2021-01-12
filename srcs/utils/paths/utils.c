@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 23:58:26 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 23:26:06 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:05:46 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_error	path_trailslash(char **str)
 	str_len = ft_strlen(*str);
 	if ((*str)[str_len - 1] == '/')
 		return (OK);
-	if (!(str2 = malloc((str_len + 2) * sizeof(char))))
+	str2 = malloc((str_len + 2) * sizeof(char));
+	if (!str2)
 		return (ERR_MALLOC);
 	ft_memcpy(str2, *str, str_len);
 	str2[str_len] = '/';
@@ -35,9 +36,11 @@ t_error	path_pwd(char **str)
 	char	buff[PATH_MAX];
 	t_error	err;
 
-	if (!(*str = ft_strdup(getcwd(buff, PATH_MAX))))
+	*str = ft_strdup(getcwd(buff, PATH_MAX));
+	if (!*str)
 		return (ERR_MALLOC);
-	if ((err = path_trailslash(str)) != OK)
+	err = path_trailslash(str);
+	if (err != OK)
 		return (err);
 	return (OK);
 }

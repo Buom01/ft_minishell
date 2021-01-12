@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 18:27:41 by badam             #+#    #+#             */
-/*   Updated: 2021/01/03 02:19:19 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 02:54:51 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_error	builtin_echo(size_t argc, char **argv)
 	}
 	while (argc)
 	{
-		if (ft_printf("%s%s", *argv, (argc == 1 ? "" : " ")) < 0)
+		if (ft_printf("%s", *argv) < 0
+			|| (argc == 1 && ft_printf(" ") < 0))
 			return (ERR_PRINTF);
 		argv++;
 		argc--;

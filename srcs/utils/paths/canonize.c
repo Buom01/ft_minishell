@@ -6,13 +6,13 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 17:42:29 by badam             #+#    #+#             */
-/*   Updated: 2020/11/04 01:57:38 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:09:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		rm_doubleslash(char *buff)
+static void	rm_doubleslash(char *buff)
 {
 	size_t	len;
 
@@ -81,14 +81,15 @@ static t_error	rm_trailing(char *buff)
 	return (OK);
 }
 
-t_error			path_canonize(char **str)
+t_error	path_canonize(char **str)
 {
 	char	*buff;
 	t_error	err;
 
 	buff = ft_strdup(*str);
 	rm_doubleslash(buff);
-	if ((err = rm_dotdotslash(buff)) != OK)
+	err = rm_dotdotslash(buff);
+	if (err != OK)
 	{
 		free(buff);
 		return (err);

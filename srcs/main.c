@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/10 19:05:46 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/11 22:12:20 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 #include "parsing/parsing.h"
 #include "libft.h"
 
-int		is_line_empty(t_string *line)
+int	is_line_empty(t_string *line)
 {
 	char	**splitted;
 	int		ret;
 
-	if (!(splitted = ft_split(line->str, "\f\t \n\r\v")))
+	splitted = ft_split(line->str, "\f\t \n\r\v");
+	if (!splitted)
 		panic(ERR_MALLOC);
 	if (!*splitted)
 		ret = 1;
@@ -33,7 +34,7 @@ int		is_line_empty(t_string *line)
 	return (ret);
 }
 
-int		read_full_line(t_string *line)
+int	read_full_line(t_string *line)
 {
 	char	buf[11];
 	int		read_ret;
@@ -60,7 +61,8 @@ void	wait_for_input(t_data *data)
 {
 	int			read_ret;
 
-	if (!(data->line = ft_string_new()))
+	data->line = ft_string_new();
+	if (!data->line)
 		panic(ERR_MALLOC);
 	ft_printf(MSG_PROMPT);
 	*should_prompt_be_printed() = 1;
@@ -96,7 +98,7 @@ void	handle_sig(int sig)
 		ft_printf("Quit\n");
 }
 
-int		main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_data		data;
 

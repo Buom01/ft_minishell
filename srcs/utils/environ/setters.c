@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:08:13 by badam             #+#    #+#             */
-/*   Updated: 2020/12/28 19:59:19 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:22:10 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ t_env	*env_create(char *equality)
 	char	*key;
 	char	*value;
 
-	if (!(key = env_parse_key(equality)))
+	key = env_parse_key(equality);
+	if (!key)
 		panic(ERR_MALLOC);
-	if (!(value = env_parse_value(equality)))
+	value = env_parse_value(equality);
+	if (!value)
 		panic(ERR_MALLOC);
 	return (env_set(key, value));
 	free(key);
@@ -31,10 +33,12 @@ t_env	*env_set(const char *key, const char *value)
 	t_env	*entry;
 	t_env	**prev_next;
 
-	if ((entry = env_get(key)))
+	entry = env_get(key);
+	if (entry)
 	{
 		free(entry->value);
-		if (!(entry->value = ft_strdup(value)))
+		entry->value = ft_strdup(value);
+		if (!entry->value)
 			panic(ERR_MALLOC);
 		return (entry);
 	}
@@ -45,10 +49,14 @@ t_env	*env_set(const char *key, const char *value)
 			panic(ERR_UNINIT_ENV_DICO);
 		while (*prev_next)
 			prev_next = &((*prev_next)->next);
-		if (!(entry = malloc(sizeof(t_env))))
+		entry = malloc(sizeof(t_env));
+		if (!entry)
 			panic(ERR_MALLOC);
-		if (!(entry->key = ft_strdup(key))
-				|| !(entry->value = ft_strdup(value)))
+		entry->key = ft_strdup(key);
+		if (!entry->key)
+			panic(ERR_MALLOC);
+		entry->value = ft_strdup(value);
+		if (!entry->value)
 			panic(ERR_MALLOC);
 		entry->next = NULL;
 		*prev_next = entry;
@@ -62,7 +70,8 @@ void	env_unset(const char *key)
 	t_env	*entry;
 
 	prev_next = env_dictionary();
-	if (!(entry = *prev_next))
+	entry = *prev_next;
+	if (!entry)
 		panic(ERR_UNINIT_ENV_DICO);
 	while (entry && ft_strcmp(entry->key, key) != 0)
 	{

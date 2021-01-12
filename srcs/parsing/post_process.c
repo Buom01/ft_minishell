@@ -6,14 +6,14 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:59:37 by badam             #+#    #+#             */
-/*   Updated: 2021/01/11 21:25:42 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/11 23:43:07 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
-static bool	process_char(t_string *cmd, t_pprocess_state *st, char *cursor)
+static bool	process_char(t_string *cmd, t_pp_state *st, char *cursor)
 {
 	size_t	strip;
 
@@ -42,9 +42,10 @@ static bool	process_char(t_string *cmd, t_pprocess_state *st, char *cursor)
 	return (*(st->cursor + 1) == '\0');
 }
 
-static void	push_arg(t_pipe_cmd *cmd, char **old_argv, t_pprocess_state *st)
+static void	push_arg(t_pipe_cmd *cmd, char **old_argv, t_pp_state *st)
 {
-	if (!(cmd->argv = malloc((2 + cmd->argc) * sizeof(char*))))
+	cmd->argv = malloc((cmd->argc + 2) * sizeof(char*));
+	if (!cmd->argv)
 		panic(ERR_MALLOC);
 	if (!cmd->cmd)
 	{
@@ -54,8 +55,8 @@ static void	push_arg(t_pipe_cmd *cmd, char **old_argv, t_pprocess_state *st)
 	else
 	{
 		ft_memcpy(cmd->argv, old_argv, cmd->argc * sizeof(char*));
-		*(cmd->argv + cmd->argc) =
-				ft_substr(st->anchor, 0, st->cursor - st->anchor);
+		*(cmd->argv + cmd->argc) = ft_substr(
+				st->anchor, 0, st->cursor - st->anchor);
 		free(old_argv);
 	}
 	if (!*(cmd->argv + cmd->argc))
@@ -64,9 +65,9 @@ static void	push_arg(t_pipe_cmd *cmd, char **old_argv, t_pprocess_state *st)
 	st->anchor = st->cursor + 1;
 }
 
-static void	init_state(t_pprocess_state *st, t_list *pipe_cmds)
+static void	init_state(t_pp_state *st, t_list *pipe_cmds)
 {
-	ft_bzero(st, sizeof(t_pprocess_state));
+	ft_bzero(st, sizeof(t_pp_state));
 	st->cmd = (t_pipe_cmd *)(pipe_cmds->content);
 	st->cursor = st->cmd->pipe_cmd->str;
 	while (*(st->cursor) && ft_strchr("\f\t  \n\r\v", *(st->cursor)))
@@ -74,11 +75,11 @@ static void	init_state(t_pprocess_state *st, t_list *pipe_cmds)
 	st->anchor = st->cursor;
 }
 
-void		post_process(t_data *data)
+void	post_process(t_data *data)
 {
-	t_list				*cmds;
-	t_list				*pipe_cmds;
-	t_pprocess_state	st;
+	t_list		*cmds;
+	t_list		*pipe_cmds;
+	t_pp_state	st;
 
 	cmds = data->cmds;
 	while (cmds)

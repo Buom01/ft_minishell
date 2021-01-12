@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:22:15 by badam             #+#    #+#             */
-/*   Updated: 2020/11/26 21:38:01 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 02:51:56 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_error	builtin_export_printall(void)
 	return (OK);
 }
 
-t_error			builtin_export(size_t argc, char **argv)
+t_error	builtin_export(size_t argc, char **argv)
 {
 	t_env_equality	eqlt;
 

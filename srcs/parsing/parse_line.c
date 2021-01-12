@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:17:19 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/08 14:34:53 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/11 23:57:41 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 #include "minishell.h"
 #include "parsing.h"
 
-void		ft_string_destroy_wrapper(void *content)
+void	ft_string_destroy_wrapper(void *content)
 {
 	ft_string_destroy(content);
 }
 
-t_string	*check_next_cmd_errors(t_string *next_cmd,
-									int inside_quote,
-									int inside_dquote)
+t_string	*check_next_cmd_errors(t_string *next_cmd, int inside_quote, int inside_dquote)
 {
 	if (inside_dquote || inside_quote)
 	{
@@ -44,7 +42,8 @@ t_string	*get_next_cmd(t_string *line, unsigned int *i)
 	int			inside_quote;
 	int			inside_dquote;
 
-	if (!(next_cmd = ft_string_new()))
+	next_cmd = ft_string_new();
+	if (!next_cmd)
 		panic(ERR_MALLOC);
 	inside_dquote = 0;
 	inside_quote = 0;
@@ -66,7 +65,7 @@ t_string	*get_next_cmd(t_string *line, unsigned int *i)
 	return (check_next_cmd_errors(next_cmd, inside_quote, inside_dquote));
 }
 
-t_error		parse_line(t_data *data)
+t_error	parse_line(t_data *data)
 {
 	unsigned int	i;
 	t_list			*new_elem;
@@ -76,12 +75,15 @@ t_error		parse_line(t_data *data)
 	i = 0;
 	while (i < data->line->len)
 	{
-		if (!(cmd = malloc(sizeof(t_cmd))))
+		cmd = malloc(sizeof(t_cmd));
+		if (!cmd)
 			panic(ERR_MALLOC);
 		ft_bzero(cmd, sizeof(t_cmd));
-		if (!(cmd->cmd = get_next_cmd(data->line, &i)))
+		cmd->cmd = get_next_cmd(data->line, &i);
+		if (!cmd->cmd)
 			return (ERR);
-		if (!(new_elem = ft_lstnew("", cmd)))
+		new_elem = ft_lstnew("", cmd);
+		if (!new_elem)
 			panic(ERR_MALLOC);
 		ft_lstadd_back(&data->cmds, new_elem);
 	}

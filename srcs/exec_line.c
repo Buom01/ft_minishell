@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/08 15:23:24 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/12 00:16:00 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ void	close_all_useless_fd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 	}
 }
 
-void	exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd,
-		bool should_fork)
+void	exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 {
 	char		*filepath;
 	t_builtin	bi;
@@ -58,7 +57,7 @@ void	exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd,
 	int			tmp_fdout;
 
 	bi = get_builtin(pipe_cmd->cmd);
-	pipe_cmd->forked = should_fork || bi == BI_NONE;
+	pipe_cmd->forked = cmd->should_fork || bi == BI_NONE;
 	if (!pipe_cmd->forked)
 	{
 		tmp_fdin = dup(STDIN_FILENO);
@@ -69,31 +68,36 @@ void	exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd,
 		dup2(tmp_fdin, STDIN_FILENO);
 		dup2(tmp_fdout, STDOUT_FILENO);
 	}
-	else if ((pipe_cmd->pid = fork()) == 0)
+	else
 	{
-		close_all_useless_fd(data, cmd, pipe_cmd);
-		dup2(pipe_cmd->fd_in, STDIN_FILENO);
-		dup2(pipe_cmd->fd_out, STDOUT_FILENO);
-		if (bi != BI_NONE)
-			exec_builtin(bi, pipe_cmd->argc, pipe_cmd->argv);
-		else
+		pipe_cmd->pid = fork();
+		if (pipe_cmd->pid)
 		{
-			if (!(filepath = whereis(pipe_cmd->cmd)))
-				print_warning(ERR_UNKNOWN_CMD);
+			close_all_useless_fd(data, cmd, pipe_cmd);
+			dup2(pipe_cmd->fd_in, STDIN_FILENO);
+			dup2(pipe_cmd->fd_out, STDOUT_FILENO);
+			if (bi != BI_NONE)
+				exec_builtin(bi, pipe_cmd->argc, pipe_cmd->argv);
 			else
-				execve(filepath, pipe_cmd->argv, data->env);
+			{
+				filepath = whereis(pipe_cmd->cmd);
+				if (!filepath)
+					print_warning(ERR_UNKNOWN_CMD);
+				else
+					execve(filepath, pipe_cmd->argv, data->env);
+			}
+			close(pipe_cmd->fd_out);
+			exit(0);
 		}
-		close(pipe_cmd->fd_out);
-		exit(0);
 	}
 	close_all_useless_fd(data, cmd, pipe_cmd);
 }
 
 void	wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
 {
-	t_list	*pipe_cmd_elem;
-	int		status;
-	t_pipe_cmd *pipe_cmd;
+	t_list		*pipe_cmd_elem;
+	int			status;
+	t_pipe_cmd	*pipe_cmd;
 
 	(void)data;
 	pipe_cmd_elem = cmd->pipe_cmds;
@@ -109,14 +113,13 @@ void	wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
 void	exec_cmd(t_data *data, t_cmd *cmd)
 {
 	t_list	*pipe_cmd_elem;
-	bool	should_fork;
 
 	data->env = env_get_array();
 	pipe_cmd_elem = cmd->pipe_cmds;
-	should_fork = !(pipe_cmd_elem && !(pipe_cmd_elem->next));
+	cmd->should_fork = !(pipe_cmd_elem && !(pipe_cmd_elem->next));
 	while (pipe_cmd_elem)
 	{
-		exec_pipe_cmd(data, cmd, pipe_cmd_elem->content, should_fork);
+		exec_pipe_cmd(data, cmd, pipe_cmd_elem->content);
 		pipe_cmd_elem = pipe_cmd_elem->next;
 	}
 	wait_for_all_process_to_finish(data, cmd);

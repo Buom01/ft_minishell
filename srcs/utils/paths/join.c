@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 18:30:08 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 16:22:32 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:06:18 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	*path_join(char *begin, char *end)
 		return (ft_strjoin(begin, end));
 	else
 	{
-		if (!(joined = malloc((beginlen + endlen + 2) * sizeof(char))))
+		joined = malloc((beginlen + endlen + 2) * sizeof(char));
+		if (!joined)
 			return (NULL);
 		joined_cpy = joined;
 		ft_memcpy(joined_cpy, begin, beginlen);

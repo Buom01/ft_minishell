@@ -6,20 +6,20 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:29:31 by badam             #+#    #+#             */
-/*   Updated: 2020/11/21 12:34:24 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:11:48 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env		**env_dictionary(void)
+t_env	**env_dictionary(void)
 {
 	static t_env	*entries;
 
 	return (&entries);
 }
 
-void		env_init(char **environ)
+void	env_init(char **environ)
 {
 	char	**environ_p;
 	t_env	*entry;
@@ -33,12 +33,15 @@ void		env_init(char **environ)
 	{
 		if (env_isvalid_equality(*environ_p, false))
 		{
-			if (!(entry = malloc(sizeof(t_env))))
+			entry = malloc(sizeof(t_env));
+			if (!entry)
 				panic(ERR_MALLOC);
 			*prev_next = entry;
-			if (!(entry->key = env_parse_key(*environ_p)))
+			entry->key = env_parse_key(*environ_p);
+			if (!entry->key)
 				panic(ERR_MALLOC);
-			if (!(entry->value = env_parse_value(*environ_p)))
+			entry->value = env_parse_value(*environ_p);
+			if (!entry->value)
 				panic(ERR_MALLOC);
 			prev_next = &(entry->next);
 		}
@@ -47,7 +50,7 @@ void		env_init(char **environ)
 	entry->next = NULL;
 }
 
-void		env_shutdown(void)
+void	env_shutdown(void)
 {
 	t_env	**entries;
 	t_env	*entry;

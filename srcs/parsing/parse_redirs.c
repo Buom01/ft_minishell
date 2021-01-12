@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:11:41 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/10 19:16:20 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/12 00:03:51 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "minishell.h"
 #include "parsing.h"
 
-void		skip_start(t_string *redir, int *i)
+void	skip_start(t_string *redir, int *i)
 {
 	if (redir->str[*i] == '>')
 		(*i)++;
@@ -44,8 +44,8 @@ t_string	*extract_filename(t_string *redir)
 			inside_dquote = !inside_dquote;
 		else if (redir->str[i] == '\'' && !inside_dquote)
 			inside_quote = !inside_quote;
-		else if ((redir->str[i] == '<' || redir->str[i] == '>') &&
-				!inside_quote && !inside_dquote)
+		else if ((redir->str[i] == '<' || redir->str[i] == '>')
+			&& !inside_quote && !inside_dquote)
 			break ;
 		else
 			ft_string_push_char(filename, redir->str[i]);
@@ -54,7 +54,7 @@ t_string	*extract_filename(t_string *redir)
 	return (filename);
 }
 
-void		handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
+void	handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
 {
 	t_string	*filename;
 
@@ -63,29 +63,32 @@ void		handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
 	{
 		if (pipe_cmd->fd_out > 2)
 			close(pipe_cmd->fd_out);
-		if ((pipe_cmd->fd_out =
-			open(filename->str, O_RDWR | O_APPEND | O_CREAT, 00644)) == -1)
+		pipe_cmd->fd_out = open(filename->str,
+				O_RDWR | O_APPEND | O_CREAT, 00644);
+		if (pipe_cmd->fd_out == -1)
 			print_warning(ERR_OPEN);
 	}
 	else if (!ft_strncmp(">", redir->str, 1))
 	{
 		if (pipe_cmd->fd_out > 2)
 			close(pipe_cmd->fd_out);
-		if ((pipe_cmd->fd_out =
-			open(filename->str, O_RDWR | O_TRUNC | O_CREAT, 00644)) == -1)
+		pipe_cmd->fd_out = open(filename->str,
+				O_RDWR | O_TRUNC | O_CREAT, 00644);
+		if (pipe_cmd->fd_out == -1)
 			print_warning(ERR_OPEN);
 	}
 	else if (!ft_strncmp("<", redir->str, 1))
 	{
 		if (pipe_cmd->fd_in > 2)
 			close(pipe_cmd->fd_in);
-		if ((pipe_cmd->fd_in = open(filename->str, 0)) == -1)
+		pipe_cmd->fd_in = open(filename->str, 0);
+		if (pipe_cmd->fd_in == -1)
 			print_warning(ERR_OPEN);
 	}
 	ft_string_destroy(filename);
 }
 
-t_error		parse_redirs(t_data *data)
+t_error	parse_redirs(t_data *data)
 {
 	t_list		*cmd_elem;
 	t_list		*pipe_cmd_elem;

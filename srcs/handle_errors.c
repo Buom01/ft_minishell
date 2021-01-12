@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 13:47:33 by frdescam          #+#    #+#             */
-/*   Updated: 2020/11/05 23:01:22 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/11 22:19:59 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_warning(t_error err_code)
 	else if (err_code == ERR_OPEN)
 		ft_printf("Error : Cannot open file\n");
 	else if (err_code == ERR_ERRNO)
-		ft_printf("%s\n", strerror(errno));\
+		ft_printf("%s\n", strerror(errno));
 	else if (err_code == ERR_PRINTF)
 		ft_printf("ft_printf returned negative value\n");
 	else if (err_code == ERR_TOOMUCH_ARGS)

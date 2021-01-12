@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:50:36 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/03 02:08:30 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/11 23:33:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "minishell.h"
 #include "parsing.h"
 
-void		fill_pipe_fds(t_list *pipe_cmds)
+void	fill_pipe_fds(t_list *pipe_cmds)
 {
 	t_list	*pipe_cmd_elem;
 	int		pipefd[2];
@@ -67,15 +67,17 @@ t_pipe_cmd	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 		}
 		(*i)++;
 	}
-	if (!(next_pipe_cmd = malloc(sizeof(t_pipe_cmd))))
+	next_pipe_cmd = malloc(sizeof(t_pipe_cmd));
+	if (!next_pipe_cmd)
 		panic(ERR_MALLOC);
 	ft_bzero(next_pipe_cmd, sizeof(t_pipe_cmd));
-	if (!(next_pipe_cmd->pipe_cmd = ft_string_sub(cmd, start, *i - start - 1)))
+	next_pipe_cmd->pipe_cmd = ft_string_sub(cmd, start, *i - start - 1);
+	if (!next_pipe_cmd->pipe_cmd)
 		panic(ERR_MALLOC);
 	return (next_pipe_cmd);
 }
 
-t_list		*get_pipes_cmds(t_string *cmd)
+t_list	*get_pipes_cmds(t_string *cmd)
 {
 	t_list			*pipes_cmds;
 	t_list			*new_elem;
@@ -85,7 +87,8 @@ t_list		*get_pipes_cmds(t_string *cmd)
 	i = 0;
 	while (i < cmd->len)
 	{
-		if (!(new_elem = ft_lstnew("", get_next_pipe_cmd(cmd, &i))))
+		new_elem = ft_lstnew("", get_next_pipe_cmd(cmd, &i));
+		if (!(new_elem))
 			panic(ERR_MALLOC);
 		((t_pipe_cmd *)new_elem->content)->fd_in = STDIN_FILENO;
 		((t_pipe_cmd *)new_elem->content)->fd_out = STDOUT_FILENO;
@@ -94,7 +97,7 @@ t_list		*get_pipes_cmds(t_string *cmd)
 	return (pipes_cmds);
 }
 
-void		parse_cmds(t_data *data)
+void	parse_cmds(t_data *data)
 {
 	t_list		*cmd_elem;
 	t_cmd		*cmd;

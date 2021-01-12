@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 16:51:09 by badam             #+#    #+#             */
-/*   Updated: 2020/09/22 16:11:10 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 02:59:48 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ static size_t	get_path_len(const char *path)
 {
 	char	*delimiter;
 
-	if ((delimiter = ft_strchr(path, ':')))
+	delimiter = ft_strchr(path, ':');
+	if (delimiter)
 		return (delimiter - path);
 	else
 		return (ft_strlen(path));
 }
 
-static void		set_next_path(char **path, const size_t len)
+static void	set_next_path(char **path, const size_t len)
 {
 	if (*(*path + len) == '\0' || *(*path + len + 1) == '\0')
 		*path = NULL;
@@ -30,7 +31,7 @@ static void		set_next_path(char **path, const size_t len)
 		*path += len + 1;
 }
 
-char			*whereis(const char *filepath)
+char	*whereis(const char *filepath)
 {
 	size_t		filepath_len;
 	char		*path_cur;
@@ -38,9 +39,10 @@ char			*whereis(const char *filepath)
 	size_t		pathname_len;
 	struct stat	stat_buff;
 
+	path_cur = env_get_value("PATH");
 	if (*filepath == '/' || *filepath == '.')
 		return (ft_strdup(filepath));
-	else if ((path_cur = env_get_value("PATH")))
+	else if (path_cur)
 	{
 		filepath_len = ft_strlen(filepath);
 		while (path_cur)

@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:14:45 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/03 02:04:13 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:01:29 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	free_data(t_data *data)
 	ft_bzero(data, sizeof(t_data));
 }
 
-int		*should_prompt_be_printed(void)
+int	*should_prompt_be_printed(void)
 {
 	static int	i = 0;
 

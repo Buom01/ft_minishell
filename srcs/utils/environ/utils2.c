@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 03:50:47 by badam             #+#    #+#             */
-/*   Updated: 2021/01/08 01:49:03 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:12:47 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ bool	env_verify_name(const char *str)
 {
 	char	*lim;
 
-	if (!(lim = (char*)ft_strchr(str, '=')))
+	lim = (char*)ft_strchr(str, '=');
+	if (!lim)
 		lim = (char*)(str + ft_strlen(str));
 	if (!ft_isalpha(*str) && *str != '_')
 		return (false);

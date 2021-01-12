@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:14:06 by badam             #+#    #+#             */
-/*   Updated: 2020/11/26 21:39:57 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:25:36 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_env_equality	env_isvalid_equality(const char *str, bool sanitizename)
 	return (ENV_EQ_UNIFIED);
 }
 
-char			*env_parse_key(const char *eqlt)
+char	*env_parse_key(const char *eqlt)
 {
 	char	*delimiter;
 
@@ -39,7 +39,7 @@ char			*env_parse_key(const char *eqlt)
 	return (ft_substr(eqlt, 0, delimiter - eqlt));
 }
 
-char			*env_parse_value(const char *eqlt)
+char	*env_parse_value(const char *eqlt)
 {
 	char	*delimiter;
 
@@ -47,12 +47,12 @@ char			*env_parse_value(const char *eqlt)
 	return (ft_strdup(delimiter + 1));
 }
 
-bool			env_isinternal(const char *key)
+bool	env_isinternal(const char *key)
 {
 	return (!ft_strcmp(key, "?"));
 }
 
-char			*env_toequality(t_env *env)
+char	*env_toequality(t_env *env)
 {
 	size_t	keyl;
 	size_t	vall;
@@ -60,7 +60,8 @@ char			*env_toequality(t_env *env)
 
 	keyl = ft_strlen(env->key);
 	vall = ft_strlen(env->value);
-	if (!(eqlt = malloc(sizeof(char) * (keyl + vall + 2))))
+	eqlt = malloc(sizeof(char) * (keyl + vall + 2));
+	if (!eqlt)
 		panic(ERR_MALLOC);
 	ft_memcpy(eqlt, env->key, keyl);
 	*(eqlt + keyl) = '=';

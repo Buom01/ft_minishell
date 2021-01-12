@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2021/01/04 00:13:40 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/11 22:15:34 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define MSG_PROMPT "This is a prompt please enter your cmd $ "
 
-typedef enum		e_error
+typedef enum e_error
 {
 	ERR = -1,
 	OK = 0,
@@ -45,7 +45,7 @@ typedef enum		e_error
 	ERR_DOUBLE_INIT_ENV_DICO
 }					t_error;
 
-typedef enum		e_builtin
+typedef enum e_builtin
 {
 	BI_NONE = -1,
 	BI_ECHO,
@@ -76,20 +76,21 @@ typedef enum		e_builtin
 **              └───────────────────        └─ pid
 */
 
-typedef struct		s_data
+typedef struct s_data
 {
 	char			**env;
 	t_string		*line;
 	t_list			*cmds;
 }					t_data;
 
-typedef struct		s_cmd
+typedef struct s_cmd
 {
 	t_string		*cmd;
 	t_list			*pipe_cmds;
+	bool			should_fork;
 }					t_cmd;
 
-typedef struct		s_pipe_cmd
+typedef struct s_pipe_cmd
 {
 	t_string		*pipe_cmd;
 	char			*cmd;
@@ -101,7 +102,7 @@ typedef struct		s_pipe_cmd
 	int				fd_out;
 }					t_pipe_cmd;
 
-typedef struct		s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
@@ -135,8 +136,7 @@ t_error				path_pwd(char **str);
 t_error				path_chdir(const char *newpath, const char *oldpath);
 char				**path_oldpath(void);
 t_error				path_trailslash(char **str);
-t_error				path_dir_exists(const char *path, bool follow_links,
-							bool *ret);
+t_error				path_dir_exists(const char *path, bool follow, bool *ret);
 t_error				path_canonize(char **str);
 t_error				path_relativize(char **path, char *pwd);
 char				*path_join(char *begin, char *end);
