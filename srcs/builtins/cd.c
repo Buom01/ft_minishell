@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 02:50:02 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 04:31:43 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 static t_error	step_five_test_cdpath(char **cdpath_array, t_cd_opts *options, char **curpath)
 {
 	char	*cdpath;
-	bool	exists;
 	t_error	err;
 
 	err = OK;
@@ -31,10 +30,7 @@ static t_error	step_five_test_cdpath(char **cdpath_array, t_cd_opts *options, ch
 			err = ERR_MALLOC;
 			break ;
 		}
-		err = path_dir_exists(cdpath, true, &exists);
-		if (err != OK)
-			break ;
-		if (exists)
+		if (dir_exists(cdpath, true))
 		{
 			*curpath = cdpath;
 			break ;

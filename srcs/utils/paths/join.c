@@ -6,13 +6,13 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 18:30:08 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 03:06:18 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 04:30:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*path_join(char *begin, char *end)
+char	*path_join(const char *begin, const char *end)
 {
 	size_t	beginlen;
 	size_t	endlen;
