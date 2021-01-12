@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2021/01/11 22:15:34 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 12:35:11 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_env
 void				exec_line(t_data *data);
 void				free_data(t_data *data);
 int					*should_prompt_be_printed(void);
+t_data				*get_data(void);
 
 bool				env_verify_name(const char *str);
 size_t				env_get_name_len(const char *str);

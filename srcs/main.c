@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/11 22:12:20 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 12:41:55 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,11 @@ void	handle_sig(int sig)
 	{
 		ft_printf("\n");
 		if (*should_prompt_be_printed())
+		{
+			ft_string_destroy(get_data()->line);
+			get_data()->line = ft_string_new();
 			ft_printf(MSG_PROMPT);
+		}
 	}
 	else if (sig == SIGQUIT)
 		ft_printf("Quit\n");
@@ -100,26 +104,27 @@ void	handle_sig(int sig)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data		data;
+	t_data		*data;
 
 	(void)argc;
 	(void)argv;
-	ft_bzero(&data, sizeof(t_data));
+	data = get_data();
+	ft_bzero(data, sizeof(t_data));
 	env_init(env);
 	signal(SIGINT, &handle_sig);
 	signal(SIGQUIT, &handle_sig);
 	while (1)
 	{
-		wait_for_input(&data);
-		parse_line(&data);
-		parse_cmds(&data);
-		if (parse_redirs(&data) == ERR)
+		wait_for_input(data);
+		parse_line(data);
+		parse_cmds(data);
+		if (parse_redirs(data) == ERR)
 		{
-			free_data(&data);
+			free_data(data);
 			continue ;
 		}
-		post_process(&data);
-		exec_line(&data);
-		free_data(&data);
+		post_process(data);
+		exec_line(data);
+		free_data(data);
 	}
 }

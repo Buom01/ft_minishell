@@ -6,13 +6,20 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 17:14:45 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/12 03:01:29 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 12:36:15 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
+
+t_data	*get_data(void)
+{
+	static t_data	data;
+
+	return (&data);
+}
 
 void	free_cmds(t_list *cmds)
 {
