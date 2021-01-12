@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/12 00:16:00 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 03:40:18 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	exec_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd)
 	else
 	{
 		pipe_cmd->pid = fork();
-		if (pipe_cmd->pid)
+		if (pipe_cmd->pid == 0)
 		{
 			close_all_useless_fd(data, cmd, pipe_cmd);
 			dup2(pipe_cmd->fd_in, STDIN_FILENO);
