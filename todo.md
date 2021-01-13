@@ -21,7 +21,7 @@
 - Vérifier les builtins quant au man
 
 --- À faire ---
-patch: echo $?
+valeur de $?
 fermer les pipes en cas d'arrêt: cat /dev/urandom | head
 vérifier les leaks
 vérifier les malloc
