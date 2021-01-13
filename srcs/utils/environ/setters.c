@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:08:13 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 03:22:10 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/13 23:59:39 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,33 @@ t_env	*env_create(char *equality)
 	free(value);
 }
 
+static t_env	*env_set_append(const char *key, const char *value)
+{
+	t_env	**prev_next;
+	t_env	*entry;
+
+	prev_next = env_dictionary();
+	if (!(*prev_next))
+		panic(ERR_UNINIT_ENV_DICO);
+	while (*prev_next)
+		prev_next = &((*prev_next)->next);
+	entry = malloc(sizeof(t_env));
+	if (!entry)
+		panic(ERR_MALLOC);
+	entry->key = ft_strdup(key);
+	if (!entry->key)
+		panic(ERR_MALLOC);
+	entry->value = ft_strdup(value);
+	if (!entry->value)
+		panic(ERR_MALLOC);
+	entry->next = NULL;
+	*prev_next = entry;
+	return (entry);
+}
+
 t_env	*env_set(const char *key, const char *value)
 {
 	t_env	*entry;
-	t_env	**prev_next;
 
 	entry = env_get(key);
 	if (entry)
@@ -43,25 +66,7 @@ t_env	*env_set(const char *key, const char *value)
 		return (entry);
 	}
 	else
-	{
-		prev_next = env_dictionary();
-		if (!(*prev_next))
-			panic(ERR_UNINIT_ENV_DICO);
-		while (*prev_next)
-			prev_next = &((*prev_next)->next);
-		entry = malloc(sizeof(t_env));
-		if (!entry)
-			panic(ERR_MALLOC);
-		entry->key = ft_strdup(key);
-		if (!entry->key)
-			panic(ERR_MALLOC);
-		entry->value = ft_strdup(value);
-		if (!entry->value)
-			panic(ERR_MALLOC);
-		entry->next = NULL;
-		*prev_next = entry;
-		return (entry);
-	}
+		return (env_set_append(key, value));
 }
 
 void	env_unset(const char *key)
