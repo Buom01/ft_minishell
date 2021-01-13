@@ -5,152 +5,106 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 21:03:19 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 04:31:43 by badam            ###   ########.fr       */
+/*   Created: 2021/01/12 22:35:11 by badam             #+#    #+#             */
+/*   Updated: 2021/01/13 23:47:19 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-static t_error	step_five_test_cdpath(char **cdpath_array, t_cd_opts *options, char **curpath)
+static void	exec_cd_cdpath_free(char **cdpath)
 {
-	char	*cdpath;
+	char	**cdpath_cpy;
+
+	cdpath_cpy = cdpath;
+	while (*cdpath_cpy)
+		free(*(cdpath_cpy++));
+	free(cdpath);
+}
+
+static t_error	exec_cd_cdpath_exec(t_cd_opts *options, char **cdpath)
+{
+	char	*testpath;
+
+	while (*cdpath)
+	{
+		testpath = path_join(*(cdpath++), options->path);
+		if (!testpath)
+			return (ERR_MALLOC);
+		if (dir_exists(testpath, true))
+		{
+			options->finalpath = testpath;
+			options->print = true;
+			break ;
+		}
+		else
+			free(testpath);
+	}
+	return (OK);
+}
+
+static t_error	exec_cd_cdpath(t_cd_opts *options, char *cdpath_env)
+{
 	t_error	err;
+	char	**cdpath;
 
 	err = OK;
-	while (*cdpath_array)
-	{
-		if (**cdpath_array)
-			cdpath = path_join(*cdpath_array, options->path);
-		else
-			cdpath = ft_strjoin("./", options->path);
-		if (!cdpath)
-		{
-			err = ERR_MALLOC;
-			break ;
-		}
-		if (dir_exists(cdpath, true))
-		{
-			*curpath = cdpath;
-			break ;
-		}
-		free(cdpath);
-		cdpath_array++;
-	}
-	if (err != OK)
-		free(cdpath);
+	cdpath = ft_split(cdpath_env, ":");
+	if (!cdpath)
+		return (ERR_MALLOC);
+	err = exec_cd_cdpath_exec(options, cdpath);
+	if (err == OK && !options->finalpath)
+		options->finalpath = ft_strdup(options->path);
+	exec_cd_cdpath_free(cdpath);
 	return (err);
 }
 
-static t_error	step_five(t_cd_opts *options, char **curpath)
-{
-	char	*env_cdpath;
-	char	**cdpath_array;
-	t_error	err;
-
-	env_cdpath = env_get_value("CDPATH");
-	if (env_cdpath)
-	{
-		cdpath_array = ft_split(env_cdpath, ":");
-		if (!cdpath_array)
-			return (ERR_MALLOC);
-		err = step_five_test_cdpath(cdpath_array, options, curpath);
-		while (*cdpath_array)
-			free(*(cdpath_array++));
-		free(cdpath_array);
-		if (err != OK)
-			return (err);
-		if (*curpath)
-			return (OK);
-	}
-	*curpath = ft_strdup(options->path);
-	if (!*curpath)
-		return (ERR_MALLOC);
-	return (OK);
-}
-
-static t_error	step_seven(char **curpath, char *pwd)
-{
-	char	*curpath_cpy;
-
-	if (**curpath != '/')
-	{
-		curpath_cpy = *curpath;
-		*curpath = path_join(pwd, *curpath);
-		free(curpath_cpy);
-		if (!(*curpath))
-			return (ERR_MALLOC);
-	}
-	return (OK);
-}
-
-static t_error	exec(t_cd_opts *options, char **curpath, char *pwd)
+static t_error	exec_cd(t_cd_opts *options)
 {
 	t_error	err;
+	char	*cdpath_env;
 
-	if (ft_strcmp(options->path, "-") == 0)
-	{
-		options->path = *(path_oldpath());
-		if (!options->path)
-			options->path = options->home;
-	}
-	if (!options->relative || options->dot)
-	{
-		*curpath = ft_strdup(options->path);
-		if (!*curpath)
-			return (ERR_MALLOC);
-	}
+	err = OK;
+	cdpath_env = env_get_value("CDPATH");
+	if (options->back)
+		options->finalpath = ft_strdup(*(path_oldpath()));
+	else if (options->relative && cdpath_env)
+		err = exec_cd_cdpath(options, cdpath_env);
 	else
-	{
-		err = step_five(options, curpath);
-		if (err != OK)
-			return (err);
-	}
-	err = step_seven(curpath, pwd);
-	if (err != OK)
-		return (err);
-	err = path_canonize(curpath);
-	if (err != OK)
-		return (err);
-	err = path_relativize(curpath, pwd);
-	if (err != OK)
-		return (err);
-	return (OK);
+		options->finalpath = ft_strdup(options->path);
+	if (err == OK && !options->finalpath)
+		return (ERR_MALLOC);
+	if (err == OK)
+		err = path_chdir(options->finalpath, options->pwd);
+	if (err == OK && (options->back || options->print))
+		ft_printf("%s\n", options->finalpath);
+	if (err == OK)
+		free(options->finalpath);
+	return (err);
 }
 
 t_error	builtin_cd(size_t argc, char **argv)
 {
 	t_cd_opts	options;
-	char		*curpath;
-	char		*pwd;
 	t_error		err;
 
+	err = OK;
+	memset(&options, 0, sizeof(options));
 	if (argc > 1)
 		return (ERR_TOOMUCH_ARGS);
 	options.home = env_get_value("HOME");
-	if (!options.home && !argc)
-		return (OK);
 	if (argc)
 		options.path = *argv;
 	else
 		options.path = options.home;
+	if (!options.path)
+		return (OK);
 	options.relative = (*options.path != '/');
-	options.dot = (*options.path == '.');
-	curpath = NULL;
-	err = path_pwd(&pwd);
-	if (err == OK)
-		err = path_pwd(&pwd);
-	if (err == OK)
-		err = exec(&options, &curpath, pwd);
-	if (err == OK)
-		err = path_chdir(curpath, pwd);
-	if (pwd)
-		free(pwd);
-	if (curpath)
-		free(curpath);
-	if (err == ERR)
-		return (ERR_ERRNO);
-	else
-		return (err);
+	options.back = ft_strcmp(options.path, "-") == 0;
+	err = path_pwd(&(options.pwd));
+	if (err == OK && options.path)
+		err = exec_cd(&options);
+	free(options.pwd);
+	return (err);
 }

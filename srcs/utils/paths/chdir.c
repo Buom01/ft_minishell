@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 17:34:37 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 03:08:16 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/12 23:20:44 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**path_oldpath(void)
 {
-	static char	*oldpath;
+	static char	*oldpath = NULL;
 
 	return (&oldpath);
 }
@@ -24,7 +24,6 @@ t_error	path_chdir(const char *newpath, const char *oldpath)
 	t_error	err;
 	char	**intern_oldpath;
 
-	err = chdir(newpath);
 	err = chdir(newpath);
 	if (err == OK)
 	{
