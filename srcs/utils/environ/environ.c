@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:29:31 by badam             #+#    #+#             */
-/*   Updated: 2021/01/13 23:55:14 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 00:20:04 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,10 @@ t_env	**env_dictionary(void)
 	return (&entries);
 }
 
-void	env_init(char **environ)
+void	env_init_fill(char **environ, t_env **prev_next)
 {
 	t_env	*entry;
-	t_env	**prev_next;
 
-	prev_next = env_dictionary();
-	if (*prev_next)
-		panic(ERR_DOUBLE_INIT_ENV_DICO);
 	while (*environ)
 	{
 		if (env_isvalid_equality(*environ, false))
@@ -46,6 +42,17 @@ void	env_init(char **environ)
 		environ++;
 	}
 	entry->next = NULL;
+}
+
+void	env_init(char **environ)
+{
+	t_env	**prev_next;
+
+	prev_next = env_dictionary();
+	if (*prev_next)
+		panic(ERR_DOUBLE_INIT_ENV_DICO);
+	env_init_fill(environ, prev_next);
+	env_set("?", "0");
 }
 
 void	env_shutdown(void)

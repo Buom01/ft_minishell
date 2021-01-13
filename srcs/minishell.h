@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 04:30:13 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 00:53:19 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,11 @@ void				exec_line(t_data *data);
 void				free_data(t_data *data);
 int					*should_prompt_be_printed(void);
 
+bool				env_isinternal(const char *key);
+bool				env_isinternal_char(const char c);
 bool				env_verify_name(const char *str);
 size_t				env_get_name_len(const char *str);
 t_env_equality		env_isvalid_equality(const char *str, bool sanitizename);
-bool				env_isinternal(const char *key);
 char				*env_toequality(t_env *env);
 size_t				env_listlen(t_env *list);
 char				*env_parse_key(const char *eqlt);
@@ -144,7 +145,7 @@ char				*path_join(const char *begin, const char *end);
 
 t_builtin			get_builtin(char *command);
 t_error				builtins(t_builtin builtin, size_t argc, char **argv);
-t_error				exec_builtin(t_builtin bi, size_t argc, char **argv);
+int					exec_builtin(t_builtin bi, size_t argc, char **argv);
 t_error				builtin_export(size_t argc, char **argv);
 t_error				builtin_unset(size_t argc, char **argv);
 t_error				builtin_env(size_t argc, char **argv);

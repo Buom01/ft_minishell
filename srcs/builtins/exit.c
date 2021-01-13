@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 18:19:56 by badam             #+#    #+#             */
-/*   Updated: 2020/12/02 22:52:27 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 00:35:55 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ t_error	builtin_exit(size_t argc, char **argv)
 	if (argc > 1)
 		return (ERR_TOOMUCH_ARGS);
 	env_shutdown();
-	exit(argc == 1 ? (unsigned char)ft_atoi(*argv) : 0);
+	if (argc == 1)
+		exit((unsigned char)ft_atoi(*argv));
+	else
+		exit(0);
 	return (OK);
 }
