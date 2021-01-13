@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 12:35:11 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/13 23:07:36 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,11 @@ t_error				path_pwd(char **str);
 t_error				path_chdir(const char *newpath, const char *oldpath);
 char				**path_oldpath(void);
 t_error				path_trailslash(char **str);
-t_error				path_dir_exists(const char *path, bool follow, bool *ret);
+bool				dir_exists(const char *path, bool follow);
+bool				file_exists(const char *path);
 t_error				path_canonize(char **str);
 t_error				path_relativize(char **path, char *pwd);
-char				*path_join(char *begin, char *end);
+char				*path_join(const char *begin, const char *end);
 
 t_builtin			get_builtin(char *command);
 t_error				builtins(t_builtin builtin, size_t argc, char **argv);
