@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 16:08:13 by badam             #+#    #+#             */
-/*   Updated: 2021/01/13 23:59:39 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 01:07:50 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_env	*env_create(char *equality)
 {
 	char	*key;
 	char	*value;
+	t_env	*env;
 
 	key = env_parse_key(equality);
 	if (!key)
@@ -23,9 +24,10 @@ t_env	*env_create(char *equality)
 	value = env_parse_value(equality);
 	if (!value)
 		panic(ERR_MALLOC);
-	return (env_set(key, value));
+	env = (env_set(key, value));
 	free(key);
 	free(value);
+	return (env);
 }
 
 static t_env	*env_set_append(const char *key, const char *value)
