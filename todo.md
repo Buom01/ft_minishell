@@ -21,5 +21,5 @@
 
 --- À faire ---
 vérifier les leaks (grossièrement) (normalement OK)
-norme (libft aussi ? on peut considérer qu'il ne fait pas partie du projet donc exclue de la norme)
+norme
 supprimer ce todo et push
