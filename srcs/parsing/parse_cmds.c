@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:50:36 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/11 23:33:06 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 18:28:09 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,13 @@ void	fill_pipe_fds(t_list *pipe_cmds)
 	}
 }
 
-t_pipe_cmd	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
+void	skip_until_pipe(t_string *cmd, unsigned int *i)
 {
-	int				start;
 	int				inside_quote;
 	int				inside_dquote;
-	t_pipe_cmd		*next_pipe_cmd;
 
 	inside_quote = 0;
 	inside_dquote = 0;
-	start = *i;
 	while (*i <= cmd->len)
 	{
 		if (cmd->str[*i] == '"' && !inside_quote)
@@ -67,6 +64,15 @@ t_pipe_cmd	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
 		}
 		(*i)++;
 	}
+}
+
+t_pipe_cmd	*get_next_pipe_cmd(t_string *cmd, unsigned int *i)
+{
+	int				start;
+	t_pipe_cmd		*next_pipe_cmd;
+
+	start = *i;
+	skip_until_pipe(cmd, i);
 	next_pipe_cmd = malloc(sizeof(t_pipe_cmd));
 	if (!next_pipe_cmd)
 		panic(ERR_MALLOC);

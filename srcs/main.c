@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/12 12:41:55 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 17:57:33 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,11 @@ void	wait_for_input(t_data *data)
 		panic(ERR_MALLOC);
 	ft_printf(MSG_PROMPT);
 	*should_prompt_be_printed() = 1;
-	while ((read_ret = read_full_line(data->line)) >= 0)
+	read_ret = read_full_line(data->line);
+	while (read_ret >= 0)
 	{
 		if (read_ret == 0)
-		{
-			free_data(data);
-			env_shutdown();
-			write(1, "exit\n", 5);
-			exit(0);
-		}
+			handle_ctrl_d(data);
 		if (read_ret == -1)
 			panic(ERR_READ);
 		if (!is_line_empty(data->line))
@@ -83,6 +79,7 @@ void	wait_for_input(t_data *data)
 			return ;
 		}
 		ft_printf(MSG_PROMPT);
+		read_ret = read_full_line(data->line);
 	}
 }
 

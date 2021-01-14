@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:17:19 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 14:41:46 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:18:50 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	other_cmd_after(t_string *line, int i)
 	return (1);
 }
 
-t_string	*check_next_cmd_errors(t_string *next_cmd, int inside_quote, int inside_dquote)
+t_string	*check_err(t_string *next_cmd, int inside_quote, int inside_dquote)
 {
 	if (inside_dquote || inside_quote)
 	{
@@ -71,7 +71,7 @@ t_string	*get_next_cmd(t_string *line, unsigned int *i)
 		ft_string_push_char(next_cmd, line->str[*i]);
 		(*i)++;
 	}
-	return (check_next_cmd_errors(next_cmd, inside_quote, inside_dquote));
+	return (check_err(next_cmd, inside_quote, inside_dquote));
 }
 
 t_error	parse_line(t_data *data)

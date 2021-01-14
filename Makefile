@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by frdescam          #+#    #+#              #
-#    Updated: 2021/01/03 21:12:25 by badam            ###   ########.fr        #
+#    Updated: 2021/01/14 18:51:20 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS		= \
 	./srcs/utils/paths/join.c				\
 	./srcs/utils/whereis.c					\
 	./srcs/utils/main_utils.c				\
+	./srcs/utils/main_utils_2.c				\
 	./srcs/builtins/builtins.c				\
 	./srcs/builtins/export.c				\
 	./srcs/builtins/unset.c					\
@@ -48,7 +49,8 @@ SRCS		= \
 	./srcs/parsing/post_process_utils.c		\
 	./srcs/parsing/post_process_fragments.c	\
 	./srcs/parsing/post_process.c			\
-	./srcs/exec_line.c
+	./srcs/exec_line.c						\
+	./srcs/exec_pipe_cmd.c
 
 OBJS		= ${SRCS:.c=.o}
 

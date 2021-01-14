@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:11:41 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/12 00:03:51 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 18:35:04 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ t_string	*extract_filename(t_string *redir)
 	return (filename);
 }
 
+void	handle_in(t_pipe_cmd *pipe_cmd, t_string *redir, t_string *filename)
+{
+	if (!ft_strncmp("<", redir->str, 1))
+	{
+		if (pipe_cmd->fd_in > 2)
+			close(pipe_cmd->fd_in);
+		pipe_cmd->fd_in = open(filename->str, 0);
+		if (pipe_cmd->fd_in == -1)
+			print_warning(ERR_OPEN);
+	}
+}
+
 void	handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
 {
 	t_string	*filename;
@@ -77,14 +89,8 @@ void	handle_redir(t_pipe_cmd *pipe_cmd, t_string *redir)
 		if (pipe_cmd->fd_out == -1)
 			print_warning(ERR_OPEN);
 	}
-	else if (!ft_strncmp("<", redir->str, 1))
-	{
-		if (pipe_cmd->fd_in > 2)
-			close(pipe_cmd->fd_in);
-		pipe_cmd->fd_in = open(filename->str, 0);
-		if (pipe_cmd->fd_in == -1)
-			print_warning(ERR_OPEN);
-	}
+	else
+		handle_in(pipe_cmd, redir, filename);
 	ft_string_destroy(filename);
 }
 
@@ -100,13 +106,15 @@ t_error	parse_redirs(t_data *data)
 		pipe_cmd_elem = ((t_cmd *)cmd_elem->content)->pipe_cmds;
 		while (pipe_cmd_elem)
 		{
-			while ((next_redir = get_next_redir(pipe_cmd_elem->content)))
+			next_redir = get_next_redir(pipe_cmd_elem->content);
+			while (next_redir)
 			{
 				handle_redir(pipe_cmd_elem->content, next_redir);
 				ft_string_destroy(next_redir);
 				if (((t_pipe_cmd *)pipe_cmd_elem->content)->fd_in == -1
 					|| ((t_pipe_cmd *)pipe_cmd_elem->content)->fd_out == -1)
 					return (ERR);
+				next_redir = get_next_redir(pipe_cmd_elem->content);
 			}
 			pipe_cmd_elem = pipe_cmd_elem->next;
 		}

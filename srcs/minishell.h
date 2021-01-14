@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2021/01/14 15:18:31 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:52:20 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,12 @@ typedef struct s_env
 }					t_env;
 
 void				exec_line(t_data *data);
+void				close_fds(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd);
+void				ex_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd);
 void				free_data(t_data *data);
 int					*should_prompt_be_printed(void);
 t_data				*get_data(void);
+void				handle_ctrl_d(t_data *data);
 
 bool				env_isinternal(const char *key);
 bool				env_isinternal_char(const char c);
