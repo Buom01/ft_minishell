@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:35:11 by badam             #+#    #+#             */
-/*   Updated: 2021/01/14 01:27:14 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 17:53:00 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static t_error	exec_cd(t_cd_opts *options)
 	if (err == OK)
 		err = path_chdir(options->finalpath, options->pwd);
 	if (err == OK && (options->back || options->print))
-		ft_printf("%s\n", options->finalpath);
+		printf("%s\n", options->finalpath);
 	if (err == OK)
 		free(options->finalpath);
 	return (err);
@@ -90,7 +90,7 @@ t_error	builtin_cd(size_t argc, char **argv)
 	t_error		err;
 
 	err = OK;
-	ft_memset(&options, 0, sizeof(options));
+	ft_bzero(&options, sizeof(options));
 	if (argc > 1)
 		return (ERR_TOOMUCH_ARGS);
 	options.home = env_get_value("HOME");

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 17:47:06 by badam             #+#    #+#             */
-/*   Updated: 2020/10/28 23:18:54 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 17:51:00 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_error	builtin_env(size_t argc, char **argv)
 	while (entry)
 	{
 		if (!env_isinternal(entry->key))
-			if (ft_printf("%s=%s\n", entry->key, entry->value) < 0)
+			if (printf("%s=%s\n", entry->key, entry->value) < 0)
 				return (ERR_PRINTF);
 		entry = entry->next;
 	}

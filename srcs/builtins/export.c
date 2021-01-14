@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:22:15 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 02:51:56 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 17:50:17 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_error	builtin_export_printall(void)
 	while (entry)
 	{
 		if (!env_isinternal(entry->key))
-			if (ft_printf("declare -x %s=\"%s\"\n",
+			if (printf("declare -x %s=\"%s\"\n",
 					entry->key, entry->value) < 0)
 				return (ERR_PRINTF);
 		entry = entry->next;
