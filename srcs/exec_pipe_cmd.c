@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:40:52 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 18:55:38 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 21:50:03 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	exec_fork(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd, t_builtin bi)
 				execve(filepath, pipe_cmd->argv, data->env);
 		}
 		close(pipe_cmd->fd_out);
-		exit(0);
+		if (bi == BI_NONE && !filepath)
+			exit(127);
+		else
+			exit(0);
 	}
 }
 
