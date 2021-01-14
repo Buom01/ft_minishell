@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:35:11 by badam             #+#    #+#             */
-/*   Updated: 2021/01/13 23:47:19 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 01:27:14 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_error	builtin_cd(size_t argc, char **argv)
 	t_error		err;
 
 	err = OK;
-	memset(&options, 0, sizeof(options));
+	ft_memset(&options, 0, sizeof(options));
 	if (argc > 1)
 		return (ERR_TOOMUCH_ARGS);
 	options.home = env_get_value("HOME");
