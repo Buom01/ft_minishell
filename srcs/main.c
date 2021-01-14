@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 17:57:33 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:58:22 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	wait_for_input(t_data *data)
 	data->line = ft_string_new();
 	if (!data->line)
 		panic(ERR_MALLOC);
-	ft_printf(MSG_PROMPT);
+	printf(MSG_PROMPT);
 	*should_prompt_be_printed() = 1;
 	read_ret = read_full_line(data->line);
 	while (read_ret >= 0)
@@ -78,7 +78,7 @@ void	wait_for_input(t_data *data)
 			*should_prompt_be_printed() = 0;
 			return ;
 		}
-		ft_printf(MSG_PROMPT);
+		printf(MSG_PROMPT);
 		read_ret = read_full_line(data->line);
 	}
 }
@@ -87,16 +87,16 @@ void	handle_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_printf("\n");
+		printf("\n");
 		if (*should_prompt_be_printed())
 		{
 			ft_string_destroy(get_data()->line);
 			get_data()->line = ft_string_new();
-			ft_printf(MSG_PROMPT);
+			printf(MSG_PROMPT);
 		}
 	}
 	else if (sig == SIGQUIT)
-		ft_printf("Quit\n");
+		printf("Quit\n");
 }
 
 int	main(int argc, char **argv, char **env)
