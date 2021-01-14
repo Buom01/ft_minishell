@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 18:58:22 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 21:01:29 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	wait_for_input(t_data *data)
 	data->line = ft_string_new();
 	if (!data->line)
 		panic(ERR_MALLOC);
-	printf(MSG_PROMPT);
+	ft_putstr_fd(MSG_PROMPT, 1);
 	*should_prompt_be_printed() = 1;
 	read_ret = read_full_line(data->line);
 	while (read_ret >= 0)
@@ -78,7 +78,7 @@ void	wait_for_input(t_data *data)
 			*should_prompt_be_printed() = 0;
 			return ;
 		}
-		printf(MSG_PROMPT);
+		ft_putstr_fd(MSG_PROMPT, 1);
 		read_ret = read_full_line(data->line);
 	}
 }
@@ -92,7 +92,7 @@ void	handle_sig(int sig)
 		{
 			ft_string_destroy(get_data()->line);
 			get_data()->line = ft_string_new();
-			printf(MSG_PROMPT);
+			ft_putstr_fd(MSG_PROMPT, 1);
 		}
 	}
 	else if (sig == SIGQUIT)

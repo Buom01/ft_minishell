@@ -6,7 +6,7 @@
 #    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/21 16:00:31 by frdescam          #+#    #+#              #
-#    Updated: 2021/01/14 18:05:19 by badam            ###   ########.fr        #
+#    Updated: 2021/01/14 21:05:37 by frdescam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isdigit.c ft_itoa.c \
 ft_memcpy.c ft_memmove.c ft_split.c ft_strchr.c ft_strcmp.c ft_strdup.c \
 ft_string_destroy.c ft_string_new.c ft_string_push.c ft_string_remove.c \
 ft_string_sub.c ft_string_with_capacity.c ft_strjoin.c ft_strlcpy.c \
-ft_strlen.c ft_strncmp.c ft_strnstr.c ft_substr.c \
+ft_strlen.c ft_strncmp.c ft_strnstr.c ft_substr.c ft_putstr_fd.c \
+ft_putchar_fd.c \
  \
 lst/ft_lstadd_back.c lst/ft_lstlast.c lst/ft_lstnew.c
 

@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 09:42:53 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 20:48:49 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 21:05:10 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+void		ft_putstr_fd(char *s, int fd);
+void		ft_putchar_fd(char c, int fd);
 
 #endif
