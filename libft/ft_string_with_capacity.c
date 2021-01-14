@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:44:58 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/20 15:20:05 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:26:56 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ t_string	*ft_string_with_capacity(size_t capacity)
 {
 	t_string	*new_string;
 
-	if (!(new_string = malloc(sizeof(t_string))))
+	new_string = malloc(sizeof(t_string));
+	if (!new_string)
 		return (NULL);
-	if (!(new_string->str = malloc(sizeof(char) * capacity)))
+	new_string->str = malloc(sizeof(char) * capacity);
+	if (!new_string->str)
 		return (NULL);
 	new_string->len = 0;
 	new_string->capacity = capacity;

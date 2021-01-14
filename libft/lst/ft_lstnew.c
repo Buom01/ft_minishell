@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 14:51:53 by frdescam          #+#    #+#             */
-/*   Updated: 2020/05/26 18:48:34 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:31:28 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_list	*ft_lstnew(const char *name, void *content)
 {
 	t_list	*new_elem;
 
-	if (!(new_elem = malloc(sizeof(t_list))))
+	new_elem = malloc(sizeof(t_list));
+	if (!new_elem)
 		return (NULL);
 	new_elem->name = ft_strdup(name);
 	new_elem->content = content;

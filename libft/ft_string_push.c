@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:55:47 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/27 20:02:03 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:23:09 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_string	*ft_string_push(t_string *string, char *to_append)
 	to_append_len = ft_strlen(to_append);
 	if (string->capacity < string->len + to_append_len + 1)
 	{
-		if (!(tmp = malloc(sizeof(char) * (string->len + to_append_len + 1))))
+		tmp = malloc(sizeof(char) * (string->len + to_append_len + 1));
+		if (!tmp)
 			return (NULL);
 		string->capacity = string->len + to_append_len + 1;
 		ft_strlcpy(tmp, string->str, string->len + to_append_len + 1);
@@ -58,7 +59,8 @@ t_string	*ft_string_push_char(t_string *string, char to_append)
 
 	if (string->capacity < string->len + 2)
 	{
-		if (!(tmp = malloc(sizeof(char) * (string->len + 2))))
+		tmp = malloc(sizeof(char) * (string->len + 2));
+		if (!tmp)
 			return (NULL);
 		string->capacity = string->len + 2;
 		ft_strlcpy(tmp, string->str, string->len + 2);

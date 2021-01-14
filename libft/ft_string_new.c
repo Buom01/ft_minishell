@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 14:14:48 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/20 15:21:01 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:21:31 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_string	*ft_string_new(void)
 {
 	t_string	*new_string;
 
-	if (!(new_string = malloc(sizeof(t_string))))
+	new_string = malloc(sizeof(t_string));
+	if (!new_string)
 		return (NULL);
 	new_string->str = NULL;
 	new_string->len = 0;

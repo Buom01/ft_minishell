@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 14:54:19 by frdescam          #+#    #+#             */
-/*   Updated: 2020/09/27 15:08:05 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:25:32 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 t_string	*ft_string_sub(t_string *string, size_t start, size_t len)
 {
-	t_string *out;
+	t_string	*out;
 
-	if (!(out = ft_string_new()))
+	out = ft_string_new();
+	if (!out)
 		return (NULL);
-	if (!(out->str = malloc(sizeof(char) * (len + 1))))
+	out->str = malloc(sizeof(char) * (len + 1));
+	if (!out->str)
 		return (NULL);
 	ft_strlcpy(out->str, string->str + start, len + 1);
 	out->len = len;

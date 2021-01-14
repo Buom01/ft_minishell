@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 11:01:35 by frdescam          #+#    #+#             */
-/*   Updated: 2019/10/15 23:25:38 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:30:31 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	s_len;
 	char			*substr;
 
-	if (!s)
-		return (NULL);
 	s_len = ft_strlen(s);
 	if (s_len < start)
 	{
-		if (!(substr = malloc(sizeof(char) * 1)))
+		substr = malloc(sizeof(char) * 1);
+		if (!substr)
 			return (NULL);
 		substr[0] = '\0';
 		return (substr);
 	}
-	if (!(substr = malloc(sizeof(char) * (len + 1))))
+	substr = malloc(sizeof(char) * (len + 1));
+	if (!substr)
 		return (NULL);
 	i = 0;
 	while (i < len)

@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 22:02:43 by frdescam          #+#    #+#             */
-/*   Updated: 2020/10/24 13:39:50 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:23:48 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_string	*ft_string_remove(t_string *string, int start, int end)
 {
 	t_string	*out;
 
-	if (!(out = ft_string_with_capacity(end - start + 1)))
+	out = ft_string_with_capacity(end - start + 1);
+	if (!out)
 		return (NULL);
 	ft_strlcpy(out->str, &string->str[start], end - start + 1);
 	out->len = end - start;

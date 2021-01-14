@@ -6,15 +6,15 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 11:10:34 by frdescam          #+#    #+#             */
-/*   Updated: 2020/05/13 11:44:03 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:19:26 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	unsigned int		i;
+	unsigned int	i;
 
 	i = 0;
 	while (s1[i])

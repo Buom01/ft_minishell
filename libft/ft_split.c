@@ -6,13 +6,13 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 11:40:50 by frdescam          #+#    #+#             */
-/*   Updated: 2020/05/27 13:29:57 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 20:47:24 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char				**ft_clear_splitted(char **tab)
+char	**ft_clear_splitted(char **tab)
 {
 	unsigned int	i;
 
@@ -53,10 +53,9 @@ static unsigned int	ft_get_nb_strs(char const *s, const char *delimiters)
 	return (nb_strs);
 }
 
-static void			ft_get_next_str(char **next_str, unsigned int *next_str_len,
-					const char *delimiters)
+void	ft_get_next_str(char **next_str, int *next_str_len, char *delimiters)
 {
-	unsigned int i;
+	int	i;
 
 	*next_str += *next_str_len;
 	*next_str_len = 0;
@@ -72,24 +71,26 @@ static void			ft_get_next_str(char **next_str, unsigned int *next_str_len,
 	}
 }
 
-char				**ft_split(char const *s, const char *delimiters)
+char	**ft_split(char const *s, const char *delimiters)
 {
 	char			**tab;
 	char			*next_str;
-	unsigned int	next_str_len;
+	int				next_str_len;
 	unsigned int	nb_strs;
 	unsigned int	i;
 
 	nb_strs = ft_get_nb_strs(s, delimiters);
-	if (!(tab = malloc(sizeof(char *) * (nb_strs + 1))))
+	tab = malloc(sizeof(char *) * (nb_strs + 1));
+	if (!tab)
 		return (NULL);
 	i = 0;
 	next_str = (char *)s;
 	next_str_len = 0;
 	while (i < nb_strs)
 	{
-		ft_get_next_str(&next_str, &next_str_len, delimiters);
-		if (!(tab[i] = malloc(sizeof(char) * (next_str_len + 1))))
+		ft_get_next_str(&next_str, &next_str_len, (char *)delimiters);
+		tab[i] = malloc(sizeof(char) * (next_str_len + 1));
+		if (!tab[i])
 			return (ft_clear_splitted(tab));
 		ft_strlcpy(tab[i], next_str, next_str_len + 1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 16:03:47 by frdescam          #+#    #+#             */
-/*   Updated: 2019/10/15 23:38:44 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:27:47 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	s2_len = ft_strlen(s2);
 	i = 0;
 	j = -1;
-	if (!(out_str = malloc(sizeof(char) * (s1_len + s2_len + 1))))
+	out_str = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!out_str)
 		return (NULL);
 	while (s1[i])
 	{
