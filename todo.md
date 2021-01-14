@@ -7,7 +7,6 @@
 - [FAIT] Executer le bon executable
 - [FAIT] Gérer correctement les fd / pipes / redirections
 - [EN COURS] Fix bugs, fix norme
-- BONUS ?
 
 
 ## badam:
@@ -21,7 +20,6 @@
 - [FAIT] Vérifier les builtins quant au man
 
 --- À faire ---
-fermer les pipes en cas d'arrêt: cat /dev/urandom | head (si c'est important ?)
 vérifier les leaks (grossièrement) (normalement OK)
 vérifier les fonctions intérdites et autorisées (cd srcs && ag 'fonctioninterdite')
 norme (libft aussi ? on peut considérer qu'il ne fait pas partie du projet donc exclue de la norme)
