@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 15:27:55 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:50:55 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void	exec_cmd(t_data *data, t_cmd *cmd)
 	cmd->should_fork = !(pipe_cmd_elem && !(pipe_cmd_elem->next));
 	while (pipe_cmd_elem)
 	{
-		exec_pipe_cmd(data, cmd, pipe_cmd_elem->content);
+		if (((t_pipe_cmd *)pipe_cmd_elem->content)->cmd)
+			exec_pipe_cmd(data, cmd, pipe_cmd_elem->content);
 		pipe_cmd_elem = pipe_cmd_elem->next;
 	}
 	wait_for_all_process_to_finish(data, cmd);
