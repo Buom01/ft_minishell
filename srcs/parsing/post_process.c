@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:59:37 by badam             #+#    #+#             */
-/*   Updated: 2021/01/11 23:43:07 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 15:40:02 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	process_char(t_string *cmd, t_pp_state *st, char *cursor)
 	else if (*cursor == '\'' && ++strip)
 		st->in_quote = true;
 	pp_strip(st, strip, cmd);
-	return (*(st->cursor + 1) == '\0');
+	return (*(st->cursor + 1) == '\0' && ++st->cursor);
 }
 
 static void	push_arg(t_pipe_cmd *cmd, char **old_argv, t_pp_state *st)
