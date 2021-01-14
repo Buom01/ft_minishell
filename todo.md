@@ -18,10 +18,9 @@
 - [TESTED] Builtins: export, unset, env, echo, pwd, cd, exit
 - [FAIT] Processing
 - [FAIT] Revoir CD
-- [FAIT]Vérifier les builtins quant au man
+- [FAIT] Vérifier les builtins quant au man
 
 --- À faire ---
-valeur de $?
 fermer les pipes en cas d'arrêt: cat /dev/urandom | head (si c'est important ?)
 vérifier les leaks (grossièrement) (normalement OK)
 vérifier les fonctions intérdites et autorisées (cd srcs && ag 'fonctioninterdite')
