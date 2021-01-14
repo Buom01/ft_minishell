@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:17:19 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/11 23:57:41 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 14:41:46 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 void	ft_string_destroy_wrapper(void *content)
 {
 	ft_string_destroy(content);
+}
+
+int	other_cmd_after(t_string *line, int i)
+{
+	while (line->str[i] && ft_strchr("\f\t \n\r\v", line->str[i]))
+		i++;
+	if (line->str[i] == '\0')
+		return (0);
+	return (1);
 }
 
 t_string	*check_next_cmd_errors(t_string *next_cmd, int inside_quote, int inside_dquote)
@@ -73,7 +82,7 @@ t_error	parse_line(t_data *data)
 
 	data->cmds = NULL;
 	i = 0;
-	while (i < data->line->len)
+	while (i < data->line->len && other_cmd_after(data->line, i))
 	{
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)
