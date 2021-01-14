@@ -21,6 +21,5 @@
 
 --- À faire ---
 vérifier les leaks (grossièrement) (normalement OK)
-vérifier les fonctions intérdites et autorisées (cd srcs && ag 'fonctioninterdite')
 norme (libft aussi ? on peut considérer qu'il ne fait pas partie du projet donc exclue de la norme)
 supprimer ce todo et push
