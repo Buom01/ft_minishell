@@ -16,16 +16,14 @@
 	`-> [En considération] Le code devrait être réécris avec utils/paths
 - [TESTED] Gestion basique des variables d'environements (initialisation, obtention, réinitialisation)
 - [TESTED] Builtins: export, unset, env, echo, pwd, cd, exit
-- [FAIT]ocessing
-- Completer les erreurs manquantes
-- Revoir CD
-- Vérifier les builtins quant au man
+- [FAIT] Processing
+- [FAIT] Revoir CD
+- [FAIT]Vérifier les builtins quant au man
 
 --- À faire ---
-vérifier les leaks
-vérifier les malloc
-vérifier les fonctions intérdites et autorisées
-norme
-patch: echo $?
-fermer les pipes en cas d'arrêt: cat /dev/urandom | head
+valeur de $?
+fermer les pipes en cas d'arrêt: cat /dev/urandom | head (si c'est important ?)
+vérifier les leaks (grossièrement) (normalement OK)
+vérifier les fonctions intérdites et autorisées (cd srcs && ag 'fonctioninterdite')
+norme (libft aussi ? on peut considérer qu'il ne fait pas partie du projet donc exclue de la norme)
 supprimer ce todo et push

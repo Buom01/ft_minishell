@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 15:53:18 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 03:24:25 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/14 01:14:22 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ char	**env_get_array(void)
 
 void	env_clear_array(char **envs)
 {
-	if (envs)
-		while (*envs)
-			free(*(envs++));
+	char	**envs_cpy;
+
+	envs_cpy = envs;
+	while (*envs)
+		free(*(envs++));
+	free(envs_cpy);
 }

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 18:39:37 by badam             #+#    #+#             */
-/*   Updated: 2021/01/12 02:57:39 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/13 23:44:41 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ typedef struct s_echo_opts
 
 typedef struct s_cd_opts
 {
-	char			*home;
-	char			*path;
-	bool			relative;
-	bool			dot;
-}					t_cd_opts;
+	char	*home;
+	char	*path;
+	bool	relative;
+	bool	back;
+	char	*pwd;
+	char	*finalpath;
+	bool	print;
+}			t_cd_opts;
 
 #endif
