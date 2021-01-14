@@ -18,13 +18,12 @@
 - [TESTED] Builtins: export, unset, env, echo, pwd, cd, exit
 - [FAIT] Processing
 - [FAIT] Revoir CD
-- Vérifier les builtins quant au man
+- [FAIT]Vérifier les builtins quant au man
 
 --- À faire ---
 valeur de $?
 fermer les pipes en cas d'arrêt: cat /dev/urandom | head
-vérifier les leaks
-vérifier les malloc
-vérifier les fonctions intérdites et autorisées
+vérifier les leaks (grossièrement) (normalement OK)
+vérifier les fonctions intérdites et autorisées (cd srcs && ag 'fonctioninterdite')
 norme
 supprimer ce todo et push
