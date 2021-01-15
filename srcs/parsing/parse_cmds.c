@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:50:36 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 18:28:09 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/15 23:41:14 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ void	skip_until_pipe(t_string *cmd, unsigned int *i)
 	inside_dquote = 0;
 	while (*i <= cmd->len)
 	{
-		if (cmd->str[*i] == '"' && !inside_quote)
+		if (cmd->str[*i] == '"' && !inside_quote && *i > 0
+			&& cmd->str[*i - 1] != '\\')
 			inside_dquote = !inside_dquote;
-		else if (cmd->str[*i] == '\'' && !inside_dquote)
+		else if (cmd->str[*i] == '\'' && !inside_dquote && *i > 0
+			&& cmd->str[*i - 1] != '\\')
 			inside_quote = !inside_quote;
 		else if (cmd->str[*i] == '|' && !inside_quote && !inside_dquote)
 		{
