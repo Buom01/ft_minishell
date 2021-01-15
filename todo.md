@@ -21,5 +21,4 @@
 
 --- À faire ---
 vérifier les leaks (grossièrement) (normalement OK)
-norme
 supprimer ce todo et push
