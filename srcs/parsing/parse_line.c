@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:17:19 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 18:18:50 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/15 14:50:04 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ t_error	parse_line(t_data *data)
 		ft_bzero(cmd, sizeof(t_cmd));
 		cmd->cmd = get_next_cmd(data->line, &i);
 		if (!cmd->cmd)
+		{
+			free(cmd);
 			return (ERR);
+		}
 		new_elem = ft_lstnew("", cmd);
 		if (!new_elem)
 			panic(ERR_MALLOC);
