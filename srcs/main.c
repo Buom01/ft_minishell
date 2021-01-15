@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/15 22:10:14 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/15 22:38:28 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,13 @@ void	handle_sig(int sig)
 			ft_putstr_fd(MSG_PROMPT, 1);
 		}
 		get_data()->sigint_received = 1;
+		env_set("?", "130");
 	}
 	else if (sig == SIGQUIT)
 	{
 		printf("Quit\n");
 		get_data()->sigquit_received = 1;
+		env_set("?", "131");
 	}
 }
 
