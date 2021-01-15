@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 17:22:41 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/11 23:53:45 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/15 23:53:02 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ t_string	*extract_redir(t_string *pipe_cmd, unsigned int i)
 	return (redir);
 }
 
+int	in_quote(t_pipe_cmd *pipe_cmd, int i, int inside_quote)
+{
+	if (pipe_cmd->pipe_cmd->str[i] == '"' && !inside_quote && i > 0
+		&& pipe_cmd->pipe_cmd->str[i - 1] != '\\')
+		return (1);
+	return (0);
+}
+
 t_string	*get_next_redir(t_pipe_cmd *pipe_cmd)
 {
 	t_string		*next_redir;
@@ -63,9 +71,10 @@ t_string	*get_next_redir(t_pipe_cmd *pipe_cmd)
 	i = 0;
 	while (i < pipe_cmd->pipe_cmd->len)
 	{
-		if (pipe_cmd->pipe_cmd->str[i] == '"' && !inside_quote)
+		if (in_quote(pipe_cmd, i, inside_quote))
 			inside_dquote = !inside_dquote;
-		else if (pipe_cmd->pipe_cmd->str[i] == '\'' && !inside_dquote)
+		else if (pipe_cmd->pipe_cmd->str[i] == '\'' && !inside_dquote && i > 0
+			&& pipe_cmd->pipe_cmd->str[i - 1] != '\\')
 			inside_quote = !inside_quote;
 		else if ((pipe_cmd->pipe_cmd->str[i] == '<'
 				|| pipe_cmd->pipe_cmd->str[i] == '>')
