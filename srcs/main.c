@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/15 22:38:28 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/15 23:01:42 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	handle_sig(int sig)
 		printf("\n");
 		if (*should_prompt_be_printed())
 		{
-			ft_string_destroy(get_data()->line);
-			get_data()->line = ft_string_new();
+			ft_bzero(get_data()->line->str, get_data()->line->capacity);
+			get_data()->line->len = 0;
 			ft_putstr_fd(MSG_PROMPT, 1);
 		}
 		get_data()->sigint_received = 1;
