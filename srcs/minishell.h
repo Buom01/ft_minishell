@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 15:24:32 by badam             #+#    #+#             */
-/*   Updated: 2021/01/14 21:06:33 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/01/15 22:21:15 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ typedef enum e_builtin
 **  Data structure :
 **
 **              ┌───────────────────  data
-**      main()  ┤                     ├─ env
+**              │                     ├─ sigint_received;
+**      main()  ┤                     ├─ sigquit_received
+**              │                     ├─ env
 **              ├───────────────────  ├─ line
 ** parse_line() ┤                     └─ cmds            -> list
 **              ├───────────────────     ├─ cmd
@@ -80,6 +82,8 @@ typedef struct s_data
 {
 	char			**env;
 	t_string		*line;
+	int				sigint_received;
+	int				sigquit_received;
 	t_list			*cmds;
 }					t_data;
 
@@ -110,6 +114,7 @@ typedef struct s_env
 }					t_env;
 
 void				exec_line(t_data *data);
+void				handle_error_code(t_data *data, int status);
 void				close_fds(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd);
 void				ex_pipe_cmd(t_data *data, t_cmd *cmd, t_pipe_cmd *pipe_cmd);
 void				free_data(t_data *data);

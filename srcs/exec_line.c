@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:38:57 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/14 21:53:42 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/15 22:21:36 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
 	t_list		*pipe_cmd_elem;
 	int			status;
 	t_pipe_cmd	*pipe_cmd;
-	char		*status_str;
 
 	(void)data;
 	status = 0;
@@ -68,9 +67,7 @@ void	wait_for_all_process_to_finish(t_data *data, t_cmd *cmd)
 		if (pipe_cmd->forked)
 		{
 			waitpid(pipe_cmd->pid, &status, 0);
-			status_str = ft_itoa(status >> 8);
-			env_set("?", status_str);
-			free(status_str);
+			handle_error_code(data, status);
 		}
 		pipe_cmd_elem = pipe_cmd_elem->next;
 	}
