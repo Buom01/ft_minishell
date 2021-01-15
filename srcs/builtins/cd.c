@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:35:11 by badam             #+#    #+#             */
-/*   Updated: 2021/01/14 17:53:00 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/15 22:28:28 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,25 @@ static t_error	exec_cd_cdpath(t_cd_opts *options, char *cdpath_env)
 {
 	t_error	err;
 	char	**cdpath;
+	char	*testpath;
 
 	err = OK;
-	cdpath = ft_split(cdpath_env, ":");
-	if (!cdpath)
+	testpath = path_join(options->pwd, options->path);
+	if (!testpath)
 		return (ERR_MALLOC);
-	err = exec_cd_cdpath_exec(options, cdpath);
-	if (err == OK && !options->finalpath)
-		options->finalpath = ft_strdup(options->path);
-	exec_cd_cdpath_free(cdpath);
+	if (dir_exists(testpath, true))
+		options->finalpath = testpath;
+	else
+	{
+		free(testpath);
+		cdpath = ft_split(cdpath_env, ":");
+		if (!cdpath)
+			return (ERR_MALLOC);
+		err = exec_cd_cdpath_exec(options, cdpath);
+		if (err == OK && !options->finalpath)
+			options->finalpath = ft_strdup(options->path);
+		exec_cd_cdpath_free(cdpath);
+	}
 	return (err);
 }
 
