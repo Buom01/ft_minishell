@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 17:59:37 by badam             #+#    #+#             */
-/*   Updated: 2021/01/14 15:40:02 by badam            ###   ########.fr       */
+/*   Updated: 2021/01/15 23:23:24 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	post_process(t_data *data)
 			{
 				if (process_char(st.cmd->pipe_cmd, &st, st.cursor))
 					push_arg(st.cmd, st.cmd->argv, &st);
-				st.cursor++;
+				if (*st.cursor)
+					st.cursor++;
 			}
 			pipe_cmds = pipe_cmds->next;
 		}
