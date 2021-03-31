@@ -6,7 +6,7 @@
 /*   By: frdescam <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/20 11:18:54 by frdescam          #+#    #+#             */
-/*   Updated: 2021/01/15 23:01:42 by frdescam         ###   ########.fr       */
+/*   Updated: 2021/03/31 19:29:18 by frdescam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,19 @@ void	handle_sig(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		printf("Quit\n");
-		get_data()->sigquit_received = 1;
-		env_set("?", "131");
+		if (*should_prompt_be_printed() == 1)
+		{
+			printf("\n");
+			ft_putstr_fd(MSG_PROMPT, 1);
+			ft_bzero(get_data()->line->str, get_data()->line->capacity);
+			get_data()->line->len = 0;
+		}
+		else
+		{
+			printf("Quit\n");
+			get_data()->sigquit_received = 1;
+			env_set("?", "131");
+		}
 	}
 }
 
